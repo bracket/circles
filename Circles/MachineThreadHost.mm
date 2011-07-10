@@ -1,21 +1,22 @@
-#import "MachineThreadHost.h"
 #import <AudioToolbox/Audiotoolbox.h>
 #import <AudioUnit/AudioUnit.h>
 #import <CoreFoundation/CFRunLoop.h> 
-
-#include "machines/MachineThread.hpp"
+#import <MachineThreadHost.h>
 #include <cmath>
 #include <cstring>
 #include <iostream>
+#include <machines/MachineThread.hpp>
+#include <vector>
+
 
 /*! @file
 MachineThreadHost is the OS specific class responsible for instantiating the
-machines/MachineThread class and starting the separate thread for external
-sound rendering.  More accurately, it's threadMain function is called in the
-AppDelegate to spawn the new thread.  It's also responsible for starting
-audio processing on the host OS and copying the output from the
-MachineThread's buffers to the host OS's output audio buffers, performing
-conversions as necessary.
+machines/MachineThread class and starting the separate thread for sound
+rendering.  More accurately, its threadMain function is called in the
+AppDelegate to spawn the new thread.  It's also responsible for starting audio
+processing on the host OS and copying the output from the MachineThread's
+buffers to the host OS's output audio buffers, performing conversions as
+necessary.
 */
 
 // TODO: This is kind of an ugly macro.  We probably need a slightly better error
@@ -38,9 +39,6 @@ namespace {
         static_cast<MachineThread*>(ptr)->loop();
 	} 
 
-	const double sample_rate = 44100.0, two_pi = 8.0 * std::atan(1.0);
-	double current_phase = 0.0, phase_delta = 440.0 * two_pi / sample_rate;
-
 	// NOTE: iOS documentation says it uses 8.24 fixed point integer format for
 	// sound output.  My ears tell me it's actually 16.16.
 	template <class T>
@@ -49,7 +47,6 @@ namespace {
 	}
 
 	//! @brief Callback used by the iOS AudioUnit system to copy the MachineThread's buffers to output.
-	// NOTE: Doesn't work yet.
 	OSStatus machine_thread_host_au_callback(
 		void * inRefCon,
 		AudioUnitRenderActionFlags * flags,
@@ -59,15 +56,25 @@ namespace {
 		AudioBufferList * data
 	)
 	{
+		MachineThread * machine_thread = static_cast<MachineThread*>(inRefCon);
+		MachineThread::BlockQueue * queue = machine_thread->get_block_queue();
 		AudioUnitSampleType * left_channel = static_cast<AudioUnitSampleType*>(data->mBuffers[0].mData);
-		AudioUnitSampleType * right_channel = static_cast<AudioUnitSampleType*>(data->mBuffers[1].mData);
 
-		for (int i = 0; i < frame_count; ++i) {
-			left_channel[i] = samplize(std::sin(current_phase));
-			current_phase += phase_delta;
+		static boost::optional<BlockType *> out;
+		static BlockType::iterator it, end = it;
+
+		UInt32 copied = 0;
+		while (copied < frame_count) {
+			if (it == end) {
+				if (out) { delete *out; out = boost::none; } // NOTE: We want to recycle this.
+				if (!queue->shift(out)) { break; }
+				it = (*out)->channel_begin(0);
+				end = (*out)->channel_end(0);
+			}
+			
+			for (; it != end && copied < frame_count; ++copied)
+				{ *left_channel++ = samplize(*it++); }
 		}
-
-		current_phase -= two_pi * static_cast<int>(current_phase / two_pi);
 
 		return 0;
 	}
@@ -101,6 +108,8 @@ namespace {
 		AudioUnit unit;
 		result = AUGraphNodeInfo(graph, node, 0, &unit);
 		RETURN_IF_ERR(result);
+
+		const double sample_rate = 44100.0;
 
 		// NOTE: I don't think we actually have control over this property.  I
 		// think we have to query it from the AudioSession, but I don't quite

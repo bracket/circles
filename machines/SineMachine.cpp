@@ -1,8 +1,11 @@
-#include <machines/Machine.hpp>
-
 #include <cmath>
+#include <machines/Machine.hpp>
+#include <machines/MachineFactory.hpp>
 
-const double two_pi = 8.0 * std::atan(1.0);
+namespace {
+    const double two_pi = 8.0 * std::atan(1.0);
+    const int sample_rate = 44100;
+}
 
 class SineMachine : public Machine {
 	public:
@@ -13,9 +16,9 @@ class SineMachine : public Machine {
 
 		BlockType * render() {
 			BlockType * out = new BlockType();
-			iterator end = out->channel_end(0);
+            BlockType::iterator end = out->channel_end(0);
 
-			for (iterator it = out->channel_begin(0); it != end; ++it) {
+			for (BlockType::iterator it = out->channel_begin(0); it != end; ++it) {
 				*it = std::sin(current_phase_);
 				current_phase_ += phase_delta_;
 			}
@@ -32,3 +35,15 @@ class SineMachine : public Machine {
 	private:
 		double current_phase_, phase_delta_;
 };
+
+namespace {
+	Machine * constructor() { return new SineMachine(); }
+
+	struct registrar {
+		registrar() {
+			get_machine_factory().register_constructor("SineMachine", constructor);
+		}
+	};
+
+	registrar r;
+}

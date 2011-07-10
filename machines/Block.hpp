@@ -48,13 +48,13 @@ class Block {
 		int sample_count() const { return sample_count_; }
 		int size() const { return channel_count_ * sample_count_; }
 
-		iterator begin() { return storage_; }
-		const_iterator begin() const { return storage_; }
+		iterator begin() { return storage_[0]; }
+		const_iterator begin() const { return storage_[0]; }
 
-		iterator end() { return storage_ + size(); }
-		const_iterator end() const { return storage_ + size(); }
+		iterator end() { return storage_[0] + size(); }
+		const_iterator end() const { return storage_[0] + size(); }
 
-		iterator channel_begin(int channel) { storage_[channel]; }
+		iterator channel_begin(int channel) { return storage_[channel]; }
 		const_iterator channel_begin(int channel) const { return storage_[channel]; }
 
 		iterator channel_end(int channel) { return storage_[channel] + sample_count_; }

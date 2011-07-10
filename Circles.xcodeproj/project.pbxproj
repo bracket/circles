@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4E36BB2E13C2AE1800D18CA9 /* MachineThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */; };
 		4E36BB3113C2D16200D18CA9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */; };
+		4E4530C413C94FB100333B9C /* SineMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */; };
+		4E5BFFFD13C6D3A00036D68B /* OutputMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E5BFFFC13C6D3A00036D68B /* OutputMachine.cpp */; };
 		4ECFA0AB13C281D4004388CE /* MachineThreadHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFA0AA13C281D4004388CE /* MachineThreadHost.mm */; };
 		4ECFA0AD13C282F5004388CE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ECFA0AC13C282F5004388CE /* CoreFoundation.framework */; };
 		4ED275C913C1014F00DB7510 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED275C813C1014F00DB7510 /* UIKit.framework */; };
@@ -27,8 +29,12 @@
 		4E36BB2A13C2AE1800D18CA9 /* Machine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Machine.hpp; sourceTree = "<group>"; };
 		4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineThread.cpp; sourceTree = "<group>"; };
 		4E36BB2C13C2AE1800D18CA9 /* MachineThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineThread.hpp; sourceTree = "<group>"; };
-		4E36BB2D13C2AE1800D18CA9 /* SineMachine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SineMachine.hpp; sourceTree = "<group>"; };
+		4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineMachine.cpp; sourceTree = "<group>"; };
 		4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4E5B000013C94A5D0036D68B /* AsynchronousQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AsynchronousQueue.hpp; sourceTree = "<group>"; };
+		4E5B000113C94A5D0036D68B /* Ticker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ticker.hpp; sourceTree = "<group>"; };
+		4E5BFFFC13C6D3A00036D68B /* OutputMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputMachine.cpp; sourceTree = "<group>"; };
+		4E5BFFFE13C8078D0036D68B /* MachineFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineFactory.hpp; sourceTree = "<group>"; };
 		4ECFA0A913C281D4004388CE /* MachineThreadHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MachineThreadHost.h; sourceTree = "<group>"; };
 		4ECFA0AA13C281D4004388CE /* MachineThreadHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MachineThreadHost.mm; sourceTree = "<group>"; };
 		4ECFA0AC13C282F5004388CE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -69,18 +75,30 @@
 		4E36BB2813C2AE1800D18CA9 /* machines */ = {
 			isa = PBXGroup;
 			children = (
+				4E5BFFFE13C8078D0036D68B /* MachineFactory.hpp */,
+				4E5BFFFC13C6D3A00036D68B /* OutputMachine.cpp */,
 				4E36BB2913C2AE1800D18CA9 /* Block.hpp */,
 				4E36BB2A13C2AE1800D18CA9 /* Machine.hpp */,
 				4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */,
+				4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */,
 				4E36BB2C13C2AE1800D18CA9 /* MachineThread.hpp */,
-				4E36BB2D13C2AE1800D18CA9 /* SineMachine.hpp */,
 			);
 			path = machines;
+			sourceTree = "<group>";
+		};
+		4E5BFFFF13C94A5D0036D68B /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				4E5B000013C94A5D0036D68B /* AsynchronousQueue.hpp */,
+				4E5B000113C94A5D0036D68B /* Ticker.hpp */,
+			);
+			path = shared;
 			sourceTree = "<group>";
 		};
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
+				4E5BFFFF13C94A5D0036D68B /* shared */,
 				4E36BB2813C2AE1800D18CA9 /* machines */,
 				4ED275CE13C1014F00DB7510 /* Circles */,
 				4ED275C713C1014F00DB7510 /* Frameworks */,
@@ -198,6 +216,8 @@
 				4ED275E813C1066000DB7510 /* GLView.mm in Sources */,
 				4ECFA0AB13C281D4004388CE /* MachineThreadHost.mm in Sources */,
 				4E36BB2E13C2AE1800D18CA9 /* MachineThread.cpp in Sources */,
+				4E5BFFFD13C6D3A00036D68B /* OutputMachine.cpp in Sources */,
+				4E4530C413C94FB100333B9C /* SineMachine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +247,10 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$SOURCE_ROOT /usr/local/include/boost_1_45_0";
+				HEADER_SEARCH_PATHS = (
+					$SOURCE_ROOT,
+					/usr/local/include/boost_1_45_0,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -243,7 +266,10 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$SOURCE_ROOT /usr/local/include/boost_1_45_0";
+				HEADER_SEARCH_PATHS = (
+					$SOURCE_ROOT,
+					/usr/local/include/boost_1_45_0,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -259,7 +285,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Circles/Circles-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$SOURCE_ROOT /usr/local/include/boost_1_45_0";
+				HEADER_SEARCH_PATHS = (
+					$SOURCE_ROOT,
+					/usr/local/include/boost_1_45_0,
+				);
 				INFOPLIST_FILE = "Circles/Circles-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -273,7 +302,10 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Circles/Circles-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$SOURCE_ROOT /usr/local/include/boost_1_45_0";
+				HEADER_SEARCH_PATHS = (
+					$SOURCE_ROOT,
+					/usr/local/include/boost_1_45_0,
+				);
 				INFOPLIST_FILE = "Circles/Circles-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = YES;
