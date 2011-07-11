@@ -1,14 +1,13 @@
-#include <machines/MachineFactory.hpp>
 #include <machines/MachineThread.hpp>
+#include <machines/MachineGraph.hpp>
 
 bool MachineThread::init() {
-	output_machine_.reset(get_machine_factory().construct("OutputMachine"));
-	if (!output_machine_) { return false; }
+	graph_.reset(MachineGraph::construct());
 
-	Machine * sine_machine = get_machine_factory().construct("SineMachine");
-	if (!sine_machine) { return false; }
+	int sine = graph_->add_machine("SineMachine");
+	if (!sine)  { return false; }
 
-	output_machine_->push_input(sine_machine);
+	if (!graph_->link_machines(sine, 1)) { return false; }
 
 	return true;
 }
@@ -17,11 +16,10 @@ bool MachineThread::loop() {
 	if (!last_rendered_) { ticker_.reset(); }
 	sample_time_ += ticker_.tick();
 
-	const int sample_rate = 44100;
-	int target_time = sample_time_ + sample_rate / 200;
+	int target_time = sample_time_ + graph_->get_sample_rate() / 200;
 
 	while (last_rendered_ < target_time) {
-		BlockType * out = output_machine_->render();
+		BlockType * out = graph_->render();
 		if (!out) { return true; }
 		last_rendered_ += out->sample_count();
 		block_queue_.push(out);

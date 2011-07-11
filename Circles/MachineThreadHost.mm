@@ -162,12 +162,13 @@ namespace {
 	context.version = 0;
 	context.info = machine_thread;
 
-	// NOTE: We try and have the MachineThread render about .05 seconds ahead
-	// of real-time.  This may need to be tuned.
+	// NOTE: We try and have the MachineThread render about .005 seconds ahead
+	// of real-time.  This may need to be tuned, or dynamically handled by the
+	// MachineThread instead.
 	CFRunLoopTimerRef timer = CFRunLoopTimerCreate(
 		kCFAllocatorDefault,
 		CFAbsoluteTimeGetCurrent(),
-		.05,
+		.005,
 		0, 0,
 		&fire_machine_thread_loop,
 		&context

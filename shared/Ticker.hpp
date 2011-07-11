@@ -5,6 +5,8 @@
 
 class Ticker : boost::noncopyable {
 	public:
+		Ticker() { reset(); }
+
 		void reset() { gettimeofday(&last_, 0); }
 
 		int tick() {

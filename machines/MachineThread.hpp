@@ -3,6 +3,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/utility.hpp>
 #include <machines/Machine.hpp>
+#include <machines/MachineGraph.hpp>
 #include <memory>
 #include <shared/AsynchronousQueue.hpp>
 #include <shared/Ticker.hpp>
@@ -27,7 +28,7 @@ class MachineThread : boost::noncopyable {
 		bool init();
 		
 		BlockQueue block_queue_;
-		boost::scoped_ptr<Machine> output_machine_;
+		boost::scoped_ptr<MachineGraph> graph_;
 
 		Ticker ticker_;
 		int sample_time_, last_rendered_;
