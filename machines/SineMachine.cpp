@@ -9,13 +9,14 @@ namespace {
 
 class SineMachine : public Machine {
 	public:
-		SineMachine(double frequency = 440.0) :
+		SineMachine(MachineGraph * graph, double frequency = 440.0) :
+			Machine(graph),
 			current_phase_(0.0),
 			phase_delta_(frequency * two_pi / sample_rate)
 		{ }
 
 		BlockType * render() {
-			BlockType * out = new BlockType();
+			BlockType * out = this->alloc_block();
             BlockType::iterator end = out->channel_end(0);
 
 			for (BlockType::iterator it = out->channel_begin(0); it != end; ++it) {
@@ -37,7 +38,7 @@ class SineMachine : public Machine {
 };
 
 namespace {
-	Machine * constructor() { return new SineMachine(); }
+	Machine * constructor(MachineGraph * graph) { return new SineMachine(graph); }
 
 	struct registrar {
 		registrar() {

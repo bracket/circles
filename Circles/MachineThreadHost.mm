@@ -66,7 +66,7 @@ namespace {
 		UInt32 copied = 0;
 		while (copied < frame_count) {
 			if (it == end) {
-				if (out) { delete *out; out = boost::none; } // NOTE: We want to recycle this.
+				if (out) { delete *out; out = boost::none; }
 				if (!queue->shift(out)) { break; }
 				it = (*out)->channel_begin(0);
 				end = (*out)->channel_end(0);

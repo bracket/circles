@@ -2,7 +2,6 @@
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/utility.hpp>
-#include <machines/Machine.hpp>
 #include <machines/MachineGraph.hpp>
 #include <memory>
 #include <shared/AsynchronousQueue.hpp>

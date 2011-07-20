@@ -27,7 +27,7 @@ class MachineGraph {
 		
 		int get_sample_rate() const { return sample_rate_; }
 
-		BlockType * render() { return output_->render(); }
+		BlockType * render();
 
 		BlockType * alloc_block() {
 			if (free_blocks_.empty()) { return new BlockType(); }
@@ -39,7 +39,7 @@ class MachineGraph {
 		void free_block(BlockType * block) { free_blocks_.push_back(block); }
 
 		int add_machine(std::string const & machine_type) {
-			std::auto_ptr<Machine> ptr(get_machine_factory().construct(machine_type));
+			std::auto_ptr<Machine> ptr(get_machine_factory().construct(machine_type, this));
 			if (!ptr.get()) { return 0; }
 
 			int id = next_id();

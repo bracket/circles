@@ -4,10 +4,15 @@
 bool MachineThread::init() {
 	graph_.reset(MachineGraph::construct());
 
-	int sine = graph_->add_machine("SineMachine");
-	if (!sine)  { return false; }
+	int silent = graph_->add_machine("SilentMachine");
+	if (!silent) { return false; }
 
-	if (!graph_->link_machines(sine, 1)) { return false; }
+	if (!graph_->link_machines(silent, 1)) { return false; }
+
+	//int sine = graph_->add_machine("SineMachine");
+	//if (!sine)  { return false; }
+
+	//if (!graph_->link_machines(sine, 1)) { return false; }
 
 	return true;
 }

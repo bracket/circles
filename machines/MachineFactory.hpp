@@ -1,13 +1,15 @@
 #pragma once
 
-#include <machines/Machine.hpp>
 #include <map>
 #include <string>
 #include <utility>
 
+class Machine;
+class MachineGraph;
+
 class MachineFactory {
 	public:
-		typedef Machine * (*MachineConstructor)();
+		typedef Machine * (*MachineConstructor)(MachineGraph *);
 
 	private:
 		typedef std::map<std::string, MachineConstructor> ConstructorMap;
@@ -26,10 +28,10 @@ class MachineFactory {
 			return false;
 		}
 
-		Machine * construct(std::string const & name) const {
+		Machine * construct(std::string const & name, MachineGraph * graph) const {
 			const_iterator it = constructors_.find(name);
 			if (it == constructors_.end()) { return 0; }
-			return (*it->second)();
+			return (*it->second)(graph);
 		}
 		
 	private:

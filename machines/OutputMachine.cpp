@@ -1,9 +1,12 @@
 #include <machines/Machine.hpp>
 #include <machines/MachineFactory.hpp>
+#include <machines/MachineGraph.hpp>
 
 class OutputMachine : public Machine {
 	public:
 		typedef Machine base;
+
+		OutputMachine(MachineGraph * graph) : Machine(graph) { }
 
 		BlockType * render() {
 			base::input_iterator it = this->input_begin(), end = this->input_end();
@@ -21,7 +24,7 @@ class OutputMachine : public Machine {
 };
 
 namespace {
-	Machine * constructor() { return new OutputMachine(); }
+	Machine * constructor(MachineGraph * graph) { return new OutputMachine(graph); }
 
 	struct registrar {
 		registrar() {

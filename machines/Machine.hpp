@@ -4,6 +4,8 @@
 #include <machines/Block.hpp>
 #include <vector>
 
+class MachineGraph;
+
 typedef Block<float, 1024, 1> BlockType;
 
 class Machine {
@@ -16,6 +18,8 @@ class Machine {
 		virtual BlockType * render() = 0;
 
 		virtual ~Machine() { }
+
+		Machine(MachineGraph * graph) : graph_(graph) { }
 
 		input_iterator input_begin() { return inputs_.begin(); }
 		const_input_iterator input_begin() const { return inputs_.begin(); }
@@ -32,6 +36,11 @@ class Machine {
 			return true;
 		}
 
+	protected:
+        BlockType * alloc_block();
+        void free_block(BlockType * block);
+
 	private:
 		InputContainer inputs_;
+		MachineGraph * graph_;
 };
