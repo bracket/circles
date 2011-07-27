@@ -28,8 +28,6 @@
 		4EFBA8CA13D91C22007A0C38 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C213D91C22007A0C38 /* Program.cpp */; };
 		4EFBA8CB13D91C22007A0C38 /* RenderingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C513D91C22007A0C38 /* RenderingEngine.cpp */; };
 		4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C713D91C22007A0C38 /* Shader.cpp */; };
-		4EFBA90D13DA5A9B007A0C38 /* test.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA90A13DA5A9B007A0C38 /* test.fsh */; };
-		4EFBA90E13DA5A9B007A0C38 /* test.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
 		4EFBA91013DB761F007A0C38 /* test.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90A13DA5A9B007A0C38 /* test.fsh */; };
 		4EFBA91113DB761F007A0C38 /* test.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
 /* End PBXBuildFile section */
@@ -76,6 +74,7 @@
 		4EFBA8C813D91C22007A0C38 /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		4EFBA90A13DA5A9B007A0C38 /* test.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.fsh; path = shaders/test.fsh; sourceTree = "<group>"; };
 		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
+		B139362513DFBD6C00463DC8 /* Circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Circle.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +201,7 @@
 		4EFBA8C013D91C22007A0C38 /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				B139362513DFBD6C00463DC8 /* Circle.hpp */,
 				4EFBA90F13DB6850007A0C38 /* shaders */,
 				4EFBA8C213D91C22007A0C38 /* Program.cpp */,
 				4EFBA8C313D91C22007A0C38 /* Program.hpp */,
@@ -295,8 +295,6 @@
 				4EFBA8CA13D91C22007A0C38 /* Program.cpp in Sources */,
 				4EFBA8CB13D91C22007A0C38 /* RenderingEngine.cpp in Sources */,
 				4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */,
-				4EFBA90D13DA5A9B007A0C38 /* test.fsh in Sources */,
-				4EFBA90E13DA5A9B007A0C38 /* test.vsh in Sources */,
 				4EEEB86913DFADE50041AD59 /* common.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
