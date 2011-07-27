@@ -24,6 +24,14 @@
 		4ED275E313C104FA00DB7510 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED275E213C104FA00DB7510 /* OpenGLES.framework */; };
 		4ED275E513C1052F00DB7510 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED275E413C1052F00DB7510 /* QuartzCore.framework */; };
 		4ED275E813C1066000DB7510 /* GLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ED275E713C1066000DB7510 /* GLView.mm */; };
+		4EEEB86913DFADE50041AD59 /* common.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EEEB86813DFADE50041AD59 /* common.mm */; };
+		4EFBA8CA13D91C22007A0C38 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C213D91C22007A0C38 /* Program.cpp */; };
+		4EFBA8CB13D91C22007A0C38 /* RenderingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C513D91C22007A0C38 /* RenderingEngine.cpp */; };
+		4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C713D91C22007A0C38 /* Shader.cpp */; };
+		4EFBA90D13DA5A9B007A0C38 /* test.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA90A13DA5A9B007A0C38 /* test.fsh */; };
+		4EFBA90E13DA5A9B007A0C38 /* test.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
+		4EFBA91013DB761F007A0C38 /* test.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90A13DA5A9B007A0C38 /* test.fsh */; };
+		4EFBA91113DB761F007A0C38 /* test.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +65,17 @@
 		4ED275E413C1052F00DB7510 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4ED275E613C1066000DB7510 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
 		4ED275E713C1066000DB7510 /* GLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLView.mm; sourceTree = "<group>"; };
+		4EEEB86613DFADE50041AD59 /* common.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
+		4EEEB86813DFADE50041AD59 /* common.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = common.mm; sourceTree = "<group>"; };
+		4EFBA8C213D91C22007A0C38 /* Program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
+		4EFBA8C313D91C22007A0C38 /* Program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Program.hpp; sourceTree = "<group>"; };
+		4EFBA8C413D91C22007A0C38 /* Renderable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Renderable.hpp; sourceTree = "<group>"; };
+		4EFBA8C513D91C22007A0C38 /* RenderingEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderingEngine.cpp; sourceTree = "<group>"; };
+		4EFBA8C613D91C22007A0C38 /* RenderingEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderingEngine.hpp; sourceTree = "<group>"; };
+		4EFBA8C713D91C22007A0C38 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		4EFBA8C813D91C22007A0C38 /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		4EFBA90A13DA5A9B007A0C38 /* test.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.fsh; path = shaders/test.fsh; sourceTree = "<group>"; };
+		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +125,8 @@
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
+				4EEEB86513DFADE50041AD59 /* arch */,
+				4EFBA8C013D91C22007A0C38 /* renderer */,
 				4E5BFFFF13C94A5D0036D68B /* shared */,
 				4E36BB2813C2AE1800D18CA9 /* machines */,
 				4ED275CE13C1014F00DB7510 /* Circles */,
@@ -161,6 +182,47 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		4EEEB86513DFADE50041AD59 /* arch */ = {
+			isa = PBXGroup;
+			children = (
+				4EEEB86613DFADE50041AD59 /* common.hpp */,
+				4EEEB86713DFADE50041AD59 /* iOS */,
+			);
+			path = arch;
+			sourceTree = "<group>";
+		};
+		4EEEB86713DFADE50041AD59 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				4EEEB86813DFADE50041AD59 /* common.mm */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		4EFBA8C013D91C22007A0C38 /* renderer */ = {
+			isa = PBXGroup;
+			children = (
+				4EFBA90F13DB6850007A0C38 /* shaders */,
+				4EFBA8C213D91C22007A0C38 /* Program.cpp */,
+				4EFBA8C313D91C22007A0C38 /* Program.hpp */,
+				4EFBA8C413D91C22007A0C38 /* Renderable.hpp */,
+				4EFBA8C513D91C22007A0C38 /* RenderingEngine.cpp */,
+				4EFBA8C613D91C22007A0C38 /* RenderingEngine.hpp */,
+				4EFBA8C713D91C22007A0C38 /* Shader.cpp */,
+				4EFBA8C813D91C22007A0C38 /* Shader.hpp */,
+			);
+			path = renderer;
+			sourceTree = "<group>";
+		};
+		4EFBA90F13DB6850007A0C38 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				4EFBA90A13DA5A9B007A0C38 /* test.fsh */,
+				4EFBA90B13DA5A9B007A0C38 /* test.vsh */,
+			);
+			name = shaders;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -208,6 +270,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EFBA91013DB761F007A0C38 /* test.fsh in Resources */,
+				4EFBA91113DB761F007A0C38 /* test.vsh in Resources */,
 				4ED275D313C1014F00DB7510 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,6 +292,12 @@
 				4E4530C413C94FB100333B9C /* SineMachine.cpp in Sources */,
 				4E4530C813CAD30E00333B9C /* MachineGraph.cpp in Sources */,
 				4E51092113D55DB900A6EC7D /* Machine.cpp in Sources */,
+				4EFBA8CA13D91C22007A0C38 /* Program.cpp in Sources */,
+				4EFBA8CB13D91C22007A0C38 /* RenderingEngine.cpp in Sources */,
+				4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */,
+				4EFBA90D13DA5A9B007A0C38 /* test.fsh in Sources */,
+				4EFBA90E13DA5A9B007A0C38 /* test.vsh in Sources */,
+				4EEEB86913DFADE50041AD59 /* common.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

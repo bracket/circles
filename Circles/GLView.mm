@@ -33,7 +33,7 @@ namespace {
 {
     self = [super initWithFrame:frame];
     if (!self) { return self; }
-        
+    
     CAEAGLLayer * EAGL_layer = (CAEAGLLayer*)super.layer;
     EAGL_layer.opaque = YES;
     
@@ -45,6 +45,7 @@ namespace {
     }
 
 	initialize_gl(gl_context_, EAGL_layer, CGRectGetWidth(frame), CGRectGetHeight(frame));
+	rendering_engine_ = RenderingEngine::construct();
 
 	[self drawView:nil];
 
@@ -52,9 +53,7 @@ namespace {
 }
 
 - (void) drawView:(CADisplayLink *)displayLink {
-    glClearColor(1.0f, 1.0f, 1.0f, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
+  	rendering_engine_->render();
 	[ gl_context_ presentRenderbuffer: GL_RENDERBUFFER ];
 }
 
@@ -66,6 +65,7 @@ namespace {
 
 	[ gl_context_ release ];
     [ super dealloc ];
+	delete rendering_engine_;
 }
 
 @end

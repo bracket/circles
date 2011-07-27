@@ -2,7 +2,7 @@
 #import "GLView.h"
 #import <UIKit/UIKit.h>
 #import "MachineThreadHost.h"
-
+#import <QuartzCore/CADisplayLink.h>
 
 @implementation CirclesAppDelegate
 
@@ -25,6 +25,13 @@
 	];
     
     [ machine_thread start ];
+
+    CADisplayLink * display_link = [
+		CADisplayLink displayLinkWithTarget:view_ 
+			selector:@selector(drawView:) 
+	];
+
+	[ display_link addToRunLoop:[ NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
     return YES;
 }
