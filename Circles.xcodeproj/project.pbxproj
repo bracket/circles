@@ -39,6 +39,10 @@
 		4E36BB2C13C2AE1800D18CA9 /* MachineThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineThread.hpp; sourceTree = "<group>"; };
 		4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineMachine.cpp; sourceTree = "<group>"; };
 		4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4E387B3113E135B0003DADA2 /* Integer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Integer.hpp; sourceTree = "<group>"; };
+		4E387B3213E135B0003DADA2 /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
+		4E387B3313E135B0003DADA2 /* ScalarType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScalarType.hpp; sourceTree = "<group>"; };
+		4E387B3413E135B0003DADA2 /* Vec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vec.hpp; sourceTree = "<group>"; };
 		4E4530C613CAD30E00333B9C /* MachineGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineGraph.cpp; sourceTree = "<group>"; };
 		4E4530C713CAD30E00333B9C /* MachineGraph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineGraph.hpp; sourceTree = "<group>"; };
 		4E51092013D55DB900A6EC7D /* Machine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Machine.cpp; sourceTree = "<group>"; };
@@ -112,6 +116,17 @@
 			path = machines;
 			sourceTree = "<group>";
 		};
+		4E387B2F13E135B0003DADA2 /* math */ = {
+			isa = PBXGroup;
+			children = (
+				4E387B3113E135B0003DADA2 /* Integer.hpp */,
+				4E387B3213E135B0003DADA2 /* Matrix.hpp */,
+				4E387B3313E135B0003DADA2 /* ScalarType.hpp */,
+				4E387B3413E135B0003DADA2 /* Vec.hpp */,
+			);
+			path = math;
+			sourceTree = "<group>";
+		};
 		4E5BFFFF13C94A5D0036D68B /* shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +139,7 @@
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
+				4E387B2F13E135B0003DADA2 /* math */,
 				4EEEB86513DFADE50041AD59 /* arch */,
 				4EFBA8C013D91C22007A0C38 /* renderer */,
 				4E5BFFFF13C94A5D0036D68B /* shared */,
