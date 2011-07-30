@@ -4,7 +4,7 @@
 #import <renderer/RenderingEngine.hpp>
 #import <UIKit/UIKit.h>
 
-@interface GLView : UIView {
+@interface GLView : UIView <UIGestureRecognizerDelegate> {
     @private
         EAGLContext * gl_context_;
 		RenderingEngine * rendering_engine_;

@@ -44,10 +44,10 @@ struct Matrix {
 	const_reference operator () (int i, int j) const { return data_[i][j]; }
 
 	range_type row_range(int i) { return range_type(data_[i], data_[i] + cols); }
-	const_range_type row_range(int i) const { return range_type(data_[i], data_[i] + cols); }
+	const_range_type row_range(int i) const { return const_range_type(data_[i], data_[i] + cols); }
 
 	range_type column_range(int j) { return range_type(data_[0] + j, data_[rows] + j); }
-	const_range_type column_range(int j) const { return range_type(data_[0] + j, data_[rows] + j); }
+	const_range_type column_range(int j) const { return const_range_type(data_[0] + j, data_[rows] + j); }
 
 	iterator begin() { return data_[0]; }
 	const_iterator begin() const { return data_[0]; }
@@ -106,12 +106,16 @@ struct Matrix {
 	}
 
 	private:
-		template <class R>
-		static inline T dot(R const & left, int stride_left, R const & right, int stride_right) {
+		template <class L, class R>
+		static inline T dot(L left, int stride_left, R right, int stride_right) {
 			T out = 0;
-			iterator l = left.first, r = right.first;
-			for (; l < left.second && r < right.second; l += stride_left, r += stride_right) 
-				{ out += *l * *r; }
+			
+			while (left.first < left.second && right.first < right.second) {
+				out += *left.first * *right.first;
+				left.first += stride_left;
+				right.first += stride_right;
+			}
+			
 			return out;
 		}
 

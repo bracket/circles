@@ -4,7 +4,7 @@
 #import <OpenGLES/EAGLDrawable.h>
 
 namespace {
-    void initialize_gl(EAGLContext * context, CAEAGLLayer * layer, int width, int height) {
+    void initialize_gl(EAGLContext * context, CAEAGLLayer * layer, float width, float height) {
 		GLuint frame_buffer, render_buffer;
 		glGenFramebuffers(1, &frame_buffer);
         glGenRenderbuffers(1, &render_buffer);
@@ -18,10 +18,12 @@ namespace {
 			GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
 			GL_RENDERBUFFER, render_buffer
 		);
-
-		glViewport(0, 0, width, height);
     }
 }
+
+@interface GLView ()
+- (void)addGestureRecognizers;
+@end
 
 @implementation GLView
 
@@ -44,10 +46,13 @@ namespace {
         return nil;
     }
 
-	initialize_gl(gl_context_, EAGL_layer, CGRectGetWidth(frame), CGRectGetHeight(frame));
-	rendering_engine_ = RenderingEngine::construct();
+	CGFloat width = CGRectGetWidth(frame), height = CGRectGetHeight(frame);
+	initialize_gl(gl_context_, EAGL_layer, width, height);
+	rendering_engine_ = RenderingEngine::construct(width, height);
 
 	[self drawView:nil];
+
+	[self addGestureRecognizers];
 
     return self;
 }
@@ -55,6 +60,24 @@ namespace {
 - (void) drawView:(CADisplayLink *)displayLink {
   	rendering_engine_->render();
 	[ gl_context_ presentRenderbuffer: GL_RENDERBUFFER ];
+}
+
+- (void)addGestureRecognizers {
+	UIPinchGestureRecognizer *pinchGesture =
+		[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomCanvas:)];
+	[pinchGesture setDelegate:self];
+	[self addGestureRecognizer:pinchGesture];
+	[pinchGesture release];
+}
+
+- (void)zoomCanvas:(UIPinchGestureRecognizer *)gestureRecognizer {
+	UIGestureRecognizerState state = [gestureRecognizer state];
+    if (state == UIGestureRecognizerStateBegan || state == UIGestureRecognizerStateChanged) {
+
+        rendering_engine_->zoom_canvas([gestureRecognizer scale]);
+
+        [gestureRecognizer setScale:1];
+    }
 }
 
 - (void)dealloc

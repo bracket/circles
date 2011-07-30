@@ -2,6 +2,8 @@
 
 #include <renderer/Program.hpp>
 
+class RenderingEngine;
+
 class Renderable {
 	public:
 		Renderable(Program * program)
@@ -9,7 +11,7 @@ class Renderable {
 		
 		virtual ~Renderable() { }
 
-		virtual void render() = 0;
+		virtual void render(RenderingEngine const * rendering_engine) = 0;
 
 		Program * get_program() const { return program_; }
 	

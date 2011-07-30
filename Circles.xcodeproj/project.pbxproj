@@ -79,6 +79,7 @@
 		4EFBA90A13DA5A9B007A0C38 /* test.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.fsh; path = shaders/test.fsh; sourceTree = "<group>"; };
 		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
 		B139362513DFBD6C00463DC8 /* Circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Circle.hpp; sourceTree = "<group>"; };
+		B139363013E4BDF300463DC8 /* MatrixOps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MatrixOps.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +120,7 @@
 		4E387B2F13E135B0003DADA2 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				B139363013E4BDF300463DC8 /* MatrixOps.hpp */,
 				4E387B3113E135B0003DADA2 /* Integer.hpp */,
 				4E387B3213E135B0003DADA2 /* Matrix.hpp */,
 				4E387B3313E135B0003DADA2 /* ScalarType.hpp */,
@@ -333,7 +335,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -375,7 +377,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Circles/Circles-Prefix.pch";
@@ -393,7 +395,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Circles/Circles-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
