@@ -25,8 +25,6 @@ class RenderingEngine {
 
 		void render();
 
-		void zoom_canvas(float scale);
-
 		Matrix<4, 4, float> const & get_projection_matrix() const {
 			return projection_matrix_;
 		}
@@ -46,15 +44,13 @@ class RenderingEngine {
 	private:
 		RenderingEngine(float view_width, float view_height) :
 			view_width_(view_width),
-			view_height_(view_height),
-			current_zoom_level_(1)
+			view_height_(view_height)
 		{ }
 		
 		bool init();
 
 		RenderMap render_map_;
 		float view_width_, view_height_;
-		float current_zoom_level_;
 
 		Matrix<4, 4, float> projection_matrix_, camera_matrix_;
 };

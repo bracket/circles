@@ -3,6 +3,8 @@
 
 #import <OpenGLES/EAGLDrawable.h>
 
+#include <app_engine/ApplicationEngine.hpp>
+
 namespace {
     void initialize_gl(EAGLContext * context, CAEAGLLayer * layer, float width, float height) {
 		GLuint frame_buffer, render_buffer;
@@ -57,6 +59,14 @@ namespace {
     return self;
 }
 
+- (void)setApplicationEngine:(ApplicationEngine *)app_engine {
+	app_engine_ = app_engine;
+}
+
+- (RenderingEngine *)getRenderingEngine {
+	return rendering_engine_;
+}
+
 - (void) drawView:(CADisplayLink *)displayLink {
   	rendering_engine_->render();
 	[ gl_context_ presentRenderbuffer: GL_RENDERBUFFER ];
@@ -74,7 +84,7 @@ namespace {
 	UIGestureRecognizerState state = [gestureRecognizer state];
     if (state == UIGestureRecognizerStateBegan || state == UIGestureRecognizerStateChanged) {
 
-        rendering_engine_->zoom_canvas([gestureRecognizer scale]);
+        app_engine_->zoom_canvas([gestureRecognizer scale]);
 
         [gestureRecognizer setScale:1];
     }

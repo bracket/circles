@@ -30,6 +30,8 @@
 		4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C713D91C22007A0C38 /* Shader.cpp */; };
 		4EFBA91013DB761F007A0C38 /* test.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90A13DA5A9B007A0C38 /* test.fsh */; };
 		4EFBA91113DB761F007A0C38 /* test.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
+		B179B63413E5C8C4003FB275 /* ApplicationEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */; };
+		B179B63913E5D08D003FB275 /* ApplicationEngineHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,10 @@
 		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
 		B139362513DFBD6C00463DC8 /* Circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Circle.hpp; sourceTree = "<group>"; };
 		B139363013E4BDF300463DC8 /* MatrixOps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MatrixOps.hpp; sourceTree = "<group>"; };
+		B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationEngine.cpp; path = app_engine/ApplicationEngine.cpp; sourceTree = "<group>"; };
+		B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationEngine.hpp; path = app_engine/ApplicationEngine.hpp; sourceTree = "<group>"; };
+		B179B63713E5D08D003FB275 /* ApplicationEngineHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngineHost.h; sourceTree = "<group>"; };
+		B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationEngineHost.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,7 @@
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
+				B179B63613E5C8CA003FB275 /* app_engine */,
 				4E387B2F13E135B0003DADA2 /* math */,
 				4EEEB86513DFADE50041AD59 /* arch */,
 				4EFBA8C013D91C22007A0C38 /* renderer */,
@@ -177,6 +184,8 @@
 		4ED275CE13C1014F00DB7510 /* Circles */ = {
 			isa = PBXGroup;
 			children = (
+				B179B63713E5D08D003FB275 /* ApplicationEngineHost.h */,
+				B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */,
 				4ECFA0A913C281D4004388CE /* MachineThreadHost.h */,
 				4ECFA0AA13C281D4004388CE /* MachineThreadHost.mm */,
 				4ED275D713C1014F00DB7510 /* CirclesAppDelegate.h */,
@@ -239,6 +248,15 @@
 				4EFBA90B13DA5A9B007A0C38 /* test.vsh */,
 			);
 			name = shaders;
+			sourceTree = "<group>";
+		};
+		B179B63613E5C8CA003FB275 /* app_engine */ = {
+			isa = PBXGroup;
+			children = (
+				B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */,
+				B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */,
+			);
+			name = app_engine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,6 +332,8 @@
 				4EFBA8CB13D91C22007A0C38 /* RenderingEngine.cpp in Sources */,
 				4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */,
 				4EEEB86913DFADE50041AD59 /* common.mm in Sources */,
+				B179B63413E5C8C4003FB275 /* ApplicationEngine.cpp in Sources */,
+				B179B63913E5D08D003FB275 /* ApplicationEngineHost.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

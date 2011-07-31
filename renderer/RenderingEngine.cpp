@@ -26,14 +26,14 @@ namespace {
 	Program * initialize_program() {
 		std::string vertex_shader_source = get_file_contents("test", "vsh");
 		std::auto_ptr<Shader> vertex_shader(Shader::construct(Shader::VertexShader, vertex_shader_source));
-		if (!vertex_shader.get()) { return false; }
+		if (!vertex_shader.get()) { return 0; }
 
 		std::string fragment_shader_source = get_file_contents("test", "fsh");
 		std::auto_ptr<Shader> fragment_shader(Shader::construct(Shader::FragmentShader, fragment_shader_source));
-		if (!fragment_shader.get()) { return false; }
+		if (!fragment_shader.get()) { return 0; }
 
 		std::auto_ptr<Program> program(Program::construct(vertex_shader.get(), fragment_shader.get()));
-		if (!program.get()) { return false; }
+		if (!program.get()) { return 0; }
 
 		vertex_shader.release();
 		fragment_shader.release();
@@ -68,10 +68,4 @@ void RenderingEngine::render() {
 		for (; it != end; ++it) { (*it)->render(this); }
 		pit->second.clear();
 	}
-}
-
-void RenderingEngine::zoom_canvas(float scale) {
-	current_zoom_level_ *= scale;
-
-	if (current_zoom_level_ < 0.01f) { current_zoom_level_ = 0.01f; }
 }

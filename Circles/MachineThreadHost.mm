@@ -152,15 +152,13 @@ namespace {
 -(void) threadMain {
 	bool done = false;
 
-	// NOTE: This should really be a property and done in the main thread,
-	// since it's probably going to need a reference to the MachineThread.
-	MachineThread * machine_thread = MachineThread::construct();
-	if (!machine_thread) { return; }
+	machine_thread_ = MachineThread::construct();
+	if (!machine_thread_) { return; }
 
 	CFRunLoopTimerContext context;
 	std::memset(&context, 0, sizeof(context));
 	context.version = 0;
-	context.info = machine_thread;
+	context.info = machine_thread_;
 
 	// NOTE: We try and have the MachineThread render about .005 seconds ahead
 	// of real-time.  This may need to be tuned, or dynamically handled by the
@@ -176,15 +174,22 @@ namespace {
 
 	CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopDefaultMode);
 
-	start_audio_unit_processing(machine_thread);
+	start_audio_unit_processing(machine_thread_);
 
 	while (!done) {
+		NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+
 		SInt32 result = CFRunLoopRunInMode(kCFRunLoopDefaultMode, .5, YES);
 		done = (result == kCFRunLoopRunStopped || result == kCFRunLoopRunFinished);
-	}
 
-	delete machine_thread;
+		[pool drain];
+	}
 }
 
+- (void)dealloc {
+	delete machine_thread_;
+
+	[super dealloc];
+}
 
 @end

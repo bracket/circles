@@ -10,19 +10,24 @@
 {
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     
-    window_ = [[ UIWindow alloc ] initWithFrame:screenBounds];
-    view_ = [[ GLView alloc ] initWithFrame: screenBounds];
+    window_ = [[ UIWindow alloc ] initWithFrame:screenBounds ];
+    view_ = [[ GLView alloc ] initWithFrame: screenBounds ];
     
     [ window_ addSubview: view_ ];
     [ window_ makeKeyAndVisible ];
     
-    MachineThreadHost * machine_thread_host = [[ MachineThreadHost alloc] init ];
+    MachineThreadHost * machine_thread_host = [[ MachineThreadHost alloc ] init ];
+	app_engine_host_ = [[ ApplicationEngineHost alloc ] init ];
+	[ app_engine_host_ setRenderingEngine:[ view_ getRenderingEngine ]];
+	[ view_ setApplicationEngine:[ app_engine_host_ getApplicationEngine ]];
 
     NSThread * machine_thread = [
 		[ NSThread alloc ]
 			initWithTarget:machine_thread_host
 			selector:@selector(threadMain) object:nil
 	];
+
+	[machine_thread_host release];
     
     [ machine_thread start ];
 
@@ -79,6 +84,7 @@
 {
     [view_ release];
     [window_ release];
+	[app_engine_host_ release];
     [super dealloc];
 }
 
