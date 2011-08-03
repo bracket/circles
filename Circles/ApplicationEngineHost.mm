@@ -3,14 +3,12 @@
 
 @implementation ApplicationEngineHost
 
-- (id)initWithView:(UIView *)view {
+- (id)init {
 	self = [super init];
 	if (!self) { return nil; }
 
 	app_engine_ = ApplicationEngine::constuct();
 	if (!app_engine_) { return nil; }
-
-	app_engine_->set_rendering_engine([ view getRenderingEngine ]);
 
 	return self;
 }

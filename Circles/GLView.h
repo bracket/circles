@@ -2,10 +2,10 @@
 #import <QuartzCore/CADisplayLink.h>
 #import <QuartzCore/QuartzCore.h>
 #import <renderer/RenderingEngine.hpp>
+#import "TouchHandlerHost.h"
 #import <UIKit/UIKit.h>
 
 class ApplicationEngine;
-class TouchHandlerHost;
 
 @interface GLView : UIView <UIGestureRecognizerDelegate> {
     @private

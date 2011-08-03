@@ -1,7 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <renderer/RenderingEngine.hpp>;
+#include <algorithm>
+#include <renderer/RenderingEngine.hpp>
 
 class ApplicationEngine {
 	public:

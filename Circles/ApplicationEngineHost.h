@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <app_engine/ApplicationEngine.hpp>
+#import "GLView.h"
 
 class RenderingEngine;
 class MachineThread;
@@ -9,7 +10,6 @@ class MachineThread;
 		ApplicationEngine * app_engine_;
 }
 
-- (id)initWithView:(UIView *)view;
 - (void)setRenderingEngine:(RenderingEngine *)rendering_engine;
 - (ApplicationEngine *)getApplicationEngine;
 
