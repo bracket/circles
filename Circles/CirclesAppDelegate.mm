@@ -4,22 +4,39 @@
 #import "MachineThreadHost.h"
 #import <QuartzCore/CADisplayLink.h>
 
+namespace {
+    
+	GLView * construct_view() {
+		CGRect screenBounds = [[UIScreen mainScreen] bounds];
+
+		UIWindow * window = [[ UIWindow alloc ] initWithFrame:screenBounds ];
+		GLView * view = [[ GLView alloc ] initWithFrame: screenBounds ];
+
+		[ window addSubview: view ];
+		[ window makeKeyAndVisible ];
+
+		return view;
+	}
+}
+
 @implementation CirclesAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    
-    window_ = [[ UIWindow alloc ] initWithFrame:screenBounds ];
-    view_ = [[ GLView alloc ] initWithFrame: screenBounds ];
-    
-    [ window_ addSubview: view_ ];
-    [ window_ makeKeyAndVisible ];
-    
-    MachineThreadHost * machine_thread_host = [[ MachineThreadHost alloc ] init ];
 	app_engine_host_ = [[ ApplicationEngineHost alloc ] init ];
-	[ app_engine_host_ setRenderingEngine:[ view_ getRenderingEngine ]];
+
+	view_ = construct_view();
+
+	RenderingEngine * rendering_engine = RenderingEngine::construct(
+		CGRectGetWidth(view_.frame), CGRectGetHeight(view_.frame)
+	);
+	[ app_engine_host_ setRenderingEngine:rendering_engine];
+
+	[ view_ allocateFramebufferStorage ];
+
 	[ view_ setApplicationEngine:[ app_engine_host_ getApplicationEngine ]];
+
+    MachineThreadHost * machine_thread_host = [[ MachineThreadHost alloc ] init ];
 
     NSThread * machine_thread = [
 		[ NSThread alloc ]
@@ -82,9 +99,8 @@
 
 - (void)dealloc
 {
-    [view_ release];
-    [window_ release];
 	[app_engine_host_ release];
+    [view_ release];
     [super dealloc];
 }
 

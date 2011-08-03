@@ -6,7 +6,7 @@
 
 #include <shared/Ticker.hpp>
 
-double wrap(double f) {
+inline double wrap(double f) {
 	double i;
 	return modf(f, &i);
 }

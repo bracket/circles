@@ -1,13 +1,23 @@
-#include <arch/common.hpp>
 #include <cmath>
 #include <OpenGLES/ES2/gl.h>
 #include <math/MatrixOps.hpp>
 #include <renderer/RenderingEngine.hpp>
-#include <renderer/Shader.hpp>
-#include <shared/Ticker.hpp>
-#include <renderer/Circle.hpp>
 
 bool RenderingEngine::init() {
+
+	GLuint frame_buffer, render_buffer;
+	glGenFramebuffers(1, &frame_buffer);
+	glGenRenderbuffers(1, &render_buffer);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, render_buffer);
+
+
+	glFramebufferRenderbuffer(
+		GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+		GL_RENDERBUFFER, render_buffer
+	);
+
 	glViewport(0, 0, view_width_, view_height_);
 
 	set_projection_matrix(perspective(
@@ -20,42 +30,9 @@ bool RenderingEngine::init() {
 	return true;
 }
 
-namespace {
-	Program * program = 0;
-
-	Program * initialize_program() {
-		std::string vertex_shader_source = get_file_contents("test", "vsh");
-		std::auto_ptr<Shader> vertex_shader(Shader::construct(Shader::VertexShader, vertex_shader_source));
-		if (!vertex_shader.get()) { return 0; }
-
-		std::string fragment_shader_source = get_file_contents("test", "fsh");
-		std::auto_ptr<Shader> fragment_shader(Shader::construct(Shader::FragmentShader, fragment_shader_source));
-		if (!fragment_shader.get()) { return 0; }
-
-		std::auto_ptr<Program> program(Program::construct(vertex_shader.get(), fragment_shader.get()));
-		if (!program.get()) { return 0; }
-
-		vertex_shader.release();
-		fragment_shader.release();
-
-		return program.release();
-	}
-
-	Circle * get_circle() {
-		if (!program) { program = initialize_program(); }
-
-		static Circle * circle = new Circle(program);
-
-		return circle;
-	}
-}
-
 void RenderingEngine::render() {
 	typedef RenderMap::iterator program_iterator;
 	typedef RenderList::iterator iterator;
-
-	Circle * circle = get_circle();
-	submit(circle);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);

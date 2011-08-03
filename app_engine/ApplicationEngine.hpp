@@ -1,8 +1,7 @@
 #pragma once
 
 #include <memory>
-
-class RenderingEngine;
+#include <renderer/RenderingEngine.hpp>;
 
 class ApplicationEngine {
 	public:
@@ -15,14 +14,17 @@ class ApplicationEngine {
 		~ApplicationEngine();
 
 		void set_rendering_engine(RenderingEngine * rendering_engine) {
-			rendering_engine_ = rendering_engine;
+			std::swap(rendering_engine_, rendering_engine);
+			delete rendering_engine;
 		}
+
+		void render_frame();
 
 		void zoom_canvas(float scale) {
 			printf("scale: %f\n", scale);
 		}
 	private:
-		ApplicationEngine() : current_zoom_level_(1) { };
+		ApplicationEngine() : rendering_engine_(0), current_zoom_level_(1) { };
 
 		bool init();
 

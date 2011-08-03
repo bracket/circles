@@ -5,24 +5,6 @@
 
 #include <app_engine/ApplicationEngine.hpp>
 
-namespace {
-    void initialize_gl(EAGLContext * context, CAEAGLLayer * layer, float width, float height) {
-		GLuint frame_buffer, render_buffer;
-		glGenFramebuffers(1, &frame_buffer);
-        glGenRenderbuffers(1, &render_buffer);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-		glBindRenderbuffer(GL_RENDERBUFFER, render_buffer);
-
-		[ context renderbufferStorage: GL_RENDERBUFFER fromDrawable: layer ];
-
-		glFramebufferRenderbuffer(
-			GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-			GL_RENDERBUFFER, render_buffer
-		);
-    }
-}
-
 @interface GLView ()
 - (void)addGestureRecognizers;
 @end
@@ -48,27 +30,22 @@ namespace {
         return nil;
     }
 
-	CGFloat width = CGRectGetWidth(frame), height = CGRectGetHeight(frame);
-	initialize_gl(gl_context_, EAGL_layer, width, height);
-	rendering_engine_ = RenderingEngine::construct(width, height);
-
-	[self drawView:nil];
-
 	[self addGestureRecognizers];
 
     return self;
+}
+
+- (void)allocateFramebufferStorage {
+	// NOTE: We assume that the rendering engine creates and binds the render buffer.
+	[ gl_context_ renderbufferStorage: GL_RENDERBUFFER fromDrawable: (CAEAGLLayer *)super.layer ];
 }
 
 - (void)setApplicationEngine:(ApplicationEngine *)app_engine {
 	app_engine_ = app_engine;
 }
 
-- (RenderingEngine *)getRenderingEngine {
-	return rendering_engine_;
-}
-
 - (void) drawView:(CADisplayLink *)displayLink {
-  	rendering_engine_->render();
+	app_engine_->render_frame();
 	[ gl_context_ presentRenderbuffer: GL_RENDERBUFFER ];
 }
 
@@ -98,7 +75,6 @@ namespace {
 
 	[ gl_context_ release ];
     [ super dealloc ];
-	delete rendering_engine_;
 }
 
 @end
