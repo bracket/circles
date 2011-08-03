@@ -32,6 +32,7 @@
 		4EFBA91113DB761F007A0C38 /* test.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
 		B179B63413E5C8C4003FB275 /* ApplicationEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */; };
 		B179B63913E5D08D003FB275 /* ApplicationEngineHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */; };
+		B1FE747713E8EAB7001C43C4 /* TouchHandlerHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = B1FE747613E8EAB7001C43C4 /* TouchHandlerHost.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,8 @@
 		B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationEngine.hpp; path = app_engine/ApplicationEngine.hpp; sourceTree = "<group>"; };
 		B179B63713E5D08D003FB275 /* ApplicationEngineHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngineHost.h; sourceTree = "<group>"; };
 		B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationEngineHost.mm; sourceTree = "<group>"; };
+		B1FE747513E8EAB7001C43C4 /* TouchHandlerHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchHandlerHost.h; sourceTree = "<group>"; };
+		B1FE747613E8EAB7001C43C4 /* TouchHandlerHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TouchHandlerHost.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 		4ED275CE13C1014F00DB7510 /* Circles */ = {
 			isa = PBXGroup;
 			children = (
+				B1FE747513E8EAB7001C43C4 /* TouchHandlerHost.h */,
+				B1FE747613E8EAB7001C43C4 /* TouchHandlerHost.mm */,
 				B179B63713E5D08D003FB275 /* ApplicationEngineHost.h */,
 				B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */,
 				4ECFA0A913C281D4004388CE /* MachineThreadHost.h */,
@@ -334,6 +339,7 @@
 				4EEEB86913DFADE50041AD59 /* common.mm in Sources */,
 				B179B63413E5C8C4003FB275 /* ApplicationEngine.cpp in Sources */,
 				B179B63913E5D08D003FB275 /* ApplicationEngineHost.mm in Sources */,
+				B1FE747713E8EAB7001C43C4 /* TouchHandlerHost.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

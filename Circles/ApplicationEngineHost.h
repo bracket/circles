@@ -9,6 +9,7 @@ class MachineThread;
 		ApplicationEngine * app_engine_;
 }
 
+- (id)initWithView:(UIView *)view;
 - (void)setRenderingEngine:(RenderingEngine *)rendering_engine;
 - (ApplicationEngine *)getApplicationEngine;
 

@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 
 class ApplicationEngine;
+class TouchHandlerHost;
 
 @interface GLView : UIView <UIGestureRecognizerDelegate> {
     @private
@@ -16,5 +17,6 @@ class ApplicationEngine;
 - (void)drawView:(CADisplayLink *) displayLink;
 - (void)setApplicationEngine:(ApplicationEngine *)app_engine;
 - (void)allocateFramebufferStorage;
+- (void)addGestureRecognizers:(TouchHandlerHost *)handler;
 
 @end

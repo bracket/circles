@@ -5,9 +5,6 @@
 
 #include <app_engine/ApplicationEngine.hpp>
 
-@interface GLView ()
-- (void)addGestureRecognizers;
-@end
 
 @implementation GLView
 
@@ -30,8 +27,6 @@
         return nil;
     }
 
-	[self addGestureRecognizers];
-
     return self;
 }
 
@@ -49,22 +44,30 @@
 	[ gl_context_ presentRenderbuffer: GL_RENDERBUFFER ];
 }
 
-- (void)addGestureRecognizers {
-	UIPinchGestureRecognizer *pinchGesture =
-		[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomCanvas:)];
-	[pinchGesture setDelegate:self];
-	[self addGestureRecognizer:pinchGesture];
-	[pinchGesture release];
-}
+- (void)addGestureRecognizers:(TouchHandlerHost *)handler {
+	UIPinchGestureRecognizer * pinchGesture = [[ UIPinchGestureRecognizer alloc ]
+		initWithTarget:handler action:@selector(handlePinch:) ];
+	[ self addGestureRecognizer:pinchGesture ];
+	[ pinchGesture release ];
 
-- (void)zoomCanvas:(UIPinchGestureRecognizer *)gestureRecognizer {
-	UIGestureRecognizerState state = [gestureRecognizer state];
-    if (state == UIGestureRecognizerStateBegan || state == UIGestureRecognizerStateChanged) {
+	UIPanGestureRecognizer * oneFingerPan = [[ UIPanGestureRecognizer alloc ]
+		initWithTarget:handler action:@selector(handleOneFingerPan:) ];
+	oneFingerPan.minimumNumberOfTouches = 1;
+	oneFingerPan.maximumNumberOfTouches = 1;
+	[ self addGestureRecognizer:oneFingerPan ];
+	[ oneFingerPan release ];
 
-        app_engine_->zoom_canvas([gestureRecognizer scale]);
+	UIPanGestureRecognizer * twoFingerPan = [[ UIPanGestureRecognizer alloc ]
+		initWithTarget:handler action:@selector(handleTwoFingerPan:) ];
+	twoFingerPan.minimumNumberOfTouches = 2;
+	twoFingerPan.maximumNumberOfTouches = 2;
+	[ self addGestureRecognizer:twoFingerPan ];
+	[ twoFingerPan release ];
 
-        [gestureRecognizer setScale:1];
-    }
+	UITapGestureRecognizer * tap = [[ UITapGestureRecognizer alloc ]
+		initWithTarget:handler action:@selector(handleTap:) ];
+	[ self addGestureRecognizer:tap ];
+	[ tap release ];
 }
 
 - (void)dealloc
