@@ -1,0 +1,8 @@
+env = Environment();
+
+env['CXX'] = '/opt/local/bin/g++-mp-4.5';
+env.AppendUnique(LIBS = [ 'boost_unit_test_framework' ]);
+env.AppendUnique(CPPPATH = [ '../..', '/usr/local/include/boost_1_45_0' ]);
+
+#, LIBS = ['libboost_unit_test_framework-mt']
+env.Program('test_suite', ['test_suite.cpp']);
