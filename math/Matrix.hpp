@@ -1,8 +1,9 @@
 #pragma once
 
 #include <algorithm>
-#include <utility>
+#include <boost/range.hpp>
 #include <math/Vec.hpp>
+#include <utility>
 
 template <int rows_, int cols_, class T = float>
 struct Matrix {
@@ -37,6 +38,11 @@ struct Matrix {
 		assign(it, end);
 	}
 
+	template <class U, int n>
+	Matrix(U (&array)[n]) {
+		assign(boost::begin(array), boost::end(array));
+	}
+
 	row_type & operator [] (int i) { return data_[i]; }
 	row_type const & operator [] (int i) const { return data_[i]; }
 
@@ -65,7 +71,17 @@ struct Matrix {
 	Vec<rows, T> operator * (Vec<cols, U> const & v) const {
 		Vec<rows, T> out;
 		for (int i = 0; i < rows; ++i) {
-			out[i] = dot(data_[i], v);
+			out[i] = dot(row_range(i), 1, std::make_pair(v.begin(), v.end()), 1);
+		}
+
+		return out;
+	}
+
+	template <class U>
+	friend Vec<cols, T> operator * (Vec<rows, U> const & v, Matrix const & M) {
+		Vec<cols, T> out;
+		for (int i = 0; i < cols; ++i) {
+			out[i] = M.dot(std::make_pair(v.begin(), v.end()), 1, M.column_range(i), cols);
 		}
 
 		return out;
@@ -116,17 +132,6 @@ struct Matrix {
 				right.first += stride_right;
 			}
 			
-			return out;
-		}
-
-		template <class U, int n>
-		static inline T dot(row_type const & row, Vec<n, U> const & v) {
-			T out = 0;
-			const_pointer it = row + 0, end = row + cols;
-			for (int i = 0; i < n && it != end; ++i, ++it) {
-				out += *it * v[i];
-			}
-
 			return out;
 		}
 

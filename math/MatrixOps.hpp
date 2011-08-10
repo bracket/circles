@@ -6,18 +6,18 @@
 
 template <class T>
 Matrix<4, 4, T> frustum(T left, T right, T bottom, T top, T near, T far) {
-	T a = 2 * near / (right - left);
-	T b = 2 * near / (top - bottom);
-	T c = (right + left) / (right - left);
-	T d = (top + bottom) / (top - bottom);
-	T e = - (far + near) / (far - near);
-	T f = -2 * far * near / (far - near);
+	T a = 2 * near / (right - left),
+		b = 2 * near / (top - bottom),
+		c = (right + left) / (right - left),
+		d = (top + bottom) / (top - bottom),
+		e = - (far + near) / (far - near),
+		f = -2 * far * near / (far - near);
 
 	T out[] = {
 		a, 0, 0,  0,
 		0, b, 0,  0,
 		c, d, e, -1,
-		0, 0, f,  1
+		0, 0, f,  0
 	};
 	return Matrix<4, 4, T>(boost::begin(out), boost::end(out));
 }

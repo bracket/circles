@@ -36,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E175AFA13ED02F30087D35F /* Rectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rectangle.hpp; sourceTree = "<group>"; };
 		4E36BB2913C2AE1800D18CA9 /* Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
 		4E36BB2A13C2AE1800D18CA9 /* Machine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Machine.hpp; sourceTree = "<group>"; };
 		4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineThread.cpp; sourceTree = "<group>"; };
@@ -129,6 +130,7 @@
 		4E387B2F13E135B0003DADA2 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				4E175AFA13ED02F30087D35F /* Rectangle.hpp */,
 				B139363013E4BDF300463DC8 /* MatrixOps.hpp */,
 				4E387B3113E135B0003DADA2 /* Integer.hpp */,
 				4E387B3213E135B0003DADA2 /* Matrix.hpp */,

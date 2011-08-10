@@ -9,21 +9,22 @@ template <class T> struct enable_if<true, T> { typedef T type; };
 
 template <int n, class T = float>
 struct Vec {
+	typedef T value_type;
+
+	typedef value_type * pointer;
+	typedef value_type const * const_pointer;
+
+	typedef value_type & reference;
+	typedef value_type const & const_reference;
+
+	typedef pointer iterator;
+	typedef const_pointer const_iterator;
+
 	Vec() { clear(); }
 
 	Vec(Vec const & right) {
 		for (int i = 0; i < n; ++i) { values[i] = right[i]; }
 	}
-
-	/*
-	template <class U>
-	Vec(std::initializer_list<U> const & list) {
-		auto it = list.begin(), end = list.end();
-		for (int i = 0; i < n && it != end; ++i, ++it) {
-			values[i] = static_cast<T>(*it);
-		}
-	}
-	*/
 
 	template <class U>
 	explicit Vec(Vec<n, U> const & right) {
@@ -88,6 +89,12 @@ struct Vec {
 
 	T & w() { return values[3]; }
 	T const & w() const { return values[3]; }
+
+	iterator begin() { return values; }
+	const_iterator begin() const { return values; }
+
+	iterator end() { return values + n; }
+	const_iterator end() const { return values + n; }
 
 	bool operator == (Vec const & right) const {
 		for (int i = 0; i < n; ++i) {
@@ -347,3 +354,17 @@ inline Vec4 rhw_position(Vec2 const & v) { return Vec4(v.x(), v.y(), 1.0f, 1.0f)
 inline Vec4 rhw_position(Vec3 const & v) { return Vec4(v.x(), v.y(), v.z(), 1.0f); }
 
 inline Vec4 const & rhw_position(Vec4 const & v) { return v; }
+
+template <int n, class T, class U>
+inline Vec<n, T> min(Vec<n, T> const & left, Vec<n, U> const & right) {
+	Vec<n, T> out;
+	for (int i = 0; i < n; ++i) { out[i] = right[i] < left[i] ? right[i] : left[i]; }
+	return out;
+}
+
+template <int n, class T, class U>
+inline Vec<n, T> max(Vec<n, T> const & left, Vec<n, U> const & right) {
+	Vec<n, T> out;
+	for (int i = 0; i < n; ++i) { out[i] = right[i] < left[i] ? left[i] : right[i]; }
+	return out;
+}
