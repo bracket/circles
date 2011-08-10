@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E175AF813ED02DD0087D35F /* TouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E175AF513ED02DD0087D35F /* TouchHandler.cpp */; };
 		4E36BB2E13C2AE1800D18CA9 /* MachineThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */; };
 		4E36BB3113C2D16200D18CA9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */; };
 		4E4530C413C94FB100333B9C /* SineMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */; };
@@ -36,6 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E175AF413ED02DD0087D35F /* Touchable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Touchable.hpp; sourceTree = "<group>"; };
+		4E175AF513ED02DD0087D35F /* TouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchHandler.cpp; sourceTree = "<group>"; };
+		4E175AF613ED02DD0087D35F /* TouchHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TouchHandler.hpp; sourceTree = "<group>"; };
 		4E175AFA13ED02F30087D35F /* Rectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rectangle.hpp; sourceTree = "<group>"; };
 		4E36BB2913C2AE1800D18CA9 /* Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
 		4E36BB2A13C2AE1800D18CA9 /* Machine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Machine.hpp; sourceTree = "<group>"; };
@@ -110,6 +114,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E175AF213ED02DD0087D35F /* input */ = {
+			isa = PBXGroup;
+			children = (
+				4E175AF413ED02DD0087D35F /* Touchable.hpp */,
+				4E175AF513ED02DD0087D35F /* TouchHandler.cpp */,
+				4E175AF613ED02DD0087D35F /* TouchHandler.hpp */,
+			);
+			path = input;
+			sourceTree = "<group>";
+		};
 		4E36BB2813C2AE1800D18CA9 /* machines */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +166,7 @@
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
+				4E175AF213ED02DD0087D35F /* input */,
 				B179B63613E5C8CA003FB275 /* app_engine */,
 				4E387B2F13E135B0003DADA2 /* math */,
 				4EEEB86513DFADE50041AD59 /* arch */,
@@ -342,6 +357,7 @@
 				B179B63413E5C8C4003FB275 /* ApplicationEngine.cpp in Sources */,
 				B179B63913E5D08D003FB275 /* ApplicationEngineHost.mm in Sources */,
 				B1FE747713E8EAB7001C43C4 /* TouchHandlerHost.mm in Sources */,
+				4E175AF813ED02DD0087D35F /* TouchHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

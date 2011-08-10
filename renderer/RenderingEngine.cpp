@@ -25,6 +25,7 @@ bool RenderingEngine::init() {
 		view_width_ / view_height_,
 		static_cast<float>(2 * std::atan(1))
 	));
+
 	set_camera_matrix(identity_matrix<float>());
 
 	return true;

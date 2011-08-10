@@ -11,6 +11,7 @@ class ApplicationEngine;
     @private
         EAGLContext * gl_context_;
 		ApplicationEngine * app_engine_;
+		TouchHandlerHost * touch_handler_host_;
 }
 
 + (Class)layerClass;

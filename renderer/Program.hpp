@@ -12,7 +12,7 @@ class Program : boost::noncopyable {
 
 		static Program * construct(Shader * vertex, Shader * fragment) {
 			std::auto_ptr<Program> ptr(new Program());
-			if (!ptr->init(vertex, fragment)) { return false; }
+			if (!ptr->init(vertex, fragment)) { return 0; }
 			return ptr.release();
 		}
 

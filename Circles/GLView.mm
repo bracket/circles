@@ -1,15 +1,26 @@
 #import "GLView.h"
 #import <OpenGLES/ES2/gl.h>
-
 #import <OpenGLES/EAGLDrawable.h>
 
 #include <app_engine/ApplicationEngine.hpp>
-
+#include <math/Matrix.hpp>
 
 @implementation GLView
 
 + (Class) layerClass {
     return [ CAEAGLLayer class ];
+}
+
+namespace {
+	Matrix<3, 3, float> make_touch_transform(float view_width, float view_height) {
+		float m[] = {
+			1, 0,           0,
+			0, -1,          0,
+			0, view_height, 1
+		};
+
+		return Matrix<3,3,float>(m);
+	}
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -27,6 +38,11 @@
         return nil;
     }
 
+	touch_handler_host_ = [[ TouchHandlerHost alloc ] init ];
+    [ touch_handler_host_
+        setTouchTransform: make_touch_transform(CGRectGetWidth(frame), CGRectGetHeight(frame)) ];
+	[ self addGestureRecognizers:touch_handler_host_ ];
+
     return self;
 }
 
@@ -37,6 +53,7 @@
 
 - (void)setApplicationEngine:(ApplicationEngine *)app_engine {
 	app_engine_ = app_engine;
+	[ touch_handler_host_ setTouchHandler: app_engine->get_touch_handler() ];
 }
 
 - (void) drawView:(CADisplayLink *)displayLink {

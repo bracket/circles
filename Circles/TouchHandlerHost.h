@@ -1,13 +1,17 @@
 #import <Foundation/Foundation.h>
+#include <math/Matrix.hpp>
 
-class ApplicationEngine;
+class TouchHandler;
 
 @interface TouchHandlerHost : NSObject {
 	@private
-		ApplicationEngine * app_engine_;
+		TouchHandler * touch_handler_;
+		Matrix<3, 3, float> touch_transform_;
 }
 
-- (void)setApplicationEngine:(ApplicationEngine *)app_engine;
+- (void)setTouchHandler:(TouchHandler *)touch_handler;
+- (void)setTouchTransform:(Matrix<3, 3, float>)touch_transform;
+
 - (void)handlePinch:(UIPinchGestureRecognizer *)gestureRecognizer;
 - (void)handleOneFingerPan:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)handleTwoFingerPan:(UIPanGestureRecognizer *)gestureRecognizer;
