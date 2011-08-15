@@ -7,7 +7,7 @@
 	self = [super init];
 	if (!self) { return nil; }
 
-	app_engine_ = ApplicationEngine::constuct();
+	app_engine_ = ApplicationEngine::construct();
 	if (!app_engine_) { return nil; }
 
 	return self;

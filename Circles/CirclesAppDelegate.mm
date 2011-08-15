@@ -5,7 +5,6 @@
 #import <QuartzCore/CADisplayLink.h>
 
 namespace {
-    
 	GLView * construct_view() {
 		CGRect screenBounds = [[UIScreen mainScreen] bounds];
 

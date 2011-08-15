@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <app_engine/ApplicationEngine.hpp>
+#import "GLView.h"
 
 class RenderingEngine;
 class MachineThread;

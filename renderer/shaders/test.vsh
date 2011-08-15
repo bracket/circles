@@ -1,13 +1,12 @@
 attribute vec4 position;
-attribute vec4 color;
+attribute vec2 tex;
 
 uniform mat4 projection;
 uniform mat4 model_view;
 
-varying vec4 colorVarying;
+varying vec2 texVarying;
 
 void main() {
 	gl_Position = projection * model_view * position;
-
-	colorVarying = color;
+	texVarying = tex;
 }

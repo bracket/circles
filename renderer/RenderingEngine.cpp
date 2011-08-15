@@ -20,11 +20,16 @@ bool RenderingEngine::init() {
 
 	glViewport(0, 0, view_width_, view_height_);
 
+	near_clip_ = 1.0f;
+	far_clip_ = 10.0f;
+	field_of_view_ = static_cast<float>(2 * std::atan(1));
+
 	set_projection_matrix(perspective(
-		1.0f, 10.0f,
+		near_clip_, far_clip_,
 		view_width_ / view_height_,
-		static_cast<float>(2 * std::atan(1))
+		field_of_view_
 	));
+
 	set_camera_matrix(identity_matrix<float>());
 
 	return true;
