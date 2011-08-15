@@ -18,9 +18,13 @@
 // NOTE: This namespace contains some test Renderables and Touchables.  It
 // should go away at some point.
 namespace {
-	inline double wrap(double f) {
+	inline double wrap(double d) {
 		double i;
-		return modf(f, &i);
+		return modf(d, &i);
+	}
+
+	inline double clamp(double low, double high, double d) {
+		return std::min(std::max(low, d), high);
 	}
 
 	class CircleRenderable;
@@ -31,7 +35,7 @@ namespace {
 	// associated Touchable and vice versa.
 	class CircleTouchable : public Touchable {
 		public:
-			void handle_touch_start(Vec2 const & start);
+			void handle_move_move(Vec2 const & pos, Vec2 const & delta);
 
             void set_renderable(CircleRenderable * renderable) 
 				{ renderable_ = renderable; }
@@ -44,49 +48,63 @@ namespace {
 		public:
 			struct Vertex {
 				GLfloat pos[3];
-				GLfloat color[4];
+				GLfloat tex[2];
 
 				Vec4 get_pos() const { return Vec4(pos[0], pos[1], pos[2], 1.0f); }
 			};
 
 			CircleRenderable(Program * program) :
 				Renderable(program),
-				touchable_(0)
+				touchable_(0),
+				position_(0, 0, -4)
 			{
 				Vertex vertices[] = {
-					{ -0.5f, -0.5f, -4.0f, 1.0f, 1.0f, 1.0f, 1.0f },
-					{ -0.5f,  0.5f, -4.0f, 1.0f, 0.0f, 0.0f, 0.0f },
-					{  0.5f, -0.5f, -4.0f, 1.0f, 1.0f, 1.0f, 1.0f },
-					{  0.5f,  0.5f, -4.0f, 1.0f, 1.0f, 1.0f, 1.0f },
+					{ -0.5f, -0.5f, 0.0f, -1.0f, -1.0f },
+					{ -0.5f,  0.5f, 0.0f, -1.0f,  1.0f },
+					{  0.5f, -0.5f, 0.0f,  1.0f, -1.0f },
+					{  0.5f,  0.5f, 0.0f,  1.0f,  1.0f },
 				};
 
 				Vertex * it = vertices, *end = vertices + sizeof(vertices) / sizeof(Vertex);
 				for (; it != end; ++it) { vertices_.push_back(*it); }
 
 				pos_idx_ = glGetAttribLocation(program->get_name(), "position");
-				color_idx_ = glGetAttribLocation(program->get_name(), "color");
+				tex_idx_ = glGetAttribLocation(program->get_name(), "tex");
 
-				time_ = 0.0f;
 				ticker_.reset();
+				phase_ = 0.0;
 			}
 
 			void set_touchable(CircleTouchable * touchable)
 				{ touchable_ = touchable; }
 
+			void set_position(Vec3 const & p) { position_ = p; }
+			Vec3 const & get_position() const { return position_; }
+
 			void render(RenderingEngine const * rendering_engine) {
 				typedef std::vector<Vertex>::iterator iterator;
 
-				time_ += ticker_.tick() / 1e6;
+                double angle = atan2(position_.y(), position_.x());
 
-				//Matrix<4, 4, float> M = rotate_around_z(static_cast<float>(8 * std::atan(1) * time_));
-				Matrix<4, 4, float> M = identity_matrix<float>();
+				phase_ += (ticker_.tick() / 1e6) * 4 * angle;
 
+				float T[] = {
+					1,             0,             0,             0, 
+					0,             1,             0,             0, 
+					0,             0,             1,             0, 
+					position_.x(), position_.y(), position_.z(), 1
+				};
+
+				Matrix<4, 4, float> M =
+					rotate_around_z(static_cast<float>(phase_))
+					* Matrix<4, 4, float>(T);
+                
 				if (touchable_) {
 					Vec2 corners[] = {
-						rendering_engine->project_to_screen(M * vertices_[0].get_pos()),
-						rendering_engine->project_to_screen(M * vertices_[1].get_pos()),
-						rendering_engine->project_to_screen(M * vertices_[2].get_pos()),
-						rendering_engine->project_to_screen(M * vertices_[3].get_pos())
+						rendering_engine->project_to_device_independent(vertices_[0].get_pos() * M),
+						rendering_engine->project_to_device_independent(vertices_[1].get_pos() * M),
+						rendering_engine->project_to_device_independent(vertices_[2].get_pos() * M),
+						rendering_engine->project_to_device_independent(vertices_[3].get_pos() * M)
 					};
 
 					Vec2 lower_left = corners[0], upper_right = corners[0];
@@ -104,25 +122,27 @@ namespace {
 				glVertexAttribPointer(pos_idx_, 3, GL_FLOAT, GL_FALSE,
 					sizeof(Vertex), vertices_.front().pos);
 
-				glVertexAttribPointer(color_idx_, 4, GL_FLOAT, GL_FALSE,
-					sizeof(Vertex), vertices_.front().color);
+				glVertexAttribPointer(tex_idx_, 2, GL_FLOAT, GL_FALSE,
+					sizeof(Vertex), vertices_.front().tex);
 
 				glEnableVertexAttribArray(pos_idx_);
-				glEnableVertexAttribArray(color_idx_);
+				glEnableVertexAttribArray(tex_idx_);
 
 				glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 				glDisableVertexAttribArray(pos_idx_);
-				glDisableVertexAttribArray(color_idx_);
+				glDisableVertexAttribArray(tex_idx_);
 			}
 
 		private:
 			std::vector<Vertex> vertices_;
-			GLuint pos_idx_, color_idx_;
-			Ticker ticker_;
-			double time_;
+			GLuint pos_idx_, tex_idx_;
+			Vec3 position_;
 
 			CircleTouchable * touchable_;
+
+			Ticker ticker_;
+			double phase_;
 	};
 
 	struct CircleData {
@@ -165,8 +185,10 @@ namespace {
 		return data;
 	}
 
-	void CircleTouchable::handle_touch_start(Vec2 const & start) {
-		std::cout << "circle touch start " << start << std::endl;
+	void CircleTouchable::handle_move_move(Vec2 const & pos, Vec2 const & delta) {
+		Vec3 pos3 = renderable_->get_position();
+		pos3 = Vec3(-pos.x(), -pos.y(), 1.0f) * pos3.z();
+        renderable_->set_position(pos3);
 	}
 }
 

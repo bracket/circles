@@ -9,7 +9,7 @@ namespace {
 
 	inline Vec2 transform_vec(Matrix<3, 3, float> const & T, CGPoint const & p) {
 		Vec3 t = Vec3(p.x, p.y, 0.0f) * T;
-		return Vec2(t.x() / t.z(), t.y() / t.z());
+		return Vec2(t.x(), t.y());
 	}
 }
 

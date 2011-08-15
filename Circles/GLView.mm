@@ -14,9 +14,9 @@
 namespace {
 	Matrix<3, 3, float> make_touch_transform(float view_width, float view_height) {
 		float m[] = {
-			1, 0,           0,
-			0, -1,          0,
-			0, view_height, 1
+			2 / view_height,         0,                  0,  
+			0,                       -2 / view_height,   0,  
+			-view_width/view_height, 1,                  1
 		};
 
 		return Matrix<3,3,float>(m);

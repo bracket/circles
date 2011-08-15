@@ -86,7 +86,6 @@
 		4EFBA8C813D91C22007A0C38 /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		4EFBA90A13DA5A9B007A0C38 /* test.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.fsh; path = shaders/test.fsh; sourceTree = "<group>"; };
 		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
-		B139362513DFBD6C00463DC8 /* Circle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Circle.hpp; sourceTree = "<group>"; };
 		B139363013E4BDF300463DC8 /* MatrixOps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MatrixOps.hpp; sourceTree = "<group>"; };
 		B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationEngine.cpp; path = app_engine/ApplicationEngine.cpp; sourceTree = "<group>"; };
 		B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationEngine.hpp; path = app_engine/ApplicationEngine.hpp; sourceTree = "<group>"; };
@@ -250,7 +249,6 @@
 		4EFBA8C013D91C22007A0C38 /* renderer */ = {
 			isa = PBXGroup;
 			children = (
-				B139362513DFBD6C00463DC8 /* Circle.hpp */,
 				4EFBA90F13DB6850007A0C38 /* shaders */,
 				4EFBA8C213D91C22007A0C38 /* Program.cpp */,
 				4EFBA8C313D91C22007A0C38 /* Program.hpp */,

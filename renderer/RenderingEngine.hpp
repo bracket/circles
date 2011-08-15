@@ -57,6 +57,27 @@ class RenderingEngine {
 				* Vec2(view_width_, view_height_);
 		}
 
+		Vec2 project_to_device_independent(Vec4 v) const {
+			float height = std::tan(field_of_view_ / 2);
+
+			v = v * camera_matrix_;
+			Vec2 out = Vec2(v.x(), v.y()) / (-v.z() * v.w() * height);
+            
+			return out;
+		}
+
+		float get_near_clip() const {
+			return near_clip_;
+		}
+
+		float get_far_clip() const {
+			return far_clip_;
+		}
+
+		float get_field_of_view() const {
+			return field_of_view_;
+		}
+
 	private:
 		RenderingEngine(float view_width, float view_height) :
 			view_width_(view_width),
@@ -67,6 +88,8 @@ class RenderingEngine {
 
 		RenderMap render_map_;
 		float view_width_, view_height_;
+		float near_clip_, far_clip_;
+		float field_of_view_;
 
 		Matrix<4, 4, float> projection_matrix_, camera_matrix_, camera_projection_matrix_;
 };
