@@ -5,6 +5,7 @@
 #include <memory>
 #include <renderer/RenderingEngine.hpp>
 #include <input/TouchHandler.hpp>
+#include <app_engine/CommandQueue.hpp>
 
 class ApplicationEngine {
 	public:
@@ -25,6 +26,11 @@ class ApplicationEngine {
 			delete rendering_engine;
 		}
 
+		void set_command_queue(CommandQueue * command_queue) {
+			std::swap(command_queue_, command_queue);
+			delete command_queue;
+		}
+
 		TouchHandler * get_touch_handler() const {
 			return touch_handler_;
 		}
@@ -38,12 +44,13 @@ class ApplicationEngine {
 
 	private:
 		ApplicationEngine() :
-			rendering_engine_(0), current_zoom_level_(1)
+			rendering_engine_(0), command_queue_(0), current_zoom_level_(1)
 		{ };
 
 		bool init();
 
 		RenderingEngine * rendering_engine_;
+		CommandQueue * command_queue_;
 		TouchHandler * touch_handler_;
 
 		float current_zoom_level_;

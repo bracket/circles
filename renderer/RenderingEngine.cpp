@@ -1,4 +1,4 @@
-#include <cmath>
+ #include <cmath>
 #include <OpenGLES/ES2/gl.h>
 #include <math/MatrixOps.hpp>
 #include <renderer/RenderingEngine.hpp>

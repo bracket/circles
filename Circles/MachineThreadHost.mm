@@ -149,10 +149,20 @@ namespace {
 
 @implementation MachineThreadHost
 
+-(id)init {
+	self = [ super init ];
+	if (!self) { return self; }
+
+	machine_thread_ = 0;
+
+	return self;
+}
+
 -(void) threadMain {
 	bool done = false;
 
 	machine_thread_ = MachineThread::construct();
+	std::cout << machine_thread_ << "\n";
 	if (!machine_thread_) { return; }
 
 	CFRunLoopTimerContext context;
@@ -184,6 +194,10 @@ namespace {
 
 		[pool drain];
 	}
+}
+
+- (MachineThread *)getMachineThread {
+	return machine_thread_;
 }
 
 - (void)dealloc {

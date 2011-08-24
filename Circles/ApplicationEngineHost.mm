@@ -21,6 +21,10 @@
 	app_engine_->set_rendering_engine(rendering_engine);
 }
 
+- (void)setCommandQueue:(CommandQueue *)command_queue {
+	app_engine_->set_command_queue(command_queue);
+}
+
 - (void)dealloc {
 	delete app_engine_;
 

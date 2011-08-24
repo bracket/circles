@@ -10,6 +10,7 @@
 class MachineThread : boost::noncopyable {
 	public:
 		typedef AsynchronousQueue<BlockType*> BlockQueue;
+		typedef AsynchronousQueue<MachineCommand*> AsyncCommandQueue;
 
 		static MachineThread * construct() {
 			std::auto_ptr<MachineThread> ptr(new MachineThread());
@@ -20,6 +21,7 @@ class MachineThread : boost::noncopyable {
 		bool loop();
 
 		BlockQueue * get_block_queue() { return &block_queue_; }
+		AsyncCommandQueue * get_command_queue() { return &command_queue_; }
 
 	private:
 		MachineThread() : sample_time_(0), last_rendered_(0) { }
@@ -27,6 +29,7 @@ class MachineThread : boost::noncopyable {
 		bool init();
 		
 		BlockQueue block_queue_;
+		AsyncCommandQueue command_queue_;
 		boost::scoped_ptr<MachineGraph> graph_;
 
 		Ticker ticker_;

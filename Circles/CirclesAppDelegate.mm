@@ -3,6 +3,7 @@
 #import <UIKit/UIKit.h>
 #import "MachineThreadHost.h"
 #import <QuartzCore/CADisplayLink.h>
+#import "Circles/LocalCommandQueue.hpp"
 
 namespace {
 	GLView * construct_view() {
@@ -29,23 +30,15 @@ namespace {
 	RenderingEngine * rendering_engine = RenderingEngine::construct(
 		CGRectGetWidth(view_.frame), CGRectGetHeight(view_.frame)
 	);
+
 	[ app_engine_host_ setRenderingEngine:rendering_engine];
 
 	[ view_ allocateFramebufferStorage ];
 
 	[ view_ setApplicationEngine:[ app_engine_host_ getApplicationEngine ]];
 
-    MachineThreadHost * machine_thread_host = [[ MachineThreadHost alloc ] init ];
-
-    NSThread * machine_thread = [
-		[ NSThread alloc ]
-			initWithTarget:machine_thread_host
-			selector:@selector(threadMain) object:nil
-	];
-
-	[machine_thread_host release];
-    
-    [ machine_thread start ];
+	CommandQueue * command_queue = LocalCommandQueue::construct();
+	[ app_engine_host_ setCommandQueue:command_queue ];
 
     CADisplayLink * display_link = [
 		CADisplayLink displayLinkWithTarget:view_ 

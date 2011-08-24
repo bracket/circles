@@ -35,7 +35,8 @@ namespace {
 	// associated Touchable and vice versa.
 	class CircleTouchable : public Touchable {
 		public:
-			void handle_move_move(Vec2 const & pos, Vec2 const & delta);
+			void handle_move_move(Vec2 const & pos);
+			void handle_single_tap(Vec2 const & pos);
 
             void set_renderable(CircleRenderable * renderable) 
 				{ renderable_ = renderable; }
@@ -185,10 +186,14 @@ namespace {
 		return data;
 	}
 
-	void CircleTouchable::handle_move_move(Vec2 const & pos, Vec2 const & delta) {
+	void CircleTouchable::handle_move_move(Vec2 const & pos) {
 		Vec3 pos3 = renderable_->get_position();
 		pos3 = Vec3(-pos.x(), -pos.y(), 1.0f) * pos3.z();
         renderable_->set_position(pos3);
+	}
+
+	void CircleTouchable::handle_single_tap(Vec2 const & pos) {
+		
 	}
 }
 
@@ -199,6 +204,7 @@ bool ApplicationEngine::init() {
 
 ApplicationEngine::~ApplicationEngine() {
 	delete rendering_engine_;
+	delete command_queue_;
 	delete touch_handler_;
 }
 

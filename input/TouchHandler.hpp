@@ -34,8 +34,9 @@ class TouchHandler {
 		}
 
 		void handle_move_start(Vec2 const & start);
-		void handle_move_move(Vec2 const & loc, Vec2 const & );
+		void handle_move_move(Vec2 const & loc);
 		void handle_move_end(Vec2 const & end);
+		void handle_single_tap(Vec2 const & loc);
 
 	private:
 		ApplicationEngine * app_engine_;

@@ -7,5 +7,6 @@ class MachineThread;
 }
 
 - (void) threadMain;
+- (MachineThread *)getMachineThread;
 
 @end

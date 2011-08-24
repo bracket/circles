@@ -40,10 +40,8 @@ namespace {
 	}
 	else if (state == UIGestureRecognizerStateChanged) {
 		CGPoint loc = [ gestureRecognizer locationInView:nil ];
-		CGPoint delta = [ gestureRecognizer translationInView:nil ];
 		touch_handler_->handle_move_move(
-			transform_pt(touch_transform_, loc),
-			transform_vec(touch_transform_, delta)
+			transform_pt(touch_transform_, loc)
 		);
 	}
 	else if (state == UIGestureRecognizerStateEnded) {
@@ -56,6 +54,10 @@ namespace {
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer {
+	if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+		CGPoint loc = [ gestureRecognizer locationInView:nil ];
+		touch_handler_->handle_single_tap(transform_pt(touch_transform_, loc));
+	}
 }
 
 @end
