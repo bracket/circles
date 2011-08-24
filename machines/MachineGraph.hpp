@@ -3,6 +3,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/unordered_map.hpp>
 #include <machines/Block.hpp>
+#include <machines/commands/MachineCommand.hpp>
 #include <machines/Machine.hpp>
 #include <machines/MachineFactory.hpp>
 #include <string>
@@ -10,7 +11,12 @@
 #include <vector>
 
 class MachineGraph {
+	friend struct MachineGraphAccess;
+
 	typedef boost::unordered_map<int, Machine*> MachineContainer;
+	typedef CommandDispatchMap<Machine> MachineDispatchMap;
+	typedef CommandDispatchMap<MachineGraph> GraphDispatchMap;
+	typedef boost::unordered_map<int, MachineDispatchMap*> DispatchContainer;
 
 	public:
 		~MachineGraph() {
@@ -37,6 +43,20 @@ class MachineGraph {
 		}
 
 		void free_block(BlockType * block) { free_blocks_.push_back(block); }
+
+		void dispatch_command(int target_id, MachineCommand * command) {
+			if (!target_id) {
+				graph_dispatch_.dispatch(this, command);
+			}
+			else {
+				MachineContainer::iterator mit = machines_.find(target_id);
+				if (mit == machines_.end()) { return; }
+
+				DispatchContainer::iterator it = dispatchers_.find(target_id);
+				if (it == dispatchers_.end()) { return; }
+				it->second->dispatch(mit->second, command);
+			}
+		}
 
 		int add_machine(std::string const & machine_type) {
 			std::auto_ptr<Machine> ptr(get_machine_factory().construct(machine_type, this));
@@ -91,6 +111,8 @@ class MachineGraph {
 		}
 
 		MachineContainer machines_;
+		DispatchContainer dispatchers_;
+		GraphDispatchMap graph_dispatch_;
 
 		std::vector<BlockType*> free_blocks_;
 		Machine * output_;
