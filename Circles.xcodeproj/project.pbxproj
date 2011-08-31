@@ -31,6 +31,7 @@
 		4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C713D91C22007A0C38 /* Shader.cpp */; };
 		4EFBA91013DB761F007A0C38 /* test.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90A13DA5A9B007A0C38 /* test.fsh */; };
 		4EFBA91113DB761F007A0C38 /* test.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
+		B16DC556140DF8A500A9C20A /* MachineCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B16DC555140DF8A500A9C20A /* MachineCommand.cpp */; };
 		B179B63413E5C8C4003FB275 /* ApplicationEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */; };
 		B179B63913E5D08D003FB275 /* ApplicationEngineHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */; };
 		B1BA7778140DD764003F427A /* MachineGraphCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1BA7774140DD764003F427A /* MachineGraphCommands.cpp */; };
@@ -89,6 +90,7 @@
 		4EFBA90A13DA5A9B007A0C38 /* test.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.fsh; path = shaders/test.fsh; sourceTree = "<group>"; };
 		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
 		B139363013E4BDF300463DC8 /* MatrixOps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MatrixOps.hpp; sourceTree = "<group>"; };
+		B16DC555140DF8A500A9C20A /* MachineCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineCommand.cpp; sourceTree = "<group>"; };
 		B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationEngine.cpp; path = app_engine/ApplicationEngine.cpp; sourceTree = "<group>"; };
 		B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationEngine.hpp; path = app_engine/ApplicationEngine.hpp; sourceTree = "<group>"; };
 		B179B63713E5D08D003FB275 /* ApplicationEngineHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngineHost.h; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 		B1BA7770140DD764003F427A /* commands */ = {
 			isa = PBXGroup;
 			children = (
+				B16DC555140DF8A500A9C20A /* MachineCommand.cpp */,
 				B1BA7773140DD764003F427A /* MachineCommand.hpp */,
 				B1BA7774140DD764003F427A /* MachineGraphCommands.cpp */,
 				B1BA7775140DD764003F427A /* MachineGraphCommands.hpp */,
@@ -380,6 +383,7 @@
 				4E175AF813ED02DD0087D35F /* TouchHandler.cpp in Sources */,
 				B1C797531404BBE60094A1D2 /* LocalCommandQueue.mm in Sources */,
 				B1BA7778140DD764003F427A /* MachineGraphCommands.cpp in Sources */,
+				B16DC556140DF8A500A9C20A /* MachineCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

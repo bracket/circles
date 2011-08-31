@@ -14,6 +14,8 @@ class LocalCommandQueue : public CommandQueue {
 
 		void push(MachineCommand * command) { async_queue_->push(command); }
 
+	void process_responses() { }
+
 	private:
 		LocalCommandQueue() { }
 
