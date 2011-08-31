@@ -1,5 +1,5 @@
 #import "ApplicationEngineHost.h"
-#include <app_engine/ApplicationEngine.hpp>
+#import <app_engine/ApplicationEngine.hpp>
 
 @implementation ApplicationEngineHost
 
@@ -13,10 +13,6 @@
 	return self;
 }
 
-- (ApplicationEngine *)getApplicationEngine {
-	return app_engine_;
-}
-
 - (void)setRenderingEngine:(RenderingEngine *)rendering_engine {
 	app_engine_->set_rendering_engine(rendering_engine);
 }
@@ -26,8 +22,6 @@
 }
 
 - (void)dealloc {
-	delete app_engine_;
-
 	[super dealloc];
 }
 

@@ -44,7 +44,9 @@ class MachineGraph {
 
 		void free_block(BlockType * block) { free_blocks_.push_back(block); }
 
-		void dispatch_command(int target_id, MachineCommand * command) {
+		void dispatch_command(MachineCommand * command) {
+			int target_id = command->get_target_id();
+
 			if (!target_id) {
 				graph_dispatch_.dispatch(this, command);
 			}

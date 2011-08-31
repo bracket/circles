@@ -22,13 +22,17 @@ class MachineCommand : boost::noncopyable {
 	public:
 		virtual ~MachineCommand() { }
 
+		void set_target_id(int target_id) { target_id_ = target_id; }
+		int get_target_id() const { return target_id_; }
+
         CommandID get_command_id() const { return command_id_; }
 
 	protected:
 		explicit MachineCommand(CommandID command_id)
-			: command_id_(command_id) { }
+			: target_id_(0), command_id_(command_id) { }
 
 	private:
+		int target_id_;
 		CommandID command_id_;
 };
 

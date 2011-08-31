@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <boost/shared_ptr.hpp>
 #include <math/Vec.hpp>
 #include <memory>
 #include <renderer/RenderingEngine.hpp>
@@ -9,10 +10,15 @@
 
 class ApplicationEngine {
 	public:
+		static ApplicationEngine * get() { return app_engine_.get(); }
+
 		static ApplicationEngine * construct() {
+			if (app_engine_) { return app_engine_.get(); }
+
 			std::auto_ptr<ApplicationEngine> ptr(new ApplicationEngine());
 			if (!ptr->init()) { return 0; }
-			return ptr.release();
+			app_engine_ = ptr;
+			return app_engine_.get();
 		}
 
 		~ApplicationEngine();
@@ -42,7 +48,11 @@ class ApplicationEngine {
 
 		void render_frame();
 
+		void push_command(MachineCommand * command) { command_queue_->push(command); }
+
 	private:
+		static boost::shared_ptr<ApplicationEngine> app_engine_;
+
 		ApplicationEngine() :
 			rendering_engine_(0), command_queue_(0), current_zoom_level_(1)
 		{ };

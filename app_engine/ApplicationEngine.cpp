@@ -15,6 +15,10 @@
 
 #include <shared/Ticker.hpp>
 
+#include <machines/commands/MachineGraphCommands.hpp>
+
+boost::shared_ptr<ApplicationEngine> ApplicationEngine::app_engine_;
+
 // NOTE: This namespace contains some test Renderables and Touchables.  It
 // should go away at some point.
 namespace {
@@ -193,7 +197,8 @@ namespace {
 	}
 
 	void CircleTouchable::handle_single_tap(Vec2 const & pos) {
-		
+		ApplicationEngine * app_engine = ApplicationEngine::get();
+		app_engine->push_command(new CreateMachineCommand("SineMachine"));
 	}
 }
 

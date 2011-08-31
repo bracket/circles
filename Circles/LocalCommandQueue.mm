@@ -17,9 +17,6 @@ bool LocalCommandQueue::init() {
 
 	MachineThread * machine_thread = 0;
 	while (!machine_thread) {
-	// FIXME:
-	// does this guarantee that machine_thread is correctly initialized to the right thing?
-	// NO! we probably need a memory barrier in MachineThreadHost threadMain.
 		machine_thread = [ machine_thread_host getMachineThread ];
 	}
 

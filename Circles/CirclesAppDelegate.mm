@@ -1,9 +1,10 @@
+#import "app_engine/ApplicationEngine.hpp"
+#import "Circles/LocalCommandQueue.hpp"
 #import "CirclesAppDelegate.h"
 #import "GLView.h"
-#import <UIKit/UIKit.h>
 #import "MachineThreadHost.h"
 #import <QuartzCore/CADisplayLink.h>
-#import "Circles/LocalCommandQueue.hpp"
+#import <UIKit/UIKit.h>
 
 namespace {
 	GLView * construct_view() {
@@ -35,7 +36,7 @@ namespace {
 
 	[ view_ allocateFramebufferStorage ];
 
-	[ view_ setApplicationEngine:[ app_engine_host_ getApplicationEngine ]];
+	[ view_ setApplicationEngine:ApplicationEngine::get() ];
 
 	CommandQueue * command_queue = LocalCommandQueue::construct();
 	[ app_engine_host_ setCommandQueue:command_queue ];

@@ -2,6 +2,7 @@
 #import <AudioUnit/AudioUnit.h>
 #import <CoreFoundation/CFRunLoop.h> 
 #import <MachineThreadHost.h>
+#include <arch/concurrency.hpp>
 #include <cmath>
 #include <cstring>
 #include <iostream>
@@ -161,9 +162,10 @@ namespace {
 -(void) threadMain {
 	bool done = false;
 
-	machine_thread_ = MachineThread::construct();
-	std::cout << machine_thread_ << "\n";
-	if (!machine_thread_) { return; }
+	MachineThread * machine_thread = MachineThread::construct();
+	if (!machine_thread) { return; }
+
+	while (!cmp_exchange_barrier(static_cast<MachineThread*>(0), machine_thread, &machine_thread_)) { ; }
 
 	CFRunLoopTimerContext context;
 	std::memset(&context, 0, sizeof(context));

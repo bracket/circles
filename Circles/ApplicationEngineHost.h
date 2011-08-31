@@ -12,7 +12,6 @@ class MachineThread;
 }
 
 - (void)setRenderingEngine:(RenderingEngine *)rendering_engine;
-- (ApplicationEngine *)getApplicationEngine;
 - (void)setCommandQueue:(CommandQueue *)command_queue;
 
 @end

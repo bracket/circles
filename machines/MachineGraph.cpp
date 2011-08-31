@@ -6,17 +6,6 @@
 
 #include <iostream>
 
-const unsigned int create_machine_command_id = 1;
-
-struct CreateMachineCommand : MachineCommand {
-	CreateMachineCommand(std::string const & mt) :
-		MachineCommand(make_command_id(machine_graph_namespace, create_machine_command_id)),
-		machine_type(mt)
-	{ }
-
-	std::string machine_type;
-};
-
 struct MachineGraphAccess {
 	static void handle_command(MachineGraph * graph, CreateMachineCommand * command) {
 		int id = graph->add_machine(command->machine_type);
@@ -41,10 +30,8 @@ bool MachineGraph::init() {
 
 	graph_dispatch_.register_dispatch(
 		make_command_id(machine_graph_namespace, create_machine_command_id), 
-		machine_graph_dispatcher<CreateMachineCommand>
+		&machine_graph_dispatcher<CreateMachineCommand>
 	);
-
-	this->dispatch_command(0, new CreateMachineCommand("SineMachine"));
 
 	return true;
 }
