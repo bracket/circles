@@ -21,6 +21,11 @@
 	app_engine_->set_command_queue(command_queue);
 }
 
+- (void)processingLoopStep:(NSTimer*)timer {
+  	app_engine_->processing_loop_step();
+}
+
+
 - (void)dealloc {
 	[super dealloc];
 }

@@ -20,7 +20,7 @@ inline CommandID make_command_id(unsigned short space, unsigned short name) {
 
 struct CommandResponse {
 	virtual std::string response_string() { return "Success"; }
-	virtual int response_code() { return 0; }
+	virtual int response_type() { return 0; }
 };
 
 extern CommandResponse * const success_response;
@@ -40,17 +40,20 @@ class MachineCommand : boost::noncopyable {
 
 		bool dispatch_callback() {
 			if (!callback_) { return true; }
-
 			if (!response_) { return false; }
-
 			(*callback_)(this, response_);
 
 			return true;
 		}
 
+		void set_response(CommandResponse * response) { response_ = response; }
+		CommandResponse * get_response() const { return response_; }
+
 	protected:
-		explicit MachineCommand(CommandID command_id)
-			: target_id_(0), command_id_(command_id) { }
+		explicit MachineCommand(CommandID command_id) :
+			target_id_(0), command_id_(command_id),
+			response_(0), callback_(0)
+		{ }
 
 	private:
 		int target_id_;

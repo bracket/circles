@@ -41,6 +41,16 @@ namespace {
 	CommandQueue * command_queue = LocalCommandQueue::construct();
 	[ app_engine_host_ setCommandQueue:command_queue ];
 
+	NSTimer * processing_timer = [ NSTimer
+		scheduledTimerWithTimeInterval:1.0e-3
+		target:app_engine_host_
+		selector:@selector(processingLoopStep:)
+		userInfo:nil
+		repeats:YES
+	];
+
+	[ [ NSRunLoop currentRunLoop ] addTimer:processing_timer forMode:NSDefaultRunLoopMode];
+
     CADisplayLink * display_link = [
 		CADisplayLink displayLinkWithTarget:view_ 
 			selector:@selector(drawView:) 

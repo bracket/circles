@@ -8,8 +8,10 @@
 
 struct MachineGraphAccess {
 	static void handle_command(MachineGraph * graph, CreateMachineCommand * command) {
-		int id = graph->add_machine(command->machine_type);
-		std::cout << "the id is: " << id << "\n";
+		std::cout << "handle_command command = " << command
+			<< " response = " << command->get_response() << std::endl;
+
+		command->set_response(success_response);
 	}
 };
 

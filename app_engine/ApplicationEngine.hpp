@@ -50,6 +50,8 @@ class ApplicationEngine {
 
 		void push_command(MachineCommand * command) { command_queue_->push(command); }
 
+		void processing_loop_step();
+
 	private:
 		static boost::shared_ptr<ApplicationEngine> app_engine_;
 

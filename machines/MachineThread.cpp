@@ -12,10 +12,7 @@ bool MachineThread::loop() {
 
 	boost::optional<MachineCommand *> out;
 
-	while (command_queue_.shift(out)) {
-		graph_->dispatch_command(*out);
-	}
-
+	while (command_queue_.shift(out)) { graph_->dispatch_command(*out); } 
 	sample_time_ += ticker_.tick();
 
 	int target_time = sample_time_ + graph_->get_sample_rate() / 200;

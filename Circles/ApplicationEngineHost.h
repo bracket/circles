@@ -14,4 +14,6 @@ class MachineThread;
 - (void)setRenderingEngine:(RenderingEngine *)rendering_engine;
 - (void)setCommandQueue:(CommandQueue *)command_queue;
 
+- (void)processingLoopStep:(NSTimer*)timer;
+
 @end

@@ -24,3 +24,15 @@ bool LocalCommandQueue::init() {
 
 	return true;
 }
+
+void LocalCommandQueue::ResponseQueue::process() {
+	typedef ContainerType::iterator iterator;
+
+	for (iterator it = ping_.begin(); it != ping_.end(); ++it) {
+		if ((*it)->dispatch_callback()) { delete *it; continue; }
+		pong_.push_back(*it);
+	}
+
+	ping_.swap(pong_);
+	pong_.clear();
+}

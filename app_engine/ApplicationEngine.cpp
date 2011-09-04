@@ -196,9 +196,17 @@ namespace {
         renderable_->set_position(pos3);
 	}
 
+	void circle_tap_callback(MachineCommand * command, CommandResponse * response) {
+		std::cout << "tappa tappa tappa command:" << command << " response: " << response << std::endl;
+	}
+
 	void CircleTouchable::handle_single_tap(Vec2 const & pos) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
-		app_engine->push_command(new CreateMachineCommand("SineMachine"));
+
+		CreateMachineCommand * command = new CreateMachineCommand("SineMachine");
+		command->set_callback(circle_tap_callback);
+
+		app_engine->push_command(command);
 	}
 }
 
@@ -218,4 +226,8 @@ void ApplicationEngine::render_frame() {
 	rendering_engine_->submit(data.renderable);
 
 	rendering_engine_->render();
+}
+
+void ApplicationEngine::processing_loop_step() {
+	if (command_queue_) { command_queue_->process_responses(); }
 }
