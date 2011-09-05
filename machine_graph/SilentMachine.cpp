@@ -1,6 +1,6 @@
-#include <machines/SoundMachine.hpp>
-#include <machines/MachineFactory.hpp>
-#include <machines/MachineGraph.hpp>
+#include <machine_graph/SoundMachine.hpp>
+#include <machine_graph/MachineFactory.hpp>
+#include <machine_graph/MachineGraph.hpp>
 
 class SilentMachine : public SoundMachine {
 	public:

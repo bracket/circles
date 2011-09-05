@@ -1,5 +1,5 @@
-#include <machines/MachineThread.hpp>
-#include <machines/MachineGraph.hpp>
+#include <machine_graph/MachineThread.hpp>
+#include <machine_graph/MachineGraph.hpp>
 
 bool MachineThread::init() {
 	graph_.reset(MachineGraph::construct());

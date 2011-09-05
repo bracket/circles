@@ -1,5 +1,5 @@
 #include <app_engine/CommandQueue.hpp>
-#include <machines/MachineThread.hpp>
+#include <machine_graph/MachineThread.hpp>
 #include <Circles/MachineThreadHost.h>
 #include <memory>
 #include <vector>

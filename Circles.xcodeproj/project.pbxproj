@@ -8,11 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E175AF813ED02DD0087D35F /* TouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E175AF513ED02DD0087D35F /* TouchHandler.cpp */; };
-		4E36BB2E13C2AE1800D18CA9 /* MachineThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */; };
 		4E36BB3113C2D16200D18CA9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */; };
-		4E4530C413C94FB100333B9C /* SineMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */; };
-		4E4530C813CAD30E00333B9C /* MachineGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E4530C613CAD30E00333B9C /* MachineGraph.cpp */; };
-		4E5BFFFD13C6D3A00036D68B /* OutputMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E5BFFFC13C6D3A00036D68B /* OutputMachine.cpp */; };
 		4ECFA0AB13C281D4004388CE /* MachineThreadHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFA0AA13C281D4004388CE /* MachineThreadHost.mm */; };
 		4ECFA0AD13C282F5004388CE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ECFA0AC13C282F5004388CE /* CoreFoundation.framework */; };
 		4ED275C913C1014F00DB7510 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED275C813C1014F00DB7510 /* UIKit.framework */; };
@@ -30,12 +26,17 @@
 		4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C713D91C22007A0C38 /* Shader.cpp */; };
 		4EFBA91013DB761F007A0C38 /* test.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90A13DA5A9B007A0C38 /* test.fsh */; };
 		4EFBA91113DB761F007A0C38 /* test.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 4EFBA90B13DA5A9B007A0C38 /* test.vsh */; };
-		B16DC556140DF8A500A9C20A /* MachineCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B16DC555140DF8A500A9C20A /* MachineCommand.cpp */; };
+		B13827A2141452BD006E6F59 /* MachineCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1382794141452BD006E6F59 /* MachineCommand.cpp */; };
+		B13827A3141452BD006E6F59 /* MachineGraphCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1382796141452BD006E6F59 /* MachineGraphCommands.cpp */; };
+		B13827A4141452BD006E6F59 /* MachineGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1382799141452BD006E6F59 /* MachineGraph.cpp */; };
+		B13827A5141452BD006E6F59 /* MachineThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B138279B141452BD006E6F59 /* MachineThread.cpp */; };
+		B13827A6141452BD006E6F59 /* OutputMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B138279D141452BD006E6F59 /* OutputMachine.cpp */; };
+		B13827A7141452BD006E6F59 /* SilentMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B138279E141452BD006E6F59 /* SilentMachine.cpp */; };
+		B13827A8141452BD006E6F59 /* SineMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B138279F141452BD006E6F59 /* SineMachine.cpp */; };
+		B13827A9141452BD006E6F59 /* SoundMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B13827A0141452BD006E6F59 /* SoundMachine.cpp */; };
 		B179B63413E5C8C4003FB275 /* ApplicationEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */; };
 		B179B63913E5D08D003FB275 /* ApplicationEngineHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */; };
-		B1BA7778140DD764003F427A /* MachineGraphCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1BA7774140DD764003F427A /* MachineGraphCommands.cpp */; };
 		B1C797531404BBE60094A1D2 /* LocalCommandQueue.mm in Sources */ = {isa = PBXBuildFile; fileRef = B1C797521404BBE60094A1D2 /* LocalCommandQueue.mm */; };
-		B1E13AC714144D9600D398F5 /* SoundMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1E13AC514144D9600D398F5 /* SoundMachine.cpp */; };
 		B1FE747713E8EAB7001C43C4 /* TouchHandlerHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = B1FE747613E8EAB7001C43C4 /* TouchHandlerHost.mm */; };
 /* End PBXBuildFile section */
 
@@ -44,21 +45,13 @@
 		4E175AF513ED02DD0087D35F /* TouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchHandler.cpp; sourceTree = "<group>"; };
 		4E175AF613ED02DD0087D35F /* TouchHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TouchHandler.hpp; sourceTree = "<group>"; };
 		4E175AFA13ED02F30087D35F /* Rectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rectangle.hpp; sourceTree = "<group>"; };
-		4E36BB2913C2AE1800D18CA9 /* Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
-		4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineThread.cpp; sourceTree = "<group>"; };
-		4E36BB2C13C2AE1800D18CA9 /* MachineThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineThread.hpp; sourceTree = "<group>"; };
-		4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineMachine.cpp; sourceTree = "<group>"; };
 		4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4E387B3113E135B0003DADA2 /* Integer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Integer.hpp; sourceTree = "<group>"; };
 		4E387B3213E135B0003DADA2 /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 		4E387B3313E135B0003DADA2 /* ScalarType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScalarType.hpp; sourceTree = "<group>"; };
 		4E387B3413E135B0003DADA2 /* Vec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vec.hpp; sourceTree = "<group>"; };
-		4E4530C613CAD30E00333B9C /* MachineGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineGraph.cpp; sourceTree = "<group>"; };
-		4E4530C713CAD30E00333B9C /* MachineGraph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineGraph.hpp; sourceTree = "<group>"; };
 		4E5B000013C94A5D0036D68B /* AsynchronousQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AsynchronousQueue.hpp; sourceTree = "<group>"; };
 		4E5B000113C94A5D0036D68B /* Ticker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ticker.hpp; sourceTree = "<group>"; };
-		4E5BFFFC13C6D3A00036D68B /* OutputMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputMachine.cpp; sourceTree = "<group>"; };
-		4E5BFFFE13C8078D0036D68B /* MachineFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineFactory.hpp; sourceTree = "<group>"; };
 		4ECFA0A913C281D4004388CE /* MachineThreadHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MachineThreadHost.h; sourceTree = "<group>"; };
 		4ECFA0AA13C281D4004388CE /* MachineThreadHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MachineThreadHost.mm; sourceTree = "<group>"; };
 		4ECFA0AC13C282F5004388CE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -87,20 +80,29 @@
 		4EFBA8C813D91C22007A0C38 /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		4EFBA90A13DA5A9B007A0C38 /* test.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.fsh; path = shaders/test.fsh; sourceTree = "<group>"; };
 		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
+		B1382792141452BD006E6F59 /* Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
+		B1382794141452BD006E6F59 /* MachineCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineCommand.cpp; sourceTree = "<group>"; };
+		B1382795141452BD006E6F59 /* MachineCommand.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineCommand.hpp; sourceTree = "<group>"; };
+		B1382796141452BD006E6F59 /* MachineGraphCommands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineGraphCommands.cpp; sourceTree = "<group>"; };
+		B1382797141452BD006E6F59 /* MachineGraphCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineGraphCommands.hpp; sourceTree = "<group>"; };
+		B1382798141452BD006E6F59 /* MachineFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineFactory.hpp; sourceTree = "<group>"; };
+		B1382799141452BD006E6F59 /* MachineGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineGraph.cpp; sourceTree = "<group>"; };
+		B138279A141452BD006E6F59 /* MachineGraph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineGraph.hpp; sourceTree = "<group>"; };
+		B138279B141452BD006E6F59 /* MachineThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineThread.cpp; sourceTree = "<group>"; };
+		B138279C141452BD006E6F59 /* MachineThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineThread.hpp; sourceTree = "<group>"; };
+		B138279D141452BD006E6F59 /* OutputMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputMachine.cpp; sourceTree = "<group>"; };
+		B138279E141452BD006E6F59 /* SilentMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SilentMachine.cpp; sourceTree = "<group>"; };
+		B138279F141452BD006E6F59 /* SineMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineMachine.cpp; sourceTree = "<group>"; };
+		B13827A0141452BD006E6F59 /* SoundMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundMachine.cpp; sourceTree = "<group>"; };
+		B13827A1141452BD006E6F59 /* SoundMachine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundMachine.hpp; sourceTree = "<group>"; };
 		B139363013E4BDF300463DC8 /* MatrixOps.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MatrixOps.hpp; sourceTree = "<group>"; };
-		B16DC555140DF8A500A9C20A /* MachineCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineCommand.cpp; sourceTree = "<group>"; };
 		B179B63213E5C8C4003FB275 /* ApplicationEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationEngine.cpp; path = app_engine/ApplicationEngine.cpp; sourceTree = "<group>"; };
 		B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationEngine.hpp; path = app_engine/ApplicationEngine.hpp; sourceTree = "<group>"; };
 		B179B63713E5D08D003FB275 /* ApplicationEngineHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngineHost.h; sourceTree = "<group>"; };
 		B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationEngineHost.mm; sourceTree = "<group>"; };
-		B1BA7773140DD764003F427A /* MachineCommand.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineCommand.hpp; sourceTree = "<group>"; };
-		B1BA7774140DD764003F427A /* MachineGraphCommands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineGraphCommands.cpp; sourceTree = "<group>"; };
-		B1BA7775140DD764003F427A /* MachineGraphCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineGraphCommands.hpp; sourceTree = "<group>"; };
 		B1C797511404BBE60094A1D2 /* LocalCommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LocalCommandQueue.hpp; sourceTree = "<group>"; };
 		B1C797521404BBE60094A1D2 /* LocalCommandQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocalCommandQueue.mm; sourceTree = "<group>"; };
 		B1C797551404BC010094A1D2 /* CommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandQueue.hpp; path = app_engine/CommandQueue.hpp; sourceTree = "<group>"; };
-		B1E13AC514144D9600D398F5 /* SoundMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundMachine.cpp; sourceTree = "<group>"; };
-		B1E13AC614144D9600D398F5 /* SoundMachine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundMachine.hpp; sourceTree = "<group>"; };
 		B1FE747513E8EAB7001C43C4 /* TouchHandlerHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchHandlerHost.h; sourceTree = "<group>"; };
 		B1FE747613E8EAB7001C43C4 /* TouchHandlerHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TouchHandlerHost.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,24 +135,6 @@
 			path = input;
 			sourceTree = "<group>";
 		};
-		4E36BB2813C2AE1800D18CA9 /* machines */ = {
-			isa = PBXGroup;
-			children = (
-				B1E13AC514144D9600D398F5 /* SoundMachine.cpp */,
-				B1E13AC614144D9600D398F5 /* SoundMachine.hpp */,
-				B1BA7770140DD764003F427A /* commands */,
-				4E4530C613CAD30E00333B9C /* MachineGraph.cpp */,
-				4E4530C713CAD30E00333B9C /* MachineGraph.hpp */,
-				4E5BFFFE13C8078D0036D68B /* MachineFactory.hpp */,
-				4E5BFFFC13C6D3A00036D68B /* OutputMachine.cpp */,
-				4E36BB2913C2AE1800D18CA9 /* Block.hpp */,
-				4E36BB2B13C2AE1800D18CA9 /* MachineThread.cpp */,
-				4E36BB2D13C2AE1800D18CA9 /* SineMachine.cpp */,
-				4E36BB2C13C2AE1800D18CA9 /* MachineThread.hpp */,
-			);
-			path = machines;
-			sourceTree = "<group>";
-		};
 		4E387B2F13E135B0003DADA2 /* math */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,13 +160,13 @@
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
+				B1382791141452BD006E6F59 /* machine_graph */,
 				4E175AF213ED02DD0087D35F /* input */,
 				B179B63613E5C8CA003FB275 /* app_engine */,
 				4E387B2F13E135B0003DADA2 /* math */,
 				4EEEB86513DFADE50041AD59 /* arch */,
 				4EFBA8C013D91C22007A0C38 /* renderer */,
 				4E5BFFFF13C94A5D0036D68B /* shared */,
-				4E36BB2813C2AE1800D18CA9 /* machines */,
 				4ED275CE13C1014F00DB7510 /* Circles */,
 				4ED275C713C1014F00DB7510 /* Frameworks */,
 				4ED275C513C1014F00DB7510 /* Products */,
@@ -283,6 +267,36 @@
 			name = shaders;
 			sourceTree = "<group>";
 		};
+		B1382791141452BD006E6F59 /* machine_graph */ = {
+			isa = PBXGroup;
+			children = (
+				B1382792141452BD006E6F59 /* Block.hpp */,
+				B1382793141452BD006E6F59 /* commands */,
+				B1382798141452BD006E6F59 /* MachineFactory.hpp */,
+				B1382799141452BD006E6F59 /* MachineGraph.cpp */,
+				B138279A141452BD006E6F59 /* MachineGraph.hpp */,
+				B138279B141452BD006E6F59 /* MachineThread.cpp */,
+				B138279C141452BD006E6F59 /* MachineThread.hpp */,
+				B138279D141452BD006E6F59 /* OutputMachine.cpp */,
+				B138279E141452BD006E6F59 /* SilentMachine.cpp */,
+				B138279F141452BD006E6F59 /* SineMachine.cpp */,
+				B13827A0141452BD006E6F59 /* SoundMachine.cpp */,
+				B13827A1141452BD006E6F59 /* SoundMachine.hpp */,
+			);
+			path = machine_graph;
+			sourceTree = "<group>";
+		};
+		B1382793141452BD006E6F59 /* commands */ = {
+			isa = PBXGroup;
+			children = (
+				B1382794141452BD006E6F59 /* MachineCommand.cpp */,
+				B1382795141452BD006E6F59 /* MachineCommand.hpp */,
+				B1382796141452BD006E6F59 /* MachineGraphCommands.cpp */,
+				B1382797141452BD006E6F59 /* MachineGraphCommands.hpp */,
+			);
+			path = commands;
+			sourceTree = "<group>";
+		};
 		B179B63613E5C8CA003FB275 /* app_engine */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,17 +305,6 @@
 				B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */,
 			);
 			name = app_engine;
-			sourceTree = "<group>";
-		};
-		B1BA7770140DD764003F427A /* commands */ = {
-			isa = PBXGroup;
-			children = (
-				B16DC555140DF8A500A9C20A /* MachineCommand.cpp */,
-				B1BA7773140DD764003F427A /* MachineCommand.hpp */,
-				B1BA7774140DD764003F427A /* MachineGraphCommands.cpp */,
-				B1BA7775140DD764003F427A /* MachineGraphCommands.hpp */,
-			);
-			path = commands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,10 +371,6 @@
 				4ED275D913C1014F00DB7510 /* CirclesAppDelegate.mm in Sources */,
 				4ED275E813C1066000DB7510 /* GLView.mm in Sources */,
 				4ECFA0AB13C281D4004388CE /* MachineThreadHost.mm in Sources */,
-				4E36BB2E13C2AE1800D18CA9 /* MachineThread.cpp in Sources */,
-				4E5BFFFD13C6D3A00036D68B /* OutputMachine.cpp in Sources */,
-				4E4530C413C94FB100333B9C /* SineMachine.cpp in Sources */,
-				4E4530C813CAD30E00333B9C /* MachineGraph.cpp in Sources */,
 				4EFBA8CA13D91C22007A0C38 /* Program.cpp in Sources */,
 				4EFBA8CB13D91C22007A0C38 /* RenderingEngine.cpp in Sources */,
 				4EFBA8CC13D91C22007A0C38 /* Shader.cpp in Sources */,
@@ -381,9 +380,14 @@
 				B1FE747713E8EAB7001C43C4 /* TouchHandlerHost.mm in Sources */,
 				4E175AF813ED02DD0087D35F /* TouchHandler.cpp in Sources */,
 				B1C797531404BBE60094A1D2 /* LocalCommandQueue.mm in Sources */,
-				B1BA7778140DD764003F427A /* MachineGraphCommands.cpp in Sources */,
-				B16DC556140DF8A500A9C20A /* MachineCommand.cpp in Sources */,
-				B1E13AC714144D9600D398F5 /* SoundMachine.cpp in Sources */,
+				B13827A2141452BD006E6F59 /* MachineCommand.cpp in Sources */,
+				B13827A3141452BD006E6F59 /* MachineGraphCommands.cpp in Sources */,
+				B13827A4141452BD006E6F59 /* MachineGraph.cpp in Sources */,
+				B13827A5141452BD006E6F59 /* MachineThread.cpp in Sources */,
+				B13827A6141452BD006E6F59 /* OutputMachine.cpp in Sources */,
+				B13827A7141452BD006E6F59 /* SilentMachine.cpp in Sources */,
+				B13827A8141452BD006E6F59 /* SineMachine.cpp in Sources */,
+				B13827A9141452BD006E6F59 /* SoundMachine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
-#include <machines/SoundMachine.hpp>
-#include <machines/MachineGraph.hpp>
+#include <machine_graph/SoundMachine.hpp>
+#include <machine_graph/MachineGraph.hpp>
 
 BlockType * SoundMachine::alloc_block() { return this->graph_->alloc_block(); }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <machines/commands/MachineCommand.hpp>
+#include <machine_graph/commands/MachineCommand.hpp>
 
 class CommandQueue {
 	public:

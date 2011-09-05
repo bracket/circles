@@ -15,7 +15,7 @@
 
 #include <shared/Ticker.hpp>
 
-#include <machines/commands/MachineGraphCommands.hpp>
+#include <machine_graph/commands/MachineGraphCommands.hpp>
 
 boost::shared_ptr<ApplicationEngine> ApplicationEngine::app_engine_;
 

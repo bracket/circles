@@ -1,6 +1,6 @@
 #pragma once
 
-#include <machines/commands/MachineCommand.hpp>
+#include <machine_graph/commands/MachineCommand.hpp>
 #include <string>
 
 const unsigned short machine_graph_namespace = 0;

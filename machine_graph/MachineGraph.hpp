@@ -2,10 +2,10 @@
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/unordered_map.hpp>
-#include <machines/Block.hpp>
-#include <machines/commands/MachineCommand.hpp>
-#include <machines/SoundMachine.hpp>
-#include <machines/MachineFactory.hpp>
+#include <machine_graph/Block.hpp>
+#include <machine_graph/commands/MachineCommand.hpp>
+#include <machine_graph/SoundMachine.hpp>
+#include <machine_graph/MachineFactory.hpp>
 #include <string>
 #include <utility>
 #include <vector>

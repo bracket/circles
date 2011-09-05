@@ -2,7 +2,7 @@
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/utility.hpp>
-#include <machines/MachineGraph.hpp>
+#include <machine_graph/MachineGraph.hpp>
 #include <memory>
 #include <shared/AsynchronousQueue.hpp>
 #include <shared/Ticker.hpp>

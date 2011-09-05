@@ -6,13 +6,13 @@
 #include <cmath>
 #include <cstring>
 #include <iostream>
-#include <machines/MachineThread.hpp>
+#include <machine_graph/MachineThread.hpp>
 #include <vector>
 
 
 /*! @file
 MachineThreadHost is the OS specific class responsible for instantiating the
-machines/MachineThread class and starting the separate thread for sound
+machine_graph/MachineThread class and starting the separate thread for sound
 rendering.  More accurately, its threadMain function is called in the
 AppDelegate to spawn the new thread.  It's also responsible for starting audio
 processing on the host OS and copying the output from the MachineThread's

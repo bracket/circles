@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algorithm>
-#include <machines/Block.hpp>
+#include <machine_graph/Block.hpp>
 #include <vector>
 
 class MachineGraph;

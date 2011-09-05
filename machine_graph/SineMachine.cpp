@@ -1,6 +1,6 @@
 #include <cmath>
-#include <machines/SoundMachine.hpp>
-#include <machines/MachineFactory.hpp>
+#include <machine_graph/SoundMachine.hpp>
+#include <machine_graph/MachineFactory.hpp>
 
 namespace {
     const double two_pi = 8.0 * std::atan(1.0);

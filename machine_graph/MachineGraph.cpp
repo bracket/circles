@@ -1,7 +1,7 @@
-#include <machines/MachineFactory.hpp>
-#include <machines/MachineGraph.hpp>
-#include <machines/commands/MachineCommand.hpp>
-#include <machines/commands/MachineGraphCommands.hpp>
+#include <machine_graph/MachineFactory.hpp>
+#include <machine_graph/MachineGraph.hpp>
+#include <machine_graph/commands/MachineCommand.hpp>
+#include <machine_graph/commands/MachineGraphCommands.hpp>
 #include <memory>
 
 #include <iostream>
