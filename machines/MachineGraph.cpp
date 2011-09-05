@@ -23,7 +23,7 @@ namespace {
 }
 
 bool MachineGraph::init() {
-    std::auto_ptr<Machine> out(get_machine_factory().construct("OutputMachine", this));
+    std::auto_ptr<SoundMachine> out(get_machine_factory().construct("OutputMachine", this));
 
 	if (!out.get()) { return false; }
 	if (!add_machine_with_id(1, out.get())) { return false; }

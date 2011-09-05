@@ -4,7 +4,7 @@
 #include <boost/unordered_map.hpp>
 #include <machines/Block.hpp>
 #include <machines/commands/MachineCommand.hpp>
-#include <machines/Machine.hpp>
+#include <machines/SoundMachine.hpp>
 #include <machines/MachineFactory.hpp>
 #include <string>
 #include <utility>
@@ -13,8 +13,8 @@
 class MachineGraph {
 	friend struct MachineGraphAccess;
 
-	typedef boost::unordered_map<int, Machine*> MachineContainer;
-	typedef CommandDispatchMap<Machine> MachineDispatchMap;
+	typedef boost::unordered_map<int, SoundMachine*> MachineContainer;
+	typedef CommandDispatchMap<SoundMachine> MachineDispatchMap;
 	typedef CommandDispatchMap<MachineGraph> GraphDispatchMap;
 	typedef boost::unordered_map<int, MachineDispatchMap*> DispatchContainer;
 
@@ -61,7 +61,7 @@ class MachineGraph {
 		}
 
 		int add_machine(std::string const & machine_type) {
-			std::auto_ptr<Machine> ptr(get_machine_factory().construct(machine_type, this));
+			std::auto_ptr<SoundMachine> ptr(get_machine_factory().construct(machine_type, this));
 			if (!ptr.get()) { return 0; }
 
 			int id = next_id();
@@ -86,7 +86,7 @@ class MachineGraph {
 		}
 
 	private:
-		// NOTE: Machine ID 0 is invalid machine ID.  Machine ID 1 is reserved
+		// NOTE: SoundMachine ID 0 is invalid machine ID.  SoundMachine ID 1 is reserved
 		// for the output machine.
 		MachineGraph(int sample_rate) :
 			output_(0),
@@ -97,18 +97,18 @@ class MachineGraph {
 
 		int next_id() { return ++current_machine_id_; }
 
-		bool add_machine_with_id(int id, Machine * machine, bool force = false) {
+		bool add_machine_with_id(int id, SoundMachine * machine, bool force = false) {
 			typedef MachineContainer::iterator iterator;
             std::pair<iterator, bool> p = machines_.insert(std::make_pair(id, machine));
 			if (p.second) { return true; }
 			if (!force) { return false; }
 
-			boost::scoped_ptr<Machine> old(p.first->second);
+			boost::scoped_ptr<SoundMachine> old(p.first->second);
 			p.first->second = machine;
 			return true;
 		}
 
-		void link_machines(Machine * input, Machine * output) {
+		void link_machines(SoundMachine * input, SoundMachine * output) {
 			output->push_input(input);
 		}
 
@@ -117,7 +117,7 @@ class MachineGraph {
 		GraphDispatchMap graph_dispatch_;
 
 		std::vector<BlockType*> free_blocks_;
-		Machine * output_;
+		SoundMachine * output_;
 
 		int sample_rate_, current_machine_id_;
 };

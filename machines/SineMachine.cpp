@@ -1,5 +1,5 @@
 #include <cmath>
-#include <machines/Machine.hpp>
+#include <machines/SoundMachine.hpp>
 #include <machines/MachineFactory.hpp>
 
 namespace {
@@ -7,10 +7,10 @@ namespace {
     const int sample_rate = 44100;
 }
 
-class SineMachine : public Machine {
+class SineMachine : public SoundMachine {
 	public:
 		SineMachine(MachineGraph * graph, double frequency = 440.0) :
-			Machine(graph),
+			SoundMachine(graph),
 			current_phase_(0.0),
 			phase_delta_(frequency * two_pi / sample_rate)
 		{ }
@@ -38,7 +38,7 @@ class SineMachine : public Machine {
 };
 
 namespace {
-	Machine * constructor(MachineGraph * graph) { return new SineMachine(graph); }
+	SoundMachine * constructor(MachineGraph * graph) { return new SineMachine(graph); }
 
 	struct registrar {
 		registrar() {

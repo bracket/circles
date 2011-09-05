@@ -1,12 +1,12 @@
-#include <machines/Machine.hpp>
+#include <machines/SoundMachine.hpp>
 #include <machines/MachineFactory.hpp>
 #include <machines/MachineGraph.hpp>
 
-class OutputMachine : public Machine {
+class OutputMachine : public SoundMachine {
 	public:
-		typedef Machine base;
+		typedef SoundMachine base;
 
-		OutputMachine(MachineGraph * graph) : Machine(graph) { }
+		OutputMachine(MachineGraph * graph) : SoundMachine(graph) { }
 
 		BlockType * render() {
 			base::input_iterator it = this->input_begin(), end = this->input_end();
@@ -24,7 +24,7 @@ class OutputMachine : public Machine {
 };
 
 namespace {
-	Machine * constructor(MachineGraph * graph) { return new OutputMachine(graph); }
+	SoundMachine * constructor(MachineGraph * graph) { return new OutputMachine(graph); }
 
 	struct registrar {
 		registrar() {

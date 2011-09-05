@@ -1,10 +1,10 @@
-#include <machines/Machine.hpp>
+#include <machines/SoundMachine.hpp>
 #include <machines/MachineFactory.hpp>
 #include <machines/MachineGraph.hpp>
 
-class SilentMachine : public Machine {
+class SilentMachine : public SoundMachine {
 	public:
-		SilentMachine(MachineGraph * graph) : Machine(graph) { }
+		SilentMachine(MachineGraph * graph) : SoundMachine(graph) { }
 
 		BlockType * render() {
 			BlockType * out = this->alloc_block();
@@ -21,7 +21,7 @@ class SilentMachine : public Machine {
 };
 
 namespace {
-	Machine * constructor(MachineGraph * graph) { return new SilentMachine(graph); }
+	SoundMachine * constructor(MachineGraph * graph) { return new SilentMachine(graph); }
 
 	struct registrar {
 		registrar() {

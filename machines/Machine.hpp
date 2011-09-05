@@ -8,8 +8,8 @@ class MachineGraph;
 
 typedef Block<float, 1024, 1> BlockType;
 
-class Machine {
-	typedef std::vector<Machine*> InputContainer;
+class SoundMachine {
+	typedef std::vector<SoundMachine*> InputContainer;
 
 	public:
 		typedef InputContainer::iterator input_iterator;
@@ -17,9 +17,9 @@ class Machine {
 
 		virtual BlockType * render() = 0;
 
-		virtual ~Machine() { }
+		virtual ~SoundMachine() { }
 
-		Machine(MachineGraph * graph) : graph_(graph) { }
+		SoundMachine(MachineGraph * graph) : graph_(graph) { }
 
 		input_iterator input_begin() { return inputs_.begin(); }
 		const_input_iterator input_begin() const { return inputs_.begin(); }
@@ -27,9 +27,9 @@ class Machine {
 		input_iterator input_end() { return inputs_.end(); }
 		const_input_iterator input_end() const { return inputs_.end(); }
 
-		void push_input(Machine * machine) { inputs_.push_back(machine); }
+		void push_input(SoundMachine * machine) { inputs_.push_back(machine); }
 
-		bool remove_input(Machine * machine) {
+		bool remove_input(SoundMachine * machine) {
 			input_iterator it = std::find(inputs_.begin(), inputs_.end(), machine);
 			if (it  == inputs_.end()) { return false; }
 			inputs_.erase(it);
