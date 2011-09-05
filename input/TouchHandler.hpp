@@ -18,8 +18,6 @@ class TouchHandler {
 		TouchHandler(ApplicationEngine * app_engine) :
 			app_engine_(app_engine) { }
 
-		~TouchHandler();
-
 		bool insert_touchable(Touchable * touchable) {
 			return touchables_.insert(touchable).second;
 		}
@@ -28,7 +26,6 @@ class TouchHandler {
 			iterator it = touchables_.find(touchable);
 			if (it == touchables_.end()) { return false; }
 
-			std::auto_ptr<Touchable> ptr(*it);
 			touchables_.erase(it);
 			return true;
 		}

@@ -100,6 +100,8 @@
 		B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationEngine.hpp; path = app_engine/ApplicationEngine.hpp; sourceTree = "<group>"; };
 		B179B63713E5D08D003FB275 /* ApplicationEngineHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngineHost.h; sourceTree = "<group>"; };
 		B179B63813E5D08D003FB275 /* ApplicationEngineHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationEngineHost.mm; sourceTree = "<group>"; };
+		B17C7B371415541A00233A0B /* Machine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Machine.hpp; sourceTree = "<group>"; };
+		B17C7B381415541A00233A0B /* MachineContainer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineContainer.hpp; sourceTree = "<group>"; };
 		B1C797511404BBE60094A1D2 /* LocalCommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LocalCommandQueue.hpp; sourceTree = "<group>"; };
 		B1C797521404BBE60094A1D2 /* LocalCommandQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocalCommandQueue.mm; sourceTree = "<group>"; };
 		B1C797551404BC010094A1D2 /* CommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandQueue.hpp; path = app_engine/CommandQueue.hpp; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
+				B17C7B341415541A00233A0B /* machines */,
 				B1382791141452BD006E6F59 /* machine_graph */,
 				4E175AF213ED02DD0087D35F /* input */,
 				B179B63613E5C8CA003FB275 /* app_engine */,
@@ -305,6 +308,15 @@
 				B179B63313E5C8C4003FB275 /* ApplicationEngine.hpp */,
 			);
 			name = app_engine;
+			sourceTree = "<group>";
+		};
+		B17C7B341415541A00233A0B /* machines */ = {
+			isa = PBXGroup;
+			children = (
+				B17C7B371415541A00233A0B /* Machine.hpp */,
+				B17C7B381415541A00233A0B /* MachineContainer.hpp */,
+			);
+			path = machines;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

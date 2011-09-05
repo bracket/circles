@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <boost/shared_ptr.hpp>
+#include <machines/MachineContainer.hpp>
 #include <math/Vec.hpp>
 #include <memory>
 #include <renderer/RenderingEngine.hpp>
@@ -52,6 +53,12 @@ class ApplicationEngine {
 
 		void processing_loop_step();
 
+		MachineID register_machine(Machine * machine) {
+			return machines_.register_machine(machine);
+		}
+
+		bool delete_machine(MachineID id) { return machines_.delete_machine(id); }
+
 	private:
 		static boost::shared_ptr<ApplicationEngine> app_engine_;
 
@@ -64,6 +71,8 @@ class ApplicationEngine {
 		RenderingEngine * rendering_engine_;
 		CommandQueue * command_queue_;
 		TouchHandler * touch_handler_;
+
+		MachineContainer machines_;
 
 		float current_zoom_level_;
 };

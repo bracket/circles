@@ -12,11 +12,6 @@ namespace {
 	}
 }
 
-TouchHandler::~TouchHandler() {
-	for (iterator it = touchables_.begin(); it != touchables_.end(); ++it)
-		{ delete *it; }
-}
-
 void TouchHandler::handle_move_start(Vec2 const & start) {
 	apply_touch_event<&Touchable::handle_move_start>(touchables_.begin(), touchables_.end(), start);
 }
