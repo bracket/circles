@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/Vec.hpp>
+#include <boost/range.hpp>
 
 template <class T>
 struct Rectangle {
@@ -48,3 +49,22 @@ struct Rectangle {
 	private:
 		T top_, left_, bottom_, right_;
 };
+
+template <class Iterator>
+Rectangle<float> get_bounding_rectangle(Iterator begin, Iterator end) {
+	Vec2 lower_left = *begin, upper_right = *begin;
+	++begin;
+
+	for (; begin != end; ++begin) {
+		lower_left = min(lower_left, *begin);
+		upper_right = max(upper_right, *begin);
+	}
+
+	return Rectangle<float>(upper_right.y(), lower_left.x(),
+		lower_left.y(), upper_right.x());
+}
+
+template <class Container>
+Rectangle<float> get_bounding_rectangle(Container const & c) {
+	return get_bounding_rectangle(boost::begin(c), boost::end(c));
+}

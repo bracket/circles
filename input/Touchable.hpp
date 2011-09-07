@@ -7,9 +7,6 @@ class Touchable {
 	public:
 		virtual ~Touchable() { }
 
-		Touchable(Rectangle<float> const & bounding_rect) :
-			bounding_rect_(bounding_rect) { }
-
 		Rectangle<float> const & get_bounding_rect() { return bounding_rect_; }
 
 		virtual void handle_move_start(Vec2 const & start) { }

@@ -3,13 +3,13 @@
 #include <map>
 #include <machines/Machine.hpp>
 
-typedef int MachineID;
-
 class MachineContainer {
 	typedef std::map<MachineID, Machine *> MachineMap;
 	typedef std::map<Machine *, MachineID> ReverseMap;
 
 	public:
+		typedef MachineMap::const_iterator const_iterator;
+
 		MachineContainer() : last_machine_id_(0) { }
 
 		~MachineContainer() {
@@ -50,6 +50,17 @@ class MachineContainer {
 
 			return true;
 		}
+
+		Machine * find_machine(MachineID id) const {
+			const_iterator it = machine_map_.find(id);
+
+			if (it == end()) { return 0; }
+
+			return it->second;
+		}
+
+		const_iterator begin() const { return machine_map_.begin(); };
+		const_iterator end() const { return machine_map_.end(); };
 
 	private:
 		int next_id() { return ++last_machine_id_; }

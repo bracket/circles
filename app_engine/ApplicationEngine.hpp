@@ -1,15 +1,18 @@
 #pragma once
 
 #include <algorithm>
+#include <app_engine/CommandQueue.hpp>
 #include <boost/shared_ptr.hpp>
+#include <input/TouchHandler.hpp>
 #include <machines/MachineContainer.hpp>
 #include <math/Vec.hpp>
 #include <memory>
 #include <renderer/RenderingEngine.hpp>
-#include <input/TouchHandler.hpp>
-#include <app_engine/CommandQueue.hpp>
+#include <set>
 
 class ApplicationEngine {
+	typedef std::set<Renderable *> RenderableContainer;
+
 	public:
 		static ApplicationEngine * get() { return app_engine_.get(); }
 
@@ -54,10 +57,40 @@ class ApplicationEngine {
 		void processing_loop_step();
 
 		MachineID register_machine(Machine * machine) {
+			register_touchable(machine->get_touchable());
+			register_renderable(machine->get_renderable());
+
 			return machines_.register_machine(machine);
 		}
 
-		bool delete_machine(MachineID id) { return machines_.delete_machine(id); }
+		bool delete_machine(MachineID id) {
+			Machine * machine = machines_.find_machine(id);
+
+			if (!machine) { return false; }
+
+			erase_touchable(machine->get_touchable());
+			erase_renderable(machine->get_renderable());
+
+			return machines_.delete_machine(id);
+		}
+
+		void register_touchable(Touchable * touchable) {
+			if (!touchable) { return; }
+			touch_handler_->insert_touchable(touchable);
+		}
+
+		void erase_touchable(Touchable * touchable) {
+			touch_handler_->erase_touchable(touchable);
+		}
+
+		void register_renderable(Renderable * renderable) {
+			if (!renderable) { return; }
+			renderables_.insert(renderable);
+		}
+
+		void erase_renderable(Renderable * renderable) {
+			renderables_.erase(renderable);
+		}
 
 	private:
 		static boost::shared_ptr<ApplicationEngine> app_engine_;
@@ -73,6 +106,7 @@ class ApplicationEngine {
 		TouchHandler * touch_handler_;
 
 		MachineContainer machines_;
+		RenderableContainer renderables_;
 
 		float current_zoom_level_;
 };
