@@ -68,6 +68,11 @@ struct Square {
 	}
 
 	void set_position(Vec3 const & pos) { pos_ = pos; }
+
+	void set_position(Vec2 const & pos) {
+		set_position(Vec3(-pos.x(), -pos.y(), 1.0f) * pos_.z());
+	}
+
 	Vec3 const & get_position() const { return pos_; }
 
 	private:

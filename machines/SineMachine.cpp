@@ -1,9 +1,11 @@
 #include <app_engine/ApplicationEngine.hpp>
 #include <machines/Machine.hpp>
 #include <machines/MachineFactory.hpp>
+#include <machine_graph/commands/MachineGraphCommands.hpp>
 
 #include <Square.hpp>
-
+#include <arch/common.hpp>
+#include <iostream>
 
 namespace {
 	class SineMachineRenderable;
@@ -98,8 +100,8 @@ namespace {
 	Machine * constructor() {
 		static Program * program = initialize_program();
 
-		Renderable * renderable = new SineMachineRenderable(program);
-		Touchable * touchable = new SineMachineTouchable();
+		SineMachineRenderable * renderable = new SineMachineRenderable(program);
+		SineMachineTouchable * touchable = new SineMachineTouchable();
 
 		renderable->set_touchable(touchable);
 		touchable->set_renderable(renderable);
@@ -109,7 +111,7 @@ namespace {
 
 	struct registrar {
 		registrar() {
-			get().register_constructor("SineMachine", constructor);
+			MachineFactory::get().register_constructor("SineMachine", constructor);
 		}
 	};
 

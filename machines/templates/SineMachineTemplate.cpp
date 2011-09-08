@@ -1,17 +1,23 @@
-#include <machines/templates/Template.hpp>
 #include <app_engine/ApplicationEngine.hpp>
+#include <machines/templates/Template.hpp>
+#include <machines/MachineFactory.hpp>
+#include <machine_graph/commands/MachineGraphCommands.hpp>
 #include <Square.hpp>
+#include <arch/common.hpp>
 
+// NOTE: This can be factored out to be very generic, and it should be.
+// Virtually every single template is going to look this and it's a hell of a
+// lot of code.
 
 namespace {
+	class SineTemplateTouchable;
+	class SineTemplateRenderable;
 	class SineTemplateMovingRenderable;
 	class SineTemplateMovingTouchable;
-	class SineTemplateRenderable;
 
 	class SineTemplateTouchable : public Touchable {
 		public: 
 			void handle_move_start(Vec2 const & start);
-
 
 			void set_renderable(SineTemplateRenderable * renderable) { renderable_ = renderable; }
 
@@ -29,40 +35,26 @@ namespace {
 
 			void render(RenderingEngine const * rendering_engine);
 
-			void set_touchable(SineTemplateMovingTouchable * touchable) { touchable_ = touchable; }
+			void set_touchable(SineTemplateTouchable * touchable) { touchable_ = touchable; }
 
 			void set_position(Vec2 const & loc) { square_.set_position(loc); }
 			
-			void get_position() { square_.get_position(); }
+            void set_position(Vec3 const & loc) { square_.set_position(loc); }
+            
+			Vec3 const & get_position() { return square_.get_position(); }
 
 		private:
 			Square square_;
-			SineTemplateMovingTouchable * touchable_;
+			SineTemplateTouchable * touchable_;
 	};
 
 	class SineTemplateMovingTouchable : public Touchable {
 		public:
-			void handle_move_move(Vec2 const & loc) {
-				renderable->set_position(loc);
-			}
+			void handle_move_move(Vec2 const & loc);
+			void handle_move_end(Vec2 const & end);
 
-			void handle_move_end(Vec2 const & loc) {
-				std::auto_ptr<SineTemplateMovingTouchable> ptr(this);
-				ApplicationEngine * app_engine = ApplicationEngine::get();
-
-				// if in a place where we actually wanna create a machine
-				Machine * machine = MachineFactory::construct("SineMachine");
-				if (machine) { app_engine->register_machine(machine); }
-				// fi
-
-				app_engine->erase_touchable(this);
-				app_engine->erase_renderable(renderable_);
-				delete renderable_;
-			}
-
-			void set_renderable(SineTemplateMovingRenderable * renderable) {
-				renderable_ = renderable;
-			}
+			void set_renderable(SineTemplateMovingRenderable * renderable)
+				{ renderable_ = renderable; }
 
 		private:
 			SineTemplateMovingRenderable * renderable_;
@@ -76,17 +68,13 @@ namespace {
 				touchable_(0)
 			{ }
 
-			void render(RenderingEngine * rendering_engine) {
-				square_.render(rendering_engine);
-
-				if (touchable_) {
-					touchable_->set_bounding_rectangle(
-						square_.get_bounding_rectangle(rendering_engine)
-					);
-				}
-			}
+			void render(RenderingEngine const * rendering_engine);
 
 			void set_touchable(Touchable * touchable) { touchable_ = touchable; }
+
+            void set_position(Vec2 const & loc) { square_.set_position(loc); }
+
+            void set_position(Vec3 const & loc) { square_.set_position(loc); }
 
 		private:
 			Square square_;
@@ -96,8 +84,8 @@ namespace {
 	void SineTemplateTouchable::handle_move_start(Vec2 const & start) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
-	// FIXME: Get smarter about my memory, damnit
-		SineTemplateMovingRenderable * renderable = new SineTemplateMovingRenderable();
+		// FIXME: Get smarter about my memory, damnit
+		SineTemplateMovingRenderable * renderable = new SineTemplateMovingRenderable(renderable_->get_program());
 		SineTemplateMovingTouchable * touchable = new SineTemplateMovingTouchable();
 
 		renderable->set_position(this->renderable_->get_position());
@@ -108,6 +96,16 @@ namespace {
 		app_engine->register_touchable(touchable);
 	}
 
+	void SineTemplateRenderable::render(RenderingEngine const * rendering_engine) {
+		square_.render(rendering_engine);
+
+		if (touchable_) {
+			touchable_->set_bounding_rectangle(
+				square_.get_bounding_rectangle(rendering_engine)
+			);
+		}
+	}
+
 	void SineTemplateMovingRenderable::render(RenderingEngine const * rendering_engine) {
 		square_.render(rendering_engine);
 
@@ -116,6 +114,23 @@ namespace {
 				square_.get_bounding_rectangle(rendering_engine)
 			);
 		}
+	}
+
+	void SineTemplateMovingTouchable::handle_move_move(Vec2 const & loc)
+		{ renderable_->set_position(loc); }
+
+	void SineTemplateMovingTouchable::handle_move_end(Vec2 const & end) {
+		std::auto_ptr<SineTemplateMovingTouchable> ptr(this);
+		ApplicationEngine * app_engine = ApplicationEngine::get();
+
+		// if in a place where we actually wanna create a machine
+		Machine * machine = MachineFactory::get().construct("SineMachine");
+		if (machine) { app_engine->register_machine(machine); }
+		// fi
+
+		app_engine->erase_touchable(this);
+		app_engine->erase_renderable(renderable_);
+		delete renderable_;
 	}
 
 	Program * initialize_program() {
@@ -139,8 +154,9 @@ namespace {
 
 Template * create_test_template() {
 	ApplicationEngine * app_engine = ApplicationEngine::get();
+	Program * program = initialize_program();
 
-	SineTemplateRenderable * renderable = new SineTemplateRenderable();
+	SineTemplateRenderable * renderable = new SineTemplateRenderable(program);
 	SineTemplateTouchable * touchable = new SineTemplateTouchable();
 
 	renderable->set_position(Vec3(0.0, 0.0, -4.0));

@@ -14,7 +14,7 @@ class Touchable {
 		virtual void handle_move_end(Vec2 const & end) { }
 		virtual void handle_single_tap(Vec2 const & loc) { }
 	
-		void set_bounding_rect(Rectangle<float> const & rect)
+		void set_bounding_rectangle(Rectangle<float> const & rect)
 			{ bounding_rect_ = rect; }
 
 	protected:

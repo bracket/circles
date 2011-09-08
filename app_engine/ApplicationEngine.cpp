@@ -34,11 +34,10 @@ ApplicationEngine::~ApplicationEngine() {
 }
 
 void ApplicationEngine::render_frame() {
-	typedef MachineContainer::const_iterator iterator;
+	typedef RenderableContainer::const_iterator iterator;
 
-	for (iterator it = machines_.begin(); it != machines_.end(); ++it) {
-		rendering_engine_->submit(it->second->get_renderable());
-	}
+	for (iterator it = renderables_.begin(); it != renderables_.end(); ++it)
+		{ rendering_engine_->submit(*it); }
 
 	rendering_engine_->render();
 }
