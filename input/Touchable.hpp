@@ -9,10 +9,13 @@ class Touchable {
 
 		Rectangle<float> const & get_bounding_rect() { return bounding_rect_; }
 
-		virtual void handle_move_start(Vec2 const & start) { }
-		virtual void handle_move_move(Vec2 const & loc) { }
-		virtual void handle_move_end(Vec2 const & end) { }
-		virtual void handle_single_tap(Vec2 const & loc) { }
+		// NOTE: TouchHandlers should return true to indicate that the
+		// Touchable should remain in the container after being handled.
+
+		virtual bool handle_move_start(Vec2 const & start) { return true; }
+		virtual bool handle_move_move(Vec2 const & loc) { return true; }
+		virtual bool handle_move_end(Vec2 const & end) { return true; }
+		virtual bool handle_single_tap(Vec2 const & loc) { return true; }
 	
 		void set_bounding_rectangle(Rectangle<float> const & rect)
 			{ bounding_rect_ = rect; }

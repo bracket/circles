@@ -13,8 +13,8 @@ namespace {
 
 	class SineMachineTouchable : public Touchable {
 		public:
-			void handle_move_move(Vec2 const & pos);
-			void handle_single_tap(Vec2 const & pos);
+			bool handle_move_move(Vec2 const & pos);
+			bool handle_single_tap(Vec2 const & pos);
 
             void set_renderable(SineMachineRenderable * renderable) 
 				{ renderable_ = renderable; }
@@ -71,10 +71,11 @@ namespace {
 		return program.release();
 	}
 
-	void SineMachineTouchable::handle_move_move(Vec2 const & pos) {
+	bool SineMachineTouchable::handle_move_move(Vec2 const & pos) {
 		Vec3 pos3 = renderable_->get_position();
 		pos3 = Vec3(-pos.x(), -pos.y(), 1.0f) * pos3.z();
         renderable_->set_position(pos3);
+        return true;
 	}
 
 	void circle_tap_callback(MachineCommand * command, CommandResponse * response) {
@@ -88,13 +89,14 @@ namespace {
 				Machine(renderable, touchable) { }
 	};
 
-	void SineMachineTouchable::handle_single_tap(Vec2 const & pos) {
+	bool SineMachineTouchable::handle_single_tap(Vec2 const & pos) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		CreateMachineCommand * command = new CreateMachineCommand("SineMachine");
 		command->set_callback(circle_tap_callback);
 
 		app_engine->push_command(command);
+        return true;
 	}
 
 	Machine * constructor() {

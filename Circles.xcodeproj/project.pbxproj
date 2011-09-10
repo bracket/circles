@@ -43,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E127FC2141B28680038D890 /* erase_if.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = erase_if.hpp; sourceTree = "<group>"; };
 		4E175AF413ED02DD0087D35F /* Touchable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Touchable.hpp; sourceTree = "<group>"; };
 		4E175AF513ED02DD0087D35F /* TouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchHandler.cpp; sourceTree = "<group>"; };
 		4E175AF613ED02DD0087D35F /* TouchHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TouchHandler.hpp; sourceTree = "<group>"; };
@@ -160,6 +161,7 @@
 		4E5BFFFF13C94A5D0036D68B /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				4E127FC2141B28680038D890 /* erase_if.hpp */,
 				4E5B000013C94A5D0036D68B /* AsynchronousQueue.hpp */,
 				4E5B000113C94A5D0036D68B /* Ticker.hpp */,
 			);

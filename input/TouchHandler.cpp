@@ -1,29 +1,36 @@
 #include <input/TouchHandler.hpp>
+#include <shared/erase_if.hpp>
 
 #include <iostream>
 
 namespace {
-	template <void (Touchable::*f)(Vec2 const &), class Iterator>
-	void apply_touch_event(Iterator begin, Iterator end, Vec2 const & loc) {
-		for (; begin != end; ++begin) {
-			Rectangle<float> const & rect = (*begin)->get_bounding_rect();
-			if (rect.contains(loc)) { ((*begin)->*f)(loc); }
+	template <bool (Touchable::*f)(Vec2 const &)>
+	struct TouchHandlerWrapper {
+		TouchHandlerWrapper(Vec2 const & loc) : loc_(loc) { }
+		
+		bool operator () (Touchable * touchable) const {
+			Rectangle<float> const & rect = touchable->get_bounding_rect();
+			if (!rect.contains(loc_)) { return false; }
+			return !(touchable->*f)(loc_);
 		}
-	}
+
+		private:
+			Vec2 loc_;
+	};
 }
 
 void TouchHandler::handle_move_start(Vec2 const & start) {
-	apply_touch_event<&Touchable::handle_move_start>(touchables_.begin(), touchables_.end(), start);
+	erase_if(touchables_, TouchHandlerWrapper<&Touchable::handle_move_start>(start));
 }
 
 void TouchHandler::handle_move_move(Vec2 const & loc) {
-	apply_touch_event<&Touchable::handle_move_move>(touchables_.begin(), touchables_.end(), loc);
+	erase_if(touchables_, TouchHandlerWrapper<&Touchable::handle_move_move>(loc));
 }
 
 void TouchHandler::handle_move_end(Vec2 const & end) {
-	apply_touch_event<&Touchable::handle_move_end>(touchables_.begin(), touchables_.end(), end);
+	erase_if(touchables_, TouchHandlerWrapper<&Touchable::handle_move_end>(end));
 }
 
 void TouchHandler::handle_single_tap(Vec2 const & loc) {
-	apply_touch_event<&Touchable::handle_single_tap>(touchables_.begin(), touchables_.end(), loc);
+	erase_if(touchables_, TouchHandlerWrapper<&Touchable::handle_single_tap>(loc));
 }

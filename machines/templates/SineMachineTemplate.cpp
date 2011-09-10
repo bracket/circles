@@ -17,7 +17,7 @@ namespace {
 
 	class SineTemplateTouchable : public Touchable {
 		public: 
-			void handle_move_start(Vec2 const & start);
+			bool handle_move_start(Vec2 const & start);
 
 			void set_renderable(SineTemplateRenderable * renderable) { renderable_ = renderable; }
 
@@ -50,8 +50,8 @@ namespace {
 
 	class SineTemplateMovingTouchable : public Touchable {
 		public:
-			void handle_move_move(Vec2 const & loc);
-			void handle_move_end(Vec2 const & end);
+			bool handle_move_move(Vec2 const & loc);
+			bool handle_move_end(Vec2 const & end);
 
 			void set_renderable(SineTemplateMovingRenderable * renderable)
 				{ renderable_ = renderable; }
@@ -81,7 +81,7 @@ namespace {
 			Touchable * touchable_;
 	};
 
-	void SineTemplateTouchable::handle_move_start(Vec2 const & start) {
+	bool SineTemplateTouchable::handle_move_start(Vec2 const & start) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		// FIXME: Get smarter about my memory, damnit
@@ -94,6 +94,8 @@ namespace {
 
 		app_engine->register_renderable(renderable);
 		app_engine->register_touchable(touchable);
+        
+        return true;
 	}
 
 	void SineTemplateRenderable::render(RenderingEngine const * rendering_engine) {
@@ -116,11 +118,15 @@ namespace {
 		}
 	}
 
-	void SineTemplateMovingTouchable::handle_move_move(Vec2 const & loc)
-		{ renderable_->set_position(loc); }
+	bool SineTemplateMovingTouchable::handle_move_move(Vec2 const & loc) {
+        renderable_->set_position(loc);
+        return true;
+    }
 
-	void SineTemplateMovingTouchable::handle_move_end(Vec2 const & end) {
-		std::auto_ptr<SineTemplateMovingTouchable> ptr(this);
+	bool SineTemplateMovingTouchable::handle_move_end(Vec2 const & end) {
+		std::auto_ptr<SineTemplateMovingTouchable> touch_ptr(this);
+        std::auto_ptr<SineTemplateMovingRenderable> render_ptr(renderable_);
+
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		// if in a place where we actually wanna create a machine
@@ -128,9 +134,9 @@ namespace {
 		if (machine) { app_engine->register_machine(machine); }
 		// fi
 
-		app_engine->erase_touchable(this);
 		app_engine->erase_renderable(renderable_);
-		delete renderable_;
+        
+        return false;
 	}
 
 	Program * initialize_program() {
