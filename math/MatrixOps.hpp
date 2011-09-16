@@ -50,6 +50,17 @@ Matrix<4, 4, T> identity_matrix() {
 }
 
 template <class T>
+Matrix<3, 3, T> identity_matrix3() {
+	T out[] = {
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1
+	};
+
+	return Matrix<3, 3, T>(out);
+}
+
+template <class T>
 Matrix<4, 4, T> perspective(T near, T far, T aspect_ratio, T field_of_view) {
 	T height = std::tan(field_of_view / 2) * near,
 		width = aspect_ratio * height;

@@ -35,15 +35,12 @@ namespace {
 			void set_touchable(SineMachineTouchable * touchable)
 				{ touchable_ = touchable; }
 
-			void set_position(Vec3 const & p) { square_.set_position(p); }
-			Vec3 const & get_position() const { return square_.get_position(); }
-
 			void render(RenderingEngine const * rendering_engine) {
-				square_.render(rendering_engine);
+				square_.render(rendering_engine, get_frame());
 
 				if (touchable_) {
 					touchable_->set_bounding_rectangle(
-						square_.get_bounding_rectangle(rendering_engine)
+						square_.get_bounding_rectangle(rendering_engine, get_frame())
 					);
 				}
 			}
@@ -72,9 +69,7 @@ namespace {
 	}
 
 	bool SineMachineTouchable::handle_move_move(Vec2 const & pos) {
-		Vec3 pos3 = renderable_->get_position();
-		pos3 = Vec3(-pos.x(), -pos.y(), 1.0f) * pos3.z();
-        renderable_->set_position(pos3);
+        renderable_->set_position(pos);
         return true;
 	}
 

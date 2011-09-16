@@ -34,8 +34,14 @@ struct Square {
 		tex_idx_ = glGetAttribLocation(program->get_name(), "tex");
 	}
 
-	void render(RenderingEngine const * engine) {
-		Matrix<4, 4, float> M = translate_matrix(pos_);
+	void render(RenderingEngine const * engine, Renderable::FrameType const & f) {
+		float F[] = {
+			f[0][0], f[0][1], f[0][2], 0,
+			f[1][0], f[1][1], f[1][2], 0,
+			      0,       0,       1, 0,
+			f[2][0], f[2][1], f[2][2], 1
+		};
+		Matrix<4, 4, float> M(F);
 		
 		program_->bind_uniform("model_view", engine->get_camera_matrix() * M);
 
@@ -54,8 +60,16 @@ struct Square {
 		glDisableVertexAttribArray(tex_idx_);
 	}
 
-	Rectangle<float> get_bounding_rectangle(RenderingEngine const * engine) const {
-		Matrix<4, 4, float> M = translate_matrix(pos_);
+	Rectangle<float> get_bounding_rectangle(
+		RenderingEngine const * engine, Renderable::FrameType const & f) const
+	{
+		float F[] = {
+			f[0][0], f[0][1], f[0][2], 0,
+			f[1][0], f[1][1], f[1][2], 0,
+			      0,       0,       1, 0,
+			f[2][0], f[2][1], f[2][2], 1
+		};
+		Matrix<4, 4, float> M(F);
 
 		Vec2 corners[] = {
 			engine->project_to_device_independent(vertices_[0].get_pos() * M),
@@ -67,18 +81,8 @@ struct Square {
 		return ::get_bounding_rectangle(corners);
 	}
 
-	void set_position(Vec3 const & pos) { pos_ = pos; }
-
-	void set_position(Vec2 const & pos) {
-		set_position(Vec3(-pos.x(), -pos.y(), 1.0f) * pos_.z());
-	}
-
-	Vec3 const & get_position() const { return pos_; }
-
 	private:
 		Program * program_;
 		std::vector<Vertex> vertices_;
 		GLuint pos_idx_, tex_idx_;
-
-		Vec3 pos_;
 };

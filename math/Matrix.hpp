@@ -121,6 +121,12 @@ struct Matrix {
 		return out;
 	}
 
+	void set_row(int i, Vec<cols, T> const & row) {
+		range_type r = row_range(i);
+
+		for (int j = 0; j < cols; ++j) { r.first[j] = row[j]; }
+	}
+
 	private:
 		template <class L, class R>
 		static inline T dot(L left, int stride_left, R right, int stride_right) {

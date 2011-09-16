@@ -37,12 +37,6 @@ namespace {
 
 			void set_touchable(SineTemplateTouchable * touchable) { touchable_ = touchable; }
 
-			void set_position(Vec2 const & loc) { square_.set_position(loc); }
-			
-            void set_position(Vec3 const & loc) { square_.set_position(loc); }
-            
-			Vec3 const & get_position() { return square_.get_position(); }
-
 		private:
 			Square square_;
 			SineTemplateTouchable * touchable_;
@@ -72,10 +66,6 @@ namespace {
 
 			void set_touchable(Touchable * touchable) { touchable_ = touchable; }
 
-            void set_position(Vec2 const & loc) { square_.set_position(loc); }
-
-            void set_position(Vec3 const & loc) { square_.set_position(loc); }
-
 		private:
 			Square square_;
 			Touchable * touchable_;
@@ -88,7 +78,7 @@ namespace {
 		SineTemplateMovingRenderable * renderable = new SineTemplateMovingRenderable(renderable_->get_program());
 		SineTemplateMovingTouchable * touchable = new SineTemplateMovingTouchable();
 
-		renderable->set_position(this->renderable_->get_position());
+		renderable->set_frame(this->renderable_->get_frame());
 		renderable->set_touchable(touchable);
 		touchable->set_renderable(renderable);
 
@@ -99,21 +89,21 @@ namespace {
 	}
 
 	void SineTemplateRenderable::render(RenderingEngine const * rendering_engine) {
-		square_.render(rendering_engine);
+		square_.render(rendering_engine, get_frame());
 
 		if (touchable_) {
 			touchable_->set_bounding_rectangle(
-				square_.get_bounding_rectangle(rendering_engine)
+				square_.get_bounding_rectangle(rendering_engine, get_frame())
 			);
 		}
 	}
 
 	void SineTemplateMovingRenderable::render(RenderingEngine const * rendering_engine) {
-		square_.render(rendering_engine);
+		square_.render(rendering_engine, get_frame());
 
 		if (touchable_) {
 			touchable_->set_bounding_rectangle(
-				square_.get_bounding_rectangle(rendering_engine)
+				square_.get_bounding_rectangle(rendering_engine, get_frame())
 			);
 		}
 	}
@@ -131,7 +121,10 @@ namespace {
 
 		// if in a place where we actually wanna create a machine
 		Machine * machine = MachineFactory::get().construct("SineMachine");
-		if (machine) { app_engine->register_machine(machine); }
+		if (!machine) { return false; }
+		
+		machine->get_renderable()->set_frame(renderable_->get_frame());
+		app_engine->register_machine(machine);
 		// fi
 
 		app_engine->erase_renderable(renderable_);
@@ -165,7 +158,7 @@ Template * create_test_template() {
 	SineTemplateRenderable * renderable = new SineTemplateRenderable(program);
 	SineTemplateTouchable * touchable = new SineTemplateTouchable();
 
-	renderable->set_position(Vec3(0.0, 0.0, -4.0));
+	renderable->set_position(Vec3(0.0, 0.0, 0.0));
 	renderable->set_touchable(touchable);
 	touchable->set_renderable(renderable);
 
