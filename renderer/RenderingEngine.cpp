@@ -20,7 +20,7 @@ bool RenderingEngine::init() {
 
 	glViewport(0, 0, view_width_, view_height_);
 
-	near_clip_ = 0.5f;
+	near_clip_ = 1.0f;
 	far_clip_ = 10.0f;
 	field_of_view_ = static_cast<float>(2 * std::atan(1));
 
@@ -31,10 +31,10 @@ bool RenderingEngine::init() {
 	));
 
 	float C[] = {
-		1, 0, 0 , 0,
-		0, 1, 0 , 0,
-		0, 0, 1 , 0,
-		0, 0, -4.5, 1,
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 5, 1,
 	};
 
 	set_camera_matrix(Matrix<4, 4, float>(C));

@@ -275,13 +275,10 @@ inline T dist(Vec<n, T> const & from, Vec<n, T> const & to) {
 }
 
 template <int n, class T>
-inline T normalize(Vec<n, T> & v) {
+inline Vec<n, T> normalize(Vec<n, T> const & v) {
 	T l = length_sq(v);
-	if (!l) { return l; }
-
-	l = sqrt(l);
-	v /= l;
-	return l;
+	if (!l) { return v; }
+	return v / sqrt(l);
 }
 
 template <int n, class T>

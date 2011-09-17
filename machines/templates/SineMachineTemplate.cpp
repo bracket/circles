@@ -1,9 +1,10 @@
 #include <app_engine/ApplicationEngine.hpp>
-#include <machines/templates/Template.hpp>
-#include <machines/MachineFactory.hpp>
-#include <machine_graph/commands/MachineGraphCommands.hpp>
-#include <Square.hpp>
 #include <arch/common.hpp>
+#include <machines/MachineFactory.hpp>
+#include <machines/templates/Template.hpp>
+#include <machine_graph/commands/MachineGraphCommands.hpp>
+#include <math/intersection.hpp>
+#include <Square.hpp>
 
 // NOTE: This can be factored out to be very generic, and it should be.
 // Virtually every single template is going to look this and it's a hell of a
@@ -109,7 +110,13 @@ namespace {
 	}
 
 	bool SineTemplateMovingTouchable::handle_move_move(Vec2 const & loc) {
-        renderable_->set_position(loc);
+		RenderingEngine * rendering_engine = ApplicationEngine::get()->get_rendering_engine();
+		Ray<3, float> ray = rendering_engine->unproject_device_independent(loc);
+
+		boost::optional<Vec3> pos = intersection(ray, Plane<3, float>(Vec3(0, 0, 1), 0));
+		if (!pos) { return false; }
+
+        renderable_->set_position(*pos);
         return true;
     }
 

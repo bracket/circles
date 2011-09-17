@@ -43,7 +43,7 @@ struct Square {
 		};
 		Matrix<4, 4, float> M(F);
 		
-		program_->bind_uniform("model_view", engine->get_camera_matrix() * M);
+		program_->bind_uniform("model_view", engine->get_camera_inverse() * M);
 
 		glVertexAttribPointer(pos_idx_, 3, GL_FLOAT, GL_FALSE,
 			sizeof(Vertex), vertices_.front().pos);

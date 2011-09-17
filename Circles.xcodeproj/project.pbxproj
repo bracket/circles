@@ -48,6 +48,9 @@
 		4E175AF513ED02DD0087D35F /* TouchHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchHandler.cpp; sourceTree = "<group>"; };
 		4E175AF613ED02DD0087D35F /* TouchHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TouchHandler.hpp; sourceTree = "<group>"; };
 		4E175AFA13ED02F30087D35F /* Rectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Rectangle.hpp; sourceTree = "<group>"; };
+		4E2B56041426FBF2004684CC /* intersection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = intersection.hpp; sourceTree = "<group>"; };
+		4E2B56051426FBF2004684CC /* Plane.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Plane.hpp; sourceTree = "<group>"; };
+		4E2B56061426FBF2004684CC /* Ray.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ray.hpp; sourceTree = "<group>"; };
 		4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4E387B3113E135B0003DADA2 /* Integer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Integer.hpp; sourceTree = "<group>"; };
 		4E387B3213E135B0003DADA2 /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
@@ -148,6 +151,9 @@
 		4E387B2F13E135B0003DADA2 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				4E2B56041426FBF2004684CC /* intersection.hpp */,
+				4E2B56051426FBF2004684CC /* Plane.hpp */,
+				4E2B56061426FBF2004684CC /* Ray.hpp */,
 				4E175AFA13ED02F30087D35F /* Rectangle.hpp */,
 				B139363013E4BDF300463DC8 /* MatrixOps.hpp */,
 				4E387B3113E135B0003DADA2 /* Integer.hpp */,
