@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <boost/range.hpp>
+#include <math.h>
 #include <math/Vec.hpp>
 #include <utility>
 
@@ -38,9 +39,17 @@ struct Matrix {
 		assign(it, end);
 	}
 
-	template <class U, int n>
-	Matrix(U (&array)[n]) {
+	template <class U>
+	Matrix(U (&array)[rows * cols]) {
 		assign(boost::begin(array), boost::end(array));
+	}
+
+	template <class R>
+	Matrix(R (&array)[rows]) {
+		iterator out = begin();
+		for (int i = 0; i < rows; ++i) {
+			out = std::copy(boost::begin(array[i]), boost::end(array[i]), out);
+		}
 	}
 
 	row_type & operator [] (int i) { return data_[i]; }
@@ -137,3 +146,91 @@ struct Matrix {
 
 		storage_type data_;
 };
+
+namespace detail {
+	namespace MatrixInverter {
+		int abs(int x) { return ::abs(x); }
+		float abs(float x) { return fabsf(x); }
+		double abs(double x) { return fabs(x); }
+		long double abs(long double x) { return fabsl(x); }
+
+		template <class T, int N>
+		inline void swap(T (&left)[N], T (&right)[N]) {
+			float *l = left, *r = right;
+			for (int i = 0; i < N; ++i) { std::swap(*l++, *r++); }
+		}
+
+		template <class T>
+		void div(T * begin, T * end, T d) {
+			for (; begin != end; ++begin) { *begin /= d; }
+		}
+
+		template <class T>
+		T max_abs(T * begin, T * end) {
+			T m = 0;
+			for (T * it = begin; it < end; ++it) {
+				T v = abs(*it);
+				if (it != begin && v <= m) { continue; }
+				m = v;
+			}
+
+			return m;
+		}
+
+		template <class T>
+		int find_pivot_row(T * begin, T * end, int stride) {
+			T m = 0; int p = 0, i = 0;
+			for (T * it = begin; it < end; ++i, it += stride) {
+				T v = abs(*it); 
+				if (i && v <= m) { continue; }
+				m = v; p = i;
+			}
+
+			return p;
+		}
+
+		template <class T>
+		void normalize_front(T * begin, T * end) {
+			float d = *begin; *begin = 1; ++begin;
+			while (begin < end) { *begin++ /= d; }
+		}
+
+		template <class T>
+		void scale_and_subtract(T * begin, T * end, T * out) {
+			T s = -*out / *begin++; *out++ = 0;
+			while (begin < end) { *out++ += s * *begin++; }
+		}
+
+		template <class T, int N>
+		void invert_matrix(Matrix<N, N, T> * M) {
+			T S[N][2 * N];
+
+			for (int i = 0; i < N; ++i) {
+				for (int j = 0; j < N; ++j) {
+					S[i][j] = (*M)[i][j];
+					S[i][j + N] = (i == j);
+				}
+			}
+
+			for (int i = 0; i < N; ++i) { div(S[i], S[i] + 2 * N, max_abs(S[i], S[i] + N)); }
+
+			for (int i = 0; i < N; ++i) {
+				int pivot = find_pivot_row(S[i] + i, S[N] + i, 2 * N);
+				if (pivot) { swap(S[i], S[i + pivot]); }
+
+				normalize_front(S[i] + i, S[i] + 2 * N);
+				for (int j = i + 1; j < N; ++j) { scale_and_subtract(S[i] + i, S[i] + 2 * N, S[j] + i); }
+			}
+
+			for (int i = N - 1; i > 0; --i) {
+				for (int j = i - 1; j >= 0; --j) { scale_and_subtract(S[i] + i, S[i] + 2 * N, S[j] + i); }
+			}
+
+			for (int i = 0; i < N; ++i) {
+				for (int j = 0; j < N; ++j) { (*M)[i][j] = S[i][j + N]; }
+			}
+		}
+	}
+}
+
+using detail::MatrixInverter::invert_matrix;
