@@ -78,7 +78,7 @@ class MachineGraph {
 			return p.first->second;
 		}
 
-		bool link_machines(int input_id, int output_id) {
+		bool link_machines(TargetID input_id, TargetID output_id) {
 			typedef MachineContainer::iterator iterator;
 
 			iterator in = machines_.find(input_id);

@@ -8,6 +8,14 @@
 
 struct MachineGraphAccess {
 	static void handle_command(MachineGraph * graph, CreateMachineCommand * command) {
+		TargetID target_id = command->machine_id;
+		target_id.client_id = command->get_target_id().client_id;
+
+		TargetID output_id = 1;
+
+		graph->add_machine(target_id, command->machine_type);
+		graph->link_machines(target_id, output_id);
+
 		// graph->add_machine(constructed TargetID, command->machine_type);
 		std::cout << "handle_command command = " << command
 			<< " response = " << command->get_response() << std::endl;
