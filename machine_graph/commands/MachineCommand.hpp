@@ -3,15 +3,7 @@
 #include <algorithm>
 #include <boost/utility.hpp>
 #include <vector>
-
-union CommandID {
-	struct {
-		unsigned short name;
-		unsigned short space;
-	};
-
-	unsigned int id;
-};
+#include <shared/types.hpp>
 
 inline CommandID make_command_id(unsigned short space, unsigned short name) {
 	CommandID id = { name, space };
@@ -31,8 +23,14 @@ class MachineCommand : boost::noncopyable {
 
 		virtual ~MachineCommand() { }
 
-		void set_target_id(int target_id) { target_id_ = target_id; }
-		int get_target_id() const { return target_id_; }
+		void set_target_id(TargetID target_id) { target_id_ = target_id; }
+		TargetID get_target_id() const { return target_id_; }
+
+		void set_client_id(ClientID id) { target_id_.client_id = id; }
+		ClientID get_client_id() { return target_id_.client_id; }
+
+		void set_machine_id(MachineID id) { target_id_.machine_id = id; }
+		MachineID get_machine_id() { return target_id_.machine_id; }
 
 		void set_callback(ResponseCallback callback) { callback_ = callback; }
 
@@ -56,7 +54,7 @@ class MachineCommand : boost::noncopyable {
 		{ }
 
 	private:
-		int target_id_;
+		TargetID target_id_;
 		CommandID command_id_;
 		CommandResponse * response_;
 		ResponseCallback callback_;

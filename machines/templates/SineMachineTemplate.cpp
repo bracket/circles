@@ -6,6 +6,8 @@
 #include <math/intersection.hpp>
 #include <Square.hpp>
 
+#include <iostream>
+
 // NOTE: This can be factored out to be very generic, and it should be.
 // Virtually every single template is going to look this and it's a hell of a
 // lot of code.
@@ -131,7 +133,12 @@ namespace {
 		if (!machine) { return false; }
 		
 		machine->get_renderable()->set_frame(renderable_->get_frame());
-		app_engine->register_machine(machine);
+		
+		MachineID machine_id = app_engine->register_machine(machine);
+
+		CreateMachineCommand * create_command = new CreateMachineCommand("SineMachine", machine_id);
+		std::cout << "client side " << create_command << " " << create_command->get_target_id() << std::endl;
+		app_engine->push_command(create_command);
 		// fi
 
 		app_engine->erase_renderable(renderable_);

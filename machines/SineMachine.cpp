@@ -94,10 +94,10 @@ namespace {
 	bool SineMachineTouchable::handle_single_tap(Vec2 const & pos) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
-		CreateMachineCommand * command = new CreateMachineCommand("SineMachine");
-		command->set_callback(circle_tap_callback);
+		// CreateMachineCommand * command = new CreateMachineCommand("SineMachine");
+		// command->set_callback(circle_tap_callback);
 
-		app_engine->push_command(command);
+		// app_engine->push_command(command);
         return true;
 	}
 

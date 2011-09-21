@@ -2,8 +2,7 @@
 
 #include <renderer/Renderable.hpp>
 #include <input/Touchable.hpp>
-
-typedef int MachineID;
+#include <shared/types.hpp>
 
 class Machine {
 	public:
@@ -12,7 +11,6 @@ class Machine {
 		Touchable * get_touchable() const { return touchable_; }
 
 		MachineID get_machine_id() const { return machine_id_; }
-
 
 	protected:
 		Machine(Renderable * renderable, Touchable * touchable) :

@@ -22,6 +22,8 @@ bool LocalCommandQueue::init() {
 
 	async_queue_ = machine_thread->get_command_queue();
 
+	this->set_client_id(1);
+
 	return true;
 }
 
