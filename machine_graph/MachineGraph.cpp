@@ -1,4 +1,4 @@
-#include <machine_graph/MachineFactory.hpp>
+#include <machine_graph/SoundMachineFactory.hpp>
 #include <machine_graph/MachineGraph.hpp>
 #include <machine_graph/commands/MachineCommand.hpp>
 #include <machine_graph/commands/MachineGraphCommands.hpp>
@@ -23,7 +23,7 @@ namespace {
 }
 
 bool MachineGraph::init() {
-    std::auto_ptr<SoundMachine> out(get_machine_factory().construct("OutputMachine", this));
+    std::auto_ptr<SoundMachine> out(SoundMachineFactory::get().construct("OutputMachine", this));
 
 	if (!out.get()) { return false; }
 	if (!add_machine_with_id(1, out.get())) { return false; }

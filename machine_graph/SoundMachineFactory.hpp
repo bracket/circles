@@ -7,7 +7,7 @@
 class SoundMachine;
 class MachineGraph;
 
-class MachineFactory {
+class SoundMachineFactory {
 	public:
 		typedef SoundMachine * (*MachineConstructor)(MachineGraph *);
 
@@ -17,6 +17,11 @@ class MachineFactory {
 		typedef ConstructorMap::const_iterator const_iterator;
  
 	public:
+		static SoundMachineFactory & get() {
+			static SoundMachineFactory factory;
+			return factory;
+		}
+
 		bool register_constructor(
 			std::string const & name, MachineConstructor constructor, bool force = false
 		)
@@ -37,8 +42,3 @@ class MachineFactory {
 	private:
 		ConstructorMap constructors_;
 };
-
-inline MachineFactory & get_machine_factory() {
-	static MachineFactory machine_factory;
-	return machine_factory;
-}

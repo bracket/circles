@@ -86,12 +86,12 @@
 		4EFBA8C813D91C22007A0C38 /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
 		4EFBA90A13DA5A9B007A0C38 /* test.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.fsh; path = shaders/test.fsh; sourceTree = "<group>"; };
 		4EFBA90B13DA5A9B007A0C38 /* test.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = test.vsh; path = shaders/test.vsh; sourceTree = "<group>"; };
+		B1363F6514297CE1004C13C5 /* SoundMachineFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundMachineFactory.hpp; sourceTree = "<group>"; };
 		B1382792141452BD006E6F59 /* Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Block.hpp; sourceTree = "<group>"; };
 		B1382794141452BD006E6F59 /* MachineCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineCommand.cpp; sourceTree = "<group>"; };
 		B1382795141452BD006E6F59 /* MachineCommand.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineCommand.hpp; sourceTree = "<group>"; };
 		B1382796141452BD006E6F59 /* MachineGraphCommands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineGraphCommands.cpp; sourceTree = "<group>"; };
 		B1382797141452BD006E6F59 /* MachineGraphCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineGraphCommands.hpp; sourceTree = "<group>"; };
-		B1382798141452BD006E6F59 /* MachineFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineFactory.hpp; sourceTree = "<group>"; };
 		B1382799141452BD006E6F59 /* MachineGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineGraph.cpp; sourceTree = "<group>"; };
 		B138279A141452BD006E6F59 /* MachineGraph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachineGraph.hpp; sourceTree = "<group>"; };
 		B138279B141452BD006E6F59 /* MachineThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MachineThread.cpp; sourceTree = "<group>"; };
@@ -289,9 +289,9 @@
 		B1382791141452BD006E6F59 /* machine_graph */ = {
 			isa = PBXGroup;
 			children = (
+				B1363F6514297CE1004C13C5 /* SoundMachineFactory.hpp */,
 				B1382792141452BD006E6F59 /* Block.hpp */,
 				B1382793141452BD006E6F59 /* commands */,
-				B1382798141452BD006E6F59 /* MachineFactory.hpp */,
 				B1382799141452BD006E6F59 /* MachineGraph.cpp */,
 				B138279A141452BD006E6F59 /* MachineGraph.hpp */,
 				B138279B141452BD006E6F59 /* MachineThread.cpp */,

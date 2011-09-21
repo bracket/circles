@@ -5,7 +5,7 @@
 #include <machine_graph/Block.hpp>
 #include <machine_graph/commands/MachineCommand.hpp>
 #include <machine_graph/SoundMachine.hpp>
-#include <machine_graph/MachineFactory.hpp>
+#include <machine_graph/SoundMachineFactory.hpp>
 #include <string>
 #include <utility>
 #include <vector>
@@ -61,7 +61,7 @@ class MachineGraph {
 		}
 
 		int add_machine(std::string const & machine_type) {
-			std::auto_ptr<SoundMachine> ptr(get_machine_factory().construct(machine_type, this));
+			std::auto_ptr<SoundMachine> ptr(SoundMachineFactory::get().construct(machine_type, this));
 			if (!ptr.get()) { return 0; }
 
 			int id = next_id();

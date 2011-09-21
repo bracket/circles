@@ -1,6 +1,6 @@
 #include <cmath>
 #include <machine_graph/SoundMachine.hpp>
-#include <machine_graph/MachineFactory.hpp>
+#include <machine_graph/SoundMachineFactory.hpp>
 
 namespace {
     const double two_pi = 8.0 * std::atan(1.0);
@@ -42,7 +42,7 @@ namespace {
 
 	struct registrar {
 		registrar() {
-			get_machine_factory().register_constructor("SineMachine", constructor);
+			SoundMachineFactory::get().register_constructor("SineMachine", constructor);
 		}
 	};
 
