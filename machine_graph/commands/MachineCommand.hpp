@@ -11,6 +11,7 @@ inline CommandID make_command_id(unsigned short space, unsigned short name) {
 }
 
 struct CommandResponse {
+	virtual ~CommandResponse() { }
 	virtual std::string response_string() { return "Success"; }
 	virtual int response_type() { return 0; }
 };
@@ -21,7 +22,10 @@ class MachineCommand : boost::noncopyable {
 	public:
 		typedef void (*ResponseCallback)(MachineCommand *, CommandResponse *);
 
-		virtual ~MachineCommand() { }
+		virtual ~MachineCommand() {
+			if (reinterpret_cast<unsigned int>(response_) & 0x00000001) { return; }
+			delete response_;
+		}
 
 		void set_target_id(TargetID target_id) { target_id_ = target_id; }
 		TargetID get_target_id() const { return target_id_; }
@@ -37,8 +41,8 @@ class MachineCommand : boost::noncopyable {
         CommandID get_command_id() const { return command_id_; }
 
 		bool dispatch_callback() {
-			if (!callback_) { return true; }
 			if (!response_) { return false; }
+			if (!callback_) { return true; }
 			(*callback_)(this, response_);
 
 			return true;
