@@ -3,6 +3,7 @@
 #include <machines/MachineFactory.hpp>
 #include <machine_graph/commands/MachineGraphCommands.hpp>
 
+#include <math/intersection.hpp>
 #include <Square.hpp>
 #include <arch/common.hpp>
 #include <iostream>
@@ -68,8 +69,14 @@ namespace {
 		return program.release();
 	}
 
-	bool SineMachineTouchable::handle_move_move(Vec2 const & pos) {
-        renderable_->set_position(pos);
+	bool SineMachineTouchable::handle_move_move(Vec2 const & loc) {
+		RenderingEngine * rendering_engine = ApplicationEngine::get()->get_rendering_engine();
+		Ray<3, float> ray = rendering_engine->unproject_device_independent(loc);
+
+		boost::optional<Vec3> pos = intersection(ray, Plane<3, float>(Vec3(0, 0, 1), 0));
+		if (!pos) { return false; }
+
+		renderable_->set_position(*pos);
         return true;
 	}
 
