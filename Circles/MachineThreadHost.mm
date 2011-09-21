@@ -77,6 +77,8 @@ namespace {
 				{ *left_channel++ = samplize(*it++); }
 		}
 
+		for (; copied < frame_count; ++copied) { *left_channel++ = 0; }
+
 		return 0;
 	}
 
