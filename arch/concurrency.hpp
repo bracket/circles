@@ -12,6 +12,8 @@ inline bool cmp_exchange(void * old_value, void * new_value, void * volatile * v
 	return OSAtomicCompareAndSwapPtr(old_value, new_value, value);
 }
 
+inline void memory_barrier() { OSMemoryBarrier(); }
+
 #endif
 
 template <class T>

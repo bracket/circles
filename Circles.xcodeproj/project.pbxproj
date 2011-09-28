@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4E175AF813ED02DD0087D35F /* TouchHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E175AF513ED02DD0087D35F /* TouchHandler.cpp */; };
 		4E36BB3113C2D16200D18CA9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E36BB2F13C2D16200D18CA9 /* AudioToolbox.framework */; };
+		4E98DE04142FF62300289D9B /* EventLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E98DE01142FF62300289D9B /* EventLogger.cpp */; };
 		4ECFA0AB13C281D4004388CE /* MachineThreadHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFA0AA13C281D4004388CE /* MachineThreadHost.mm */; };
 		4ECFA0AD13C282F5004388CE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ECFA0AC13C282F5004388CE /* CoreFoundation.framework */; };
 		4ED275C913C1014F00DB7510 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED275C813C1014F00DB7510 /* UIKit.framework */; };
@@ -59,6 +60,8 @@
 		4E387B3413E135B0003DADA2 /* Vec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vec.hpp; sourceTree = "<group>"; };
 		4E5B000013C94A5D0036D68B /* AsynchronousQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AsynchronousQueue.hpp; sourceTree = "<group>"; };
 		4E5B000113C94A5D0036D68B /* Ticker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ticker.hpp; sourceTree = "<group>"; };
+		4E98DE01142FF62300289D9B /* EventLogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventLogger.cpp; sourceTree = "<group>"; };
+		4E98DE02142FF62300289D9B /* EventLogger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EventLogger.hpp; sourceTree = "<group>"; };
 		4ECFA0A913C281D4004388CE /* MachineThreadHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MachineThreadHost.h; sourceTree = "<group>"; };
 		4ECFA0AA13C281D4004388CE /* MachineThreadHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MachineThreadHost.mm; sourceTree = "<group>"; };
 		4ECFA0AC13C282F5004388CE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -170,10 +173,20 @@
 			isa = PBXGroup;
 			children = (
 				4E127FC2141B28680038D890 /* erase_if.hpp */,
+				4E98DDFF142FF62300289D9B /* EventLogger */,
 				4E5B000013C94A5D0036D68B /* AsynchronousQueue.hpp */,
 				4E5B000113C94A5D0036D68B /* Ticker.hpp */,
 			);
 			path = shared;
+			sourceTree = "<group>";
+		};
+		4E98DDFF142FF62300289D9B /* EventLogger */ = {
+			isa = PBXGroup;
+			children = (
+				4E98DE01142FF62300289D9B /* EventLogger.cpp */,
+				4E98DE02142FF62300289D9B /* EventLogger.hpp */,
+			);
+			path = EventLogger;
 			sourceTree = "<group>";
 		};
 		4ED275B913C1014E00DB7510 = {
@@ -434,6 +447,7 @@
 				B197FB1D141735BB00120726 /* SineMachine.cpp in Sources */,
 				B197FB20141735BB00120726 /* SineMachineTemplate.cpp in Sources */,
 				B1D8D9541432D1E1003DCAA1 /* OutputMachine.cpp in Sources */,
+				4E98DE04142FF62300289D9B /* EventLogger.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
