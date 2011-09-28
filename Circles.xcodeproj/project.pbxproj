@@ -39,6 +39,7 @@
 		B197FB1D141735BB00120726 /* SineMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B197FB17141735BB00120726 /* SineMachine.cpp */; };
 		B197FB20141735BB00120726 /* SineMachineTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B197FB1B141735BB00120726 /* SineMachineTemplate.cpp */; };
 		B1C797531404BBE60094A1D2 /* LocalCommandQueue.mm in Sources */ = {isa = PBXBuildFile; fileRef = B1C797521404BBE60094A1D2 /* LocalCommandQueue.mm */; };
+		B1D8D9541432D1E1003DCAA1 /* OutputMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D8D9531432D1E1003DCAA1 /* OutputMachine.cpp */; };
 		B1FE747713E8EAB7001C43C4 /* TouchHandlerHost.mm in Sources */ = {isa = PBXBuildFile; fileRef = B1FE747613E8EAB7001C43C4 /* TouchHandlerHost.mm */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +117,7 @@
 		B1C797511404BBE60094A1D2 /* LocalCommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LocalCommandQueue.hpp; sourceTree = "<group>"; };
 		B1C797521404BBE60094A1D2 /* LocalCommandQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocalCommandQueue.mm; sourceTree = "<group>"; };
 		B1C797551404BC010094A1D2 /* CommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandQueue.hpp; path = app_engine/CommandQueue.hpp; sourceTree = "<group>"; };
+		B1D8D9531432D1E1003DCAA1 /* OutputMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputMachine.cpp; sourceTree = "<group>"; };
 		B1FE747513E8EAB7001C43C4 /* TouchHandlerHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchHandlerHost.h; sourceTree = "<group>"; };
 		B1FE747613E8EAB7001C43C4 /* TouchHandlerHost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TouchHandlerHost.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -329,6 +331,7 @@
 		B17C7B341415541A00233A0B /* machines */ = {
 			isa = PBXGroup;
 			children = (
+				B1D8D9531432D1E1003DCAA1 /* OutputMachine.cpp */,
 				B197FB16141735BB00120726 /* MachineFactory.hpp */,
 				B197FB17141735BB00120726 /* SineMachine.cpp */,
 				B197FB18141735BB00120726 /* templates */,
@@ -430,6 +433,7 @@
 				B13827A9141452BD006E6F59 /* SoundMachine.cpp in Sources */,
 				B197FB1D141735BB00120726 /* SineMachine.cpp in Sources */,
 				B197FB20141735BB00120726 /* SineMachineTemplate.cpp in Sources */,
+				B1D8D9541432D1E1003DCAA1 /* OutputMachine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

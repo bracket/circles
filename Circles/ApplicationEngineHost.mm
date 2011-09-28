@@ -13,6 +13,10 @@
 	return self;
 }
 
+- (void)postSystemsInit {
+	app_engine_->post_systems_init();
+}
+
 - (void)setRenderingEngine:(RenderingEngine *)rendering_engine {
 	app_engine_->set_rendering_engine(rendering_engine);
 }

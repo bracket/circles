@@ -30,8 +30,7 @@ namespace {
 				Renderable(program),
 				square_(program),
 				touchable_(0)
-			{
-			}
+			{ }
 
 			void set_touchable(SineMachineTouchable * touchable)
 				{ touchable_ = touchable; }
@@ -85,14 +84,8 @@ namespace {
 			<< " response: " << response << std::endl;
 	}
 
-	class SineMachine : public Machine {
-		public:
-			SineMachine(Renderable * renderable, Touchable * touchable) : 
-				Machine(renderable, touchable) { }
-	};
-
 	bool SineMachineTouchable::handle_single_tap(Vec2 const & pos) {
-		ApplicationEngine * app_engine = ApplicationEngine::get();
+//		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		// CreateMachineCommand * command = new CreateMachineCommand("SineMachine");
 		// command->set_callback(circle_tap_callback);
@@ -100,6 +93,12 @@ namespace {
 		// app_engine->push_command(command);
         return true;
 	}
+
+	class SineMachine : public Machine {
+		public:
+			SineMachine(Renderable * renderable, Touchable * touchable) : 
+				Machine(renderable, touchable) { }
+	};
 
 	Machine * constructor() {
 		static Program * program = initialize_program();

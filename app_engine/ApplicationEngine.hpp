@@ -54,6 +54,7 @@ class ApplicationEngine {
 
 		void push_command(MachineCommand * command) { command_queue_->push(command); }
 
+		void post_systems_init();
 		void processing_loop_step();
 
 		MachineID register_machine(Machine * machine) {

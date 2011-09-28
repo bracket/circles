@@ -12,7 +12,6 @@ class Machine {
 
 		MachineID get_machine_id() const { return machine_id_; }
 
-	protected:
 		Machine(Renderable * renderable, Touchable * touchable) :
 			renderable_(renderable),
 			touchable_(touchable)

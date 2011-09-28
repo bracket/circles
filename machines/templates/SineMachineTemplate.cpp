@@ -133,6 +133,7 @@ namespace {
 		if (!machine) { return false; }
 		
 		machine->get_renderable()->set_frame(renderable_->get_frame());
+		std::cout << "template frame: " << machine->get_renderable()->get_frame() << std::endl;
 		
 		MachineID machine_id = app_engine->register_machine(machine);
 
@@ -172,7 +173,7 @@ Template * create_test_template() {
 	SineTemplateRenderable * renderable = new SineTemplateRenderable(program);
 	SineTemplateTouchable * touchable = new SineTemplateTouchable();
 
-	renderable->set_position(Vec3(0.0, 0.0, 0.0));
+	renderable->set_position(Vec3(-3, 3, 0.0));
 	renderable->set_touchable(touchable);
 	touchable->set_renderable(renderable);
 

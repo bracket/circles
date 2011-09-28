@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <app_engine/ApplicationEngine.hpp>
 #include <arch/common.hpp>
+#include <machines/MachineFactory.hpp>
 #include <math/Rectangle.hpp>
 #include <renderer/Shader.hpp>
 #include <shared/Ticker.hpp>
@@ -40,6 +41,23 @@ void ApplicationEngine::render_frame() {
 		{ rendering_engine_->submit(*it); }
 
 	rendering_engine_->render();
+}
+
+void ApplicationEngine::post_systems_init() {
+	Machine * output_machine = MachineFactory::get().construct("OutputMachine");
+
+	float T[] = {
+		1.0, 0.0, 0.0,
+		0.0, 1.0, 0.0,
+		2.5, 3.0, 0.0
+	};
+	output_machine->get_renderable()->set_frame(T);
+	register_touchable(output_machine->get_touchable());
+	register_renderable(output_machine->get_renderable());
+
+	std::cout << "output frame: " << output_machine->get_renderable()->get_frame() << std::endl;
+
+	machines_.register_output_machine(output_machine);
 }
 
 void ApplicationEngine::processing_loop_step() {

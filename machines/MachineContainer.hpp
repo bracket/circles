@@ -10,7 +10,7 @@ class MachineContainer {
 	public:
 		typedef MachineMap::const_iterator const_iterator;
 
-		MachineContainer() : last_machine_id_(0) { }
+		MachineContainer() : last_machine_id_(OUTPUT_MACHINE_ID) { }
 
 		~MachineContainer() {
 			typedef MachineMap::iterator iterator;
@@ -29,10 +29,11 @@ class MachineContainer {
 
 			MachineID id = next_id();
 
-			machine_map_.insert(std::make_pair(id, machine));
-			reverse_map_.insert(std::make_pair(machine, id));
+			return register_machine_with_id(id, machine);
+		}
 
-			return id;
+		MachineID register_output_machine(Machine * machine) {
+			return register_machine_with_id(OUTPUT_MACHINE_ID, machine);
 		}
 
 		bool delete_machine(MachineID id) {
@@ -64,6 +65,24 @@ class MachineContainer {
 
 	private:
 		int next_id() { return ++last_machine_id_; }
+
+		MachineID register_machine_with_id(MachineID id, Machine * machine) {
+			typedef MachineMap::iterator iterator;
+			typedef std::pair<iterator, bool> pair_type;
+
+			std::auto_ptr<Machine> ptr(machine);
+
+			pair_type p = machine_map_.insert(std::make_pair(id, machine));
+			if (!p.second) {
+				std::auto_ptr<Machine> old(p.first->second);
+				p.first->second = ptr.release();
+				reverse_map_.erase(machine);
+			}
+			reverse_map_.insert(std::make_pair(machine, id));
+
+			return id;
+		}
+
 
 		MachineMap machine_map_;
 		ReverseMap reverse_map_;

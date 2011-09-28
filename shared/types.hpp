@@ -1,5 +1,7 @@
 #pragma once
 
+#define OUTPUT_MACHINE_ID MachineID(1)
+
 union CommandID {
 	struct {
 		unsigned short name;
