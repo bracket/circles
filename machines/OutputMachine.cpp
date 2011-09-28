@@ -14,7 +14,7 @@ namespace {
 
 	class OutputMachineTouchable : public Touchable {
 		public:
-			bool handle_move_end(Vec2 const & pos);
+			bool handle_move_end(Vec2 const & loc);
 
 			void set_renderable(OutputMachineRenderable * renderable) { renderable_ = renderable; }
 
