@@ -10,6 +10,8 @@ class MachineContainer {
 	public:
 		typedef MachineMap::const_iterator const_iterator;
 
+		static const MachineID OUTPUT_MACHINE_ID = 1;
+
 		MachineContainer() : last_machine_id_(OUTPUT_MACHINE_ID) { }
 
 		~MachineContainer() {

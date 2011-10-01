@@ -14,7 +14,7 @@ namespace {
 
 	class OutputMachineTouchable : public Touchable {
 		public:
-			bool handle_move_end(Vec2 const & loc);
+			bool handle_move_end(TouchHandler * handler, Vec2 const & loc);
 
 			void set_renderable(OutputMachineRenderable * renderable) { renderable_ = renderable; }
 
@@ -66,7 +66,7 @@ namespace {
 		return program.release();
 	}
 
-	bool OutputMachineTouchable::handle_move_end(Vec2 const & loc) {
+	bool OutputMachineTouchable::handle_move_end(TouchHandler *, Vec2 const & loc) {
 		// make connection
 		return true;
 	}

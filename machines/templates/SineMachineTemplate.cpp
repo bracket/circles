@@ -20,7 +20,7 @@ namespace {
 
 	class SineTemplateTouchable : public Touchable {
 		public: 
-			bool handle_move_start(Vec2 const & start);
+			bool handle_move_start(TouchHandler *, Vec2 const & start);
 
 			void set_renderable(SineTemplateRenderable * renderable) { renderable_ = renderable; }
 
@@ -47,8 +47,8 @@ namespace {
 
 	class SineTemplateMovingTouchable : public Touchable {
 		public:
-			bool handle_move_move(Vec2 const & loc);
-			bool handle_move_end(Vec2 const & end);
+			bool handle_move_move(TouchHandler *, Vec2 const & loc);
+			bool handle_move_end(TouchHandler *, Vec2 const & end);
 
 			void set_renderable(SineTemplateMovingRenderable * renderable)
 				{ renderable_ = renderable; }
@@ -74,7 +74,7 @@ namespace {
 			Touchable * touchable_;
 	};
 
-	bool SineTemplateTouchable::handle_move_start(Vec2 const & start) {
+	bool SineTemplateTouchable::handle_move_start(TouchHandler *, Vec2 const & start) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		// FIXME: Get smarter about my memory, damnit
@@ -111,7 +111,7 @@ namespace {
 		}
 	}
 
-	bool SineTemplateMovingTouchable::handle_move_move(Vec2 const & loc) {
+	bool SineTemplateMovingTouchable::handle_move_move(TouchHandler *, Vec2 const & loc) {
 		RenderingEngine * rendering_engine = ApplicationEngine::get()->get_rendering_engine();
 		Ray<3, float> ray = rendering_engine->unproject_device_independent(loc);
 
@@ -122,7 +122,7 @@ namespace {
         return true;
     }
 
-	bool SineTemplateMovingTouchable::handle_move_end(Vec2 const & end) {
+	bool SineTemplateMovingTouchable::handle_move_end(TouchHandler *, Vec2 const & end) {
 		std::auto_ptr<SineTemplateMovingTouchable> touch_ptr(this);
         std::auto_ptr<SineTemplateMovingRenderable> render_ptr(renderable_);
 

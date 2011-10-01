@@ -21,8 +21,8 @@ namespace {
 			LinkMovingTouchable(Machine * machine) :
 				start_machine_(machine) { }
 
-			bool handle_move_move(Vec2 const & loc);
-			bool handle_move_end(Vec2 const & loc);
+			bool handle_move_move(TouchHandler *, Vec2 const & loc);
+			bool handle_move_end(TouchHandler *, Vec2 const & loc);
 
 			void set_renderable(LinkMovingRenderable * renderable) { renderable_ = renderable; }
 
@@ -56,7 +56,7 @@ namespace {
 			LinkMovingTouchable * touchable_;
 	};
 
-	bool LinkMovingTouchable::handle_move_move(Vec2 const & loc) {
+	bool LinkMovingTouchable::handle_move_move(TouchHandler *, Vec2 const & loc) {
 		RenderingEngine * rendering_engine = ApplicationEngine::get()->get_rendering_engine();
 		Ray<3, float> ray = rendering_engine->unproject_device_independent(loc);
 
@@ -67,14 +67,14 @@ namespace {
         return true;
 	}
 
-	bool LinkMovingTouchable::handle_move_end(Vec2 const & loc) {
+	bool LinkMovingTouchable::handle_move_end(TouchHandler *, Vec2 const & loc) {
 		return true;
 	}
 
 	class SineMachineTouchable : public Touchable {
 		public:
-			bool handle_move_start(Vec2 const & loc);
-			bool handle_single_tap(Vec2 const & loc);
+			bool handle_move_start(TouchHandler *, Vec2 const & loc);
+			bool handle_single_tap(TouchHandler *, Vec2 const & loc);
 
 			void set_machine(SineMachine * machine) { machine_ = machine; }
 
@@ -139,7 +139,7 @@ namespace {
 		return program.release();
 	}
 
-	bool SineMachineTouchable::handle_move_start(Vec2 const & loc) {
+	bool SineMachineTouchable::handle_move_start(TouchHandler *, Vec2 const & loc) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		LinkMovingRenderable * link_renderable = new LinkMovingRenderable(renderable_->get_program());
@@ -160,7 +160,7 @@ namespace {
 			<< " response: " << response << std::endl;
 	}
 
-	bool SineMachineTouchable::handle_single_tap(Vec2 const & pos) {
+	bool SineMachineTouchable::handle_single_tap(TouchHandler *, Vec2 const & pos) {
 //		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		// CreateMachineCommand * command = new CreateMachineCommand("SineMachine");
