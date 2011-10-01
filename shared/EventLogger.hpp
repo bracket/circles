@@ -81,25 +81,32 @@ class EventLogger {
 		void push_queue(EventLogMessage * message, EventLogMessage ** head, EventLogMessage ** tail) {
 			bool done = false;
 			EventLogMessage * last = 0;
+
 			while (!done) {
-				last = *tail_;
-				if (last->next) { cmp_exchange(last, last->next, tail_); }
+				last = *tail;
+				if (last->next) { cmp_exchange(last, get_tail(last), tail); }
 				else { done = cmp_exchange(static_cast<EventLogMessage*>(0), message, &last->next);
 			}
 
-			cmp_exchange(last, *tail, tail_);
+			cmp_exchange(last, get_tail(last), tail);
 		}
 
 		template <int max_retries>
 		EventLogMessage * shift_queue(EventLogMessage ** head, EventLogMessage ** tail) {
+			if (*head == *tail) { return 0; }
 
 			for (int i = 0; i < max_retries; ++i) {
-			EventLogMessage * m = *head;
-				if (m == *tail) { return 0; }
-				if (cmp_exchange(m, *head, &m->next)) { return m; }
+				EventLogMessage * message = *head, * next = message->next;
+				if (!next) { return 0; }
+				if (cmp_exchange(m, next, head)) { return message; }
 			}
 
 			return 0;
+		}
+
+		EventLogMessage * get_tail(EventLogMessage * message) const {
+			for (; message->next; message = message->next) { }
+			return message;
 		}
 
 		EventLogMessage * head_, * tail_;
