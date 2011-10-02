@@ -14,11 +14,6 @@ struct MachineGraphAccess {
 		TargetID output_id = 1;
 
 		graph->add_machine(target_id, command->machine_type);
-		graph->link_machines(target_id, output_id);
-
-		// graph->add_machine(constructed TargetID, command->machine_type);
-		std::cout << "handle_command command = " << command
-			<< " response = " << command->get_response() << std::endl;
 
 		command->set_response(success_response);
 	}

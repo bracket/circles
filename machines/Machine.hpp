@@ -6,6 +6,8 @@
 
 class Machine {
 	public:
+		friend class MachineContainer;
+
 		Renderable * get_renderable() const { return renderable_; }
 
 		Touchable * get_touchable() const { return touchable_; }
@@ -18,7 +20,7 @@ class Machine {
 		{ }
 
 	private:
-		void set_target_machine_id(MachineID id) { machine_id_ = id; }
+		void set_machine_id(MachineID id) { machine_id_ = id; }
 
 		Renderable * renderable_;
 		Touchable * touchable_;

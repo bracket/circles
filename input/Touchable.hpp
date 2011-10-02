@@ -7,6 +7,12 @@ class TouchHandler;
 
 class Touchable {
 	public:
+		enum TouchableTypeID {
+			TypeIDNone = 0,
+			TypeIDMachine,
+			TypeIDLink,
+		};
+
 		virtual ~Touchable() { }
 
 		Rectangle<float> const & get_bounding_rect() { return bounding_rect_; }
@@ -21,6 +27,10 @@ class Touchable {
 	
 		void set_bounding_rectangle(Rectangle<float> const & rect)
 			{ bounding_rect_ = rect; }
+
+		virtual void handle_rendezvous(Touchable * touchable) { }
+
+		virtual TouchableTypeID get_touchable_type_id() const { return TypeIDNone; }
 
 	protected:
 		Touchable() { }

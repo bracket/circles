@@ -1,4 +1,5 @@
 #include <app_engine/ApplicationEngine.hpp>
+#include <machines/LinkMovingTouchable.hpp>
 #include <machines/Machine.hpp>
 #include <machines/MachineFactory.hpp>
 #include <machine_graph/commands/MachineGraphCommands.hpp>
@@ -9,6 +10,7 @@
 #include <iostream>
 
 namespace {
+	class OutputMachine;
 	class OutputMachineRenderable;
 	class OutputMachineTouchable;
 
@@ -16,9 +18,13 @@ namespace {
 		public:
 			bool handle_move_end(TouchHandler * handler, Vec2 const & loc);
 
+			void handle_rendezvous(Touchable * touchable);
+
+			void set_machine(OutputMachine * machine) { machine_ = machine; }
 			void set_renderable(OutputMachineRenderable * renderable) { renderable_ = renderable; }
 
 		private:
+			OutputMachine * machine_;
 			OutputMachineRenderable * renderable_;
 	};
 
@@ -66,16 +72,26 @@ namespace {
 		return program.release();
 	}
 
-	bool OutputMachineTouchable::handle_move_end(TouchHandler *, Vec2 const & loc) {
-		// make connection
+	class OutputMachine : public Machine {
+		public:
+			OutputMachine(OutputMachineRenderable * renderable, OutputMachineTouchable * touchable) :
+				Machine(renderable, touchable)
+			{
+				touchable->set_machine(this);
+			}
+	};
+
+	bool OutputMachineTouchable::handle_move_end(TouchHandler * handler, Vec2 const & loc) {
+		handler->insert_rendezvous(loc, this);
 		return true;
 	}
 
-	class OutputMachine : public Machine {
-		public:
-			OutputMachine(Renderable * renderable, Touchable * touchable) :
-				Machine(renderable, touchable) { }
-	};
+	void OutputMachineTouchable::handle_rendezvous(Touchable * touchable) {
+		if (touchable->get_touchable_type_id() == Touchable::TypeIDLink) {
+			LinkMovingTouchable * link_touchable = static_cast<LinkMovingTouchable*>(touchable);
+			Machine * start_machine = link_touchable->get_start_machine();
+		}
+	}
 
 	Machine * constructor() {
 		static Program * program = initialize_program();

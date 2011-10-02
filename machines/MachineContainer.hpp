@@ -82,6 +82,8 @@ class MachineContainer {
 			}
 			reverse_map_.insert(std::make_pair(machine, id));
 
+			machine->set_machine_id(id);
+
 			return id;
 		}
 
