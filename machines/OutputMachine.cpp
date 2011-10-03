@@ -88,8 +88,17 @@ namespace {
 
 	void OutputMachineTouchable::handle_rendezvous(Touchable * touchable) {
 		if (touchable->get_touchable_type_id() == Touchable::TypeIDLink) {
+			ApplicationEngine * app_engine = ApplicationEngine::get();
+
 			LinkMovingTouchable * link_touchable = static_cast<LinkMovingTouchable*>(touchable);
 			Machine * start_machine = link_touchable->get_start_machine();
+
+			LinkMachineCommand * command = new LinkMachineCommand(
+				start_machine->get_machine_id(),
+				machine_->get_machine_id()
+			);
+
+			app_engine->push_command(command);
 		}
 	}
 

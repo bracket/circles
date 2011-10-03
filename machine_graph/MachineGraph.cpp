@@ -11,10 +11,16 @@ struct MachineGraphAccess {
 		TargetID target_id = command->machine_id;
 		target_id.client_id = command->get_target_id().client_id;
 
-		TargetID output_id = 1;
-
 		graph->add_machine(target_id, command->machine_type);
+		command->set_response(success_response);
+	}
 
+	static void handle_command(MachineGraph * graph, LinkMachineCommand * command) {
+		TargetID input_id = command->input_id, output_id = command->output_id;
+
+        input_id.client_id = command->get_target_id().client_id;
+
+		graph->link_machines(input_id, output_id);
 		command->set_response(success_response);
 	}
 };
@@ -39,6 +45,11 @@ bool MachineGraph::init() {
 	graph_dispatch_.register_dispatch(
 		make_command_id(machine_graph_namespace, create_machine_command_id), 
 		&machine_graph_dispatcher<CreateMachineCommand>
+	);
+
+	graph_dispatch_.register_dispatch(
+		make_command_id(machine_graph_namespace, link_machine_command_id),
+		&machine_graph_dispatcher<LinkMachineCommand>
 	);
 
 	return true;

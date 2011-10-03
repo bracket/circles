@@ -133,12 +133,10 @@ namespace {
 		if (!machine) { return false; }
 		
 		machine->get_renderable()->set_frame(renderable_->get_frame());
-		std::cout << "template frame: " << machine->get_renderable()->get_frame() << std::endl;
 		
 		MachineID machine_id = app_engine->register_machine(machine);
 
 		CreateMachineCommand * create_command = new CreateMachineCommand("SineMachine", machine_id);
-		std::cout << "client side " << create_command << " " << create_command->get_target_id() << std::endl;
 		app_engine->push_command(create_command);
 		// fi
 
