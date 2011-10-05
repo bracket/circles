@@ -93,7 +93,7 @@ namespace {
 		link_touchable->set_renderable(link_renderable);
 
 		app_engine->register_renderable(link_renderable);
-		app_engine->register_touchable(link_touchable);
+		app_engine->register_touchable(link_touchable, true);
 
 		return true;
 	}

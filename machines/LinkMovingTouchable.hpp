@@ -18,6 +18,8 @@ class LinkMovingTouchable : public Touchable {
 		LinkMovingTouchable(Machine * machine) :
 			start_machine_(machine)
 		{ }
+        
+        ~LinkMovingTouchable();
 
 		bool handle_move_move(TouchHandler *, Vec2 const & loc);
 		bool handle_move_end(TouchHandler *, Vec2 const & loc);
@@ -26,7 +28,7 @@ class LinkMovingTouchable : public Touchable {
 
 		Machine * get_start_machine() const { return start_machine_; }
 
-		TouchableTypeID get_touchable_type_id() const { return Touchable::TypeIDLink; }
+		TouchableTypeID get_touchable_type_id() const { return Touchable::TypeIDLinkMovingTouchable; }
 
 	private:
 		Machine * start_machine_;
@@ -57,6 +59,12 @@ class LinkMovingRenderable : public Renderable {
 		Square square_;
 		LinkMovingTouchable * touchable_;
 };
+
+inline LinkMovingTouchable::~LinkMovingTouchable() {
+	ApplicationEngine::get()->erase_renderable(renderable_);
+	delete renderable_;
+}
+
 
 inline bool LinkMovingTouchable::handle_move_move(TouchHandler *, Vec2 const & loc) {
 	RenderingEngine * rendering_engine = ApplicationEngine::get()->get_rendering_engine();

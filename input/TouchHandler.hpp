@@ -10,10 +10,25 @@
 class ApplicationEngine;
 
 class TouchHandler {
-	// TODO: TouchableContainer should be a data structure that lets us quickly
-	// find bounding boxes that intersect touch events, and lets us update
-	// bounding boxes easily while Touchables are moving.
-	typedef std::set<Touchable*> TouchableContainer;
+	struct TouchableInfo {
+		Touchable * touchable;
+		unsigned int counter;
+		bool is_owned_by_touch_handler;
+	};
+
+	struct TouchableInfoCompare {
+		template <class L, class R>
+		bool operator() (L const & left, R const & right) const {
+			return extract(left) < extract(right);
+		}
+
+		private:
+			Touchable * extract(Touchable * touchable) const { return touchable; }
+
+			Touchable * extract(TouchableInfo const & info) const { return info.touchable; }
+	};
+
+	typedef std::set<TouchableInfo, TouchableInfoCompare> TouchableContainer;
 
 	typedef std::pair<Vec2, Touchable *> RendezvousPair;
 	typedef std::vector<RendezvousPair> RendezvousContainer;
@@ -40,17 +55,26 @@ class TouchHandler {
 	};
 
 	public:
+		friend struct TouchHandlerAccess;
+
 		TouchHandler(ApplicationEngine * app_engine) :
 			app_engine_(app_engine) { }
 
-		bool insert_touchable(Touchable * touchable) {
-			return touchables_.insert(touchable).second;
+		bool insert_touchable(Touchable * touchable, bool is_owned_by_touch_handler) {
+			TouchableInfo info = { touchable, 0, is_owned_by_touch_handler };
+
+			if (touchables_.insert(info).second) { return true; }
+			if (is_owned_by_touch_handler) { delete touchable; }
+
+			return false;
 		}
 
 		bool erase_touchable(Touchable * touchable) {
-			iterator it = touchables_.find(touchable);
+			TouchableInfo info = { touchable, 0, false };
+			iterator it = touchables_.find(info);
 			if (it == touchables_.end()) { return false; }
 
+			if (it->is_owned_by_touch_handler) { delete it->touchable; }
 			touchables_.erase(it);
 			return true;
 		}
@@ -73,4 +97,5 @@ class TouchHandler {
 		ApplicationEngine * app_engine_;
 		TouchableContainer touchables_;
 		RendezvousContainer rendezvous_;
+		std::vector<Touchable *> touchables_to_delete_;
 };

@@ -1,16 +1,16 @@
 #pragma once
 
+#include <boost/utility.hpp>
 #include <math/Rectangle.hpp>
 #include <math/Vec.hpp>
 
 class TouchHandler;
 
-class Touchable {
+class Touchable : boost::noncopyable {
 	public:
 		enum TouchableTypeID {
 			TypeIDNone = 0,
-			TypeIDMachine,
-			TypeIDLink,
+			TypeIDLinkMovingTouchable,
 		};
 
 		virtual ~Touchable() { }

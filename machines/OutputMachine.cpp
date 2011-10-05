@@ -87,7 +87,7 @@ namespace {
 	}
 
 	void OutputMachineTouchable::handle_rendezvous(Touchable * touchable) {
-		if (touchable->get_touchable_type_id() == Touchable::TypeIDLink) {
+		if (touchable->get_touchable_type_id() == Touchable::TypeIDLinkMovingTouchable) {
 			ApplicationEngine * app_engine = ApplicationEngine::get();
 
 			LinkMovingTouchable * link_touchable = static_cast<LinkMovingTouchable*>(touchable);

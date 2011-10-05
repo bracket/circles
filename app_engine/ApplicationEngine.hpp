@@ -75,9 +75,9 @@ class ApplicationEngine {
 			return machines_.delete_machine(id);
 		}
 
-		void register_touchable(Touchable * touchable) {
+		void register_touchable(Touchable * touchable, bool is_owned_by_touch_handler=false) {
 			if (!touchable) { return; }
-			touch_handler_->insert_touchable(touchable);
+			touch_handler_->insert_touchable(touchable, is_owned_by_touch_handler);
 		}
 
 		void erase_touchable(Touchable * touchable) {
