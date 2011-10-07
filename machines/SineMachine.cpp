@@ -82,7 +82,7 @@ namespace {
 		return program.release();
 	}
 
-	bool SineMachineTouchable::handle_move_start(TouchHandler *, Vec2 const & loc) {
+	bool SineMachineTouchable::handle_move_start(TouchHandler * handler, Vec2 const & loc) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		LinkMovingRenderable * link_renderable = new LinkMovingRenderable(renderable_->get_program());
@@ -94,6 +94,8 @@ namespace {
 
 		app_engine->register_renderable(link_renderable);
 		app_engine->register_touchable(link_touchable, true);
+        
+        handler->register_always_notified(link_touchable);
 
 		return true;
 	}

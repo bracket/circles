@@ -74,7 +74,7 @@ namespace {
 			Touchable * touchable_;
 	};
 
-	bool SineTemplateTouchable::handle_move_start(TouchHandler *, Vec2 const & start) {
+	bool SineTemplateTouchable::handle_move_start(TouchHandler * handler, Vec2 const & start) {
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		// FIXME: Get smarter about my memory, damnit
@@ -86,7 +86,8 @@ namespace {
 		touchable->set_renderable(renderable);
 
 		app_engine->register_renderable(renderable);
-		app_engine->register_touchable(touchable);
+		app_engine->register_touchable(touchable, true);
+        handler->register_always_notified(touchable);
         
         return true;
 	}
@@ -123,9 +124,6 @@ namespace {
     }
 
 	bool SineTemplateMovingTouchable::handle_move_end(TouchHandler *, Vec2 const & end) {
-		std::auto_ptr<SineTemplateMovingTouchable> touch_ptr(this);
-        std::auto_ptr<SineTemplateMovingRenderable> render_ptr(renderable_);
-
 		ApplicationEngine * app_engine = ApplicationEngine::get();
 
 		// if in a place where we actually wanna create a machine

@@ -1,20 +1,23 @@
 #pragma 
 
 #include <algorithm>
+#include <boost/range/algorithm.hpp>
 #include <input/Touchable.hpp>
+#include <math/Vec.hpp>
 #include <memory>
 #include <set>
-#include <math/Vec.hpp>
 #include <vector>
+
+#include <iostream>
 
 class ApplicationEngine;
 
 class TouchHandler {
 	struct TouchableInfo {
 		Touchable * touchable;
-		unsigned int counter;
+		unsigned int event_counter;
 		bool is_owned_by_touch_handler;
-	};
+    };
 
 	struct TouchableInfoCompare {
 		template <class L, class R>
@@ -32,6 +35,9 @@ class TouchHandler {
 
 	typedef std::pair<Vec2, Touchable *> RendezvousPair;
 	typedef std::vector<RendezvousPair> RendezvousContainer;
+
+	typedef std::vector<Touchable*> ToDeleteContainer;
+	typedef std::vector<TouchableInfo *> AlwaysNotifiedContainer;
 
 	typedef TouchableContainer::iterator iterator;
 
@@ -58,13 +64,13 @@ class TouchHandler {
 		friend struct TouchHandlerAccess;
 
 		TouchHandler(ApplicationEngine * app_engine) :
-			app_engine_(app_engine) { }
+			app_engine_(app_engine),
+			current_event_(0) { }
 
 		bool insert_touchable(Touchable * touchable, bool is_owned_by_touch_handler) {
-			TouchableInfo info = { touchable, 0, is_owned_by_touch_handler };
+			TouchableInfo info = { touchable, current_event_, is_owned_by_touch_handler };
 
 			if (touchables_.insert(info).second) { return true; }
-			if (is_owned_by_touch_handler) { delete touchable; }
 
 			return false;
 		}
@@ -76,6 +82,8 @@ class TouchHandler {
 
 			if (it->is_owned_by_touch_handler) { delete it->touchable; }
 			touchables_.erase(it);
+			erase_always_notified(&*it);
+
 			return true;
 		}
 
@@ -93,9 +101,48 @@ class TouchHandler {
 		void handle_move_end(Vec2 const & end);
 		void handle_single_tap(Vec2 const & loc);
 
+		bool register_always_notified(Touchable * touchable) {
+			TouchableInfo info  = { touchable, 0, false };
+			iterator it = touchables_.find(info);
+			if (it == touchables_.end()) { return false; }
+
+			return insert_always_notified(&*it);
+		}
+
+		bool erase_always_notified(Touchable * touchable) {
+			TouchableInfo info = { touchable, 0, false };
+			iterator it = touchables_.find(info);
+			if (it == touchables_.end()) { return false; }
+
+			return erase_always_notified(&*it);
+		}
+
 	private:
+		bool insert_always_notified(TouchableInfo const * info) {
+			typedef AlwaysNotifiedContainer::iterator aiterator;
+
+			std::pair<aiterator, aiterator> p = boost::equal_range(always_notified_, info);
+			if (p.first != p.second) { return false; }
+
+			always_notified_.insert(p.second, const_cast<TouchableInfo *>(info));
+			return true;
+		}
+
+		bool erase_always_notified(TouchableInfo const * info) {
+			typedef AlwaysNotifiedContainer::iterator aiterator;
+
+			std::pair<aiterator, aiterator> p = boost::equal_range(always_notified_, info);
+			if (p.first == p.second) { return false; }
+
+			always_notified_.erase(p.first);
+			return true;
+		}
+
 		ApplicationEngine * app_engine_;
 		TouchableContainer touchables_;
 		RendezvousContainer rendezvous_;
-		std::vector<Touchable *> touchables_to_delete_;
+		ToDeleteContainer to_delete_;
+		AlwaysNotifiedContainer always_notified_;
+
+		unsigned int current_event_;
 };
