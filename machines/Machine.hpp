@@ -2,24 +2,27 @@
 
 #include <renderer/Renderable.hpp>
 #include <input/Touchable.hpp>
+#include <shared/types.hpp>
 
 class Machine {
 	public:
+		friend class MachineContainer;
+
 		Renderable * get_renderable() const { return renderable_; }
 
 		Touchable * get_touchable() const { return touchable_; }
 
-		int get_target_machine_id() const { return target_machine_id_; }
+		MachineID get_machine_id() const { return machine_id_; }
 
-	protected:
-		Machine(Renderable * renderable, Touchable * touchable, int target_machine_id) :
+		Machine(Renderable * renderable, Touchable * touchable) :
 			renderable_(renderable),
-			touchable_(touchable), 
-			target_machine_id_(target_machine_id)
+			touchable_(touchable)
 		{ }
 
 	private:
+		void set_machine_id(MachineID id) { machine_id_ = id; }
+
 		Renderable * renderable_;
 		Touchable * touchable_;
-		int target_machine_id_;
+		MachineID machine_id_;
 };

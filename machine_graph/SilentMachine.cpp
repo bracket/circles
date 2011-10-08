@@ -1,5 +1,5 @@
 #include <machine_graph/SoundMachine.hpp>
-#include <machine_graph/MachineFactory.hpp>
+#include <machine_graph/SoundMachineFactory.hpp>
 #include <machine_graph/MachineGraph.hpp>
 
 class SilentMachine : public SoundMachine {
@@ -25,7 +25,7 @@ namespace {
 
 	struct registrar {
 		registrar() {
-			get_machine_factory().register_constructor("SilentMachine", constructor);
+			SoundMachineFactory::get().register_constructor("SilentMachine", constructor);
 		}
 	};
 

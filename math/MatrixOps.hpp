@@ -3,6 +3,7 @@
 #include <boost/range.hpp>
 #include <cmath>
 #include <math/Matrix.hpp>
+#include <math/Vec.hpp>
 
 template <class T>
 Matrix<4, 4, T> frustum(T left, T right, T bottom, T top, T near, T far) {
@@ -49,6 +50,17 @@ Matrix<4, 4, T> identity_matrix() {
 }
 
 template <class T>
+Matrix<3, 3, T> identity_matrix3() {
+	T out[] = {
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1
+	};
+
+	return Matrix<3, 3, T>(out);
+}
+
+template <class T>
 Matrix<4, 4, T> perspective(T near, T far, T aspect_ratio, T field_of_view) {
 	T height = std::tan(field_of_view / 2) * near,
 		width = aspect_ratio * height;
@@ -69,4 +81,16 @@ Matrix<4, 4, T> rotate_around_z(T angle) {
 	};
 
 	return Matrix<4, 4, T>(boost::begin(out), boost::end(out));
+}
+
+template <class T>
+Matrix<4, 4, T> translate_matrix(Vec<3, T> const & position) {
+	T values[] = {
+		1,             0,             0,             0, 
+		0,             1,             0,             0, 
+		0,             0,             1,             0, 
+		position.x(),  position.y(),  position.z(),  1
+	};
+
+	return Matrix<4, 4, T>(values);
 }

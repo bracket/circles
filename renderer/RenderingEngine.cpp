@@ -30,7 +30,14 @@ bool RenderingEngine::init() {
 		field_of_view_
 	));
 
-	set_camera_matrix(identity_matrix<float>());
+	float C[] = {
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 5, 1,
+	};
+
+	set_camera_matrix(Matrix<4, 4, float>(C));
 
 	return true;
 }

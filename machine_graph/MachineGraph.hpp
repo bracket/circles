@@ -5,7 +5,7 @@
 #include <machine_graph/Block.hpp>
 #include <machine_graph/commands/MachineCommand.hpp>
 #include <machine_graph/SoundMachine.hpp>
-#include <machine_graph/MachineFactory.hpp>
+#include <machine_graph/SoundMachineFactory.hpp>
 #include <string>
 #include <utility>
 #include <vector>
@@ -13,10 +13,10 @@
 class MachineGraph {
 	friend struct MachineGraphAccess;
 
-	typedef boost::unordered_map<int, SoundMachine*> MachineContainer;
+	typedef boost::unordered_map<TargetID, SoundMachine*> MachineContainer;
 	typedef CommandDispatchMap<SoundMachine> MachineDispatchMap;
 	typedef CommandDispatchMap<MachineGraph> GraphDispatchMap;
-	typedef boost::unordered_map<int, MachineDispatchMap*> DispatchContainer;
+	typedef boost::unordered_map<TargetID, MachineDispatchMap*> DispatchContainer;
 
 	public:
 		~MachineGraph() {
@@ -45,9 +45,9 @@ class MachineGraph {
 		void free_block(BlockType * block) { free_blocks_.push_back(block); }
 
 		void dispatch_command(MachineCommand * command) {
-			int target_id = command->get_target_id();
+			TargetID target_id = command->get_target_id();
 
-			if (!target_id) {
+			if (!target_id.machine_id) {
 				graph_dispatch_.dispatch(this, command);
 			}
 			else {
@@ -60,18 +60,25 @@ class MachineGraph {
 			}
 		}
 
-		int add_machine(std::string const & machine_type) {
-			std::auto_ptr<SoundMachine> ptr(get_machine_factory().construct(machine_type, this));
-			if (!ptr.get()) { return 0; }
-
-			int id = next_id();
-			if (!add_machine_with_id(id, ptr.get())) { return 0; }
-
-			ptr.release();
-			return id;
+		bool add_machine(TargetID target_id, std::string const & machine_type, bool force = false) {
+			std::auto_ptr<SoundMachine> ptr(SoundMachineFactory::get().construct(machine_type, this));
+			if (!ptr.get()) { return false; }
+			return add_machine(target_id, ptr, force);
 		}
 
-		bool link_machines(int input_id, int output_id) {
+		SoundMachine * add_machine(TargetID target_id, std::auto_ptr<SoundMachine> machine, bool force = false) {
+			typedef MachineContainer::iterator iterator;
+
+            std::pair<iterator, bool> p = machines_.insert(std::make_pair(target_id, machine.get()));
+			if (p.second) { return machine.release(); }
+			if (!force) { return 0; }
+
+			boost::scoped_ptr<SoundMachine> old(p.first->second);
+			p.first->second = machine.release();
+			return p.first->second;
+		}
+
+		bool link_machines(TargetID input_id, TargetID output_id) {
 			typedef MachineContainer::iterator iterator;
 
 			iterator in = machines_.find(input_id);
@@ -97,16 +104,6 @@ class MachineGraph {
 
 		int next_id() { return ++current_machine_id_; }
 
-		bool add_machine_with_id(int id, SoundMachine * machine, bool force = false) {
-			typedef MachineContainer::iterator iterator;
-            std::pair<iterator, bool> p = machines_.insert(std::make_pair(id, machine));
-			if (p.second) { return true; }
-			if (!force) { return false; }
-
-			boost::scoped_ptr<SoundMachine> old(p.first->second);
-			p.first->second = machine;
-			return true;
-		}
 
 		void link_machines(SoundMachine * input, SoundMachine * output) {
 			output->push_input(input);

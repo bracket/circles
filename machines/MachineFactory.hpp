@@ -1,24 +1,25 @@
 #pragma once
 
-#include <map>
+#include <machines/Machine.hpp>
 #include <string>
-#include <utility>
-
-class SoundMachine;
-class MachineGraph;
 
 class MachineFactory {
 	public:
-		typedef SoundMachine * (*MachineConstructor)(MachineGraph *);
+		typedef Machine * (*Constructor)();
 
 	private:
-		typedef std::map<std::string, MachineConstructor> ConstructorMap;
+		typedef std::map<std::string, Constructor> ConstructorMap;
 		typedef ConstructorMap::iterator iterator;
 		typedef ConstructorMap::const_iterator const_iterator;
- 
+	
 	public:
+		static MachineFactory & get() {
+			static MachineFactory factory;
+			return factory;
+		}
+
 		bool register_constructor(
-			std::string const & name, MachineConstructor constructor, bool force = false
+			std::string const & name, Constructor constructor, bool force = false
 		)
 		{
 			std::pair<iterator, bool> p = constructors_.insert(std::make_pair(name, constructor));
@@ -28,17 +29,12 @@ class MachineFactory {
 			return false;
 		}
 
-		SoundMachine * construct(std::string const & name, MachineGraph * graph) const {
+		Machine * construct(std::string const & name) const {
 			const_iterator it = constructors_.find(name);
 			if (it == constructors_.end()) { return 0; }
-			return (*it->second)(graph);
+			return (*it->second)();
 		}
-		
+
 	private:
 		ConstructorMap constructors_;
 };
-
-inline MachineFactory & get_machine_factory() {
-	static MachineFactory machine_factory;
-	return machine_factory;
-}

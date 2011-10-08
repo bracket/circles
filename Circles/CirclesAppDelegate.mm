@@ -41,6 +41,8 @@ namespace {
 	CommandQueue * command_queue = LocalCommandQueue::construct();
 	[ app_engine_host_ setCommandQueue:command_queue ];
 
+	[ app_engine_host_ postSystemsInit ];
+
 	NSTimer * processing_timer = [ NSTimer
 		scheduledTimerWithTimeInterval:1.0e-3
 		target:app_engine_host_

@@ -21,6 +21,8 @@ class LocalCommandQueue : public CommandQueue {
 		}
 
 		void push(MachineCommand * command) {
+			command->set_client_id(get_client_id());
+
 			response_queue_.push(command);
 			async_queue_->push(command);
 		}

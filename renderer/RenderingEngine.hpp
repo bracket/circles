@@ -3,6 +3,7 @@
 #include <boost/unordered_map.hpp>
 #include <math/Matrix.hpp>
 #include <math/Vec.hpp>
+#include <math/Ray.hpp>
 #include <memory>
 #include <renderer/Program.hpp>
 #include <renderer/Renderable.hpp>
@@ -35,7 +36,7 @@ class RenderingEngine {
 
 		void set_projection_matrix(Matrix<4, 4, float> const & matrix) {
 			projection_matrix_ = matrix;
-			camera_projection_matrix_ = camera_matrix_ * projection_matrix_;
+			camera_projection_matrix_ = camera_inverse_ * projection_matrix_;
 		}
 
 		Matrix<4, 4, float> const & get_camera_matrix() const {
@@ -43,8 +44,13 @@ class RenderingEngine {
 		}
 
 		void set_camera_matrix(Matrix<4, 4, float> const & matrix) {
-			camera_matrix_ = matrix;
-			camera_projection_matrix_ = camera_matrix_ * projection_matrix_;
+			camera_matrix_ = camera_inverse_ = matrix;
+			invert_matrix(&camera_inverse_);
+			camera_projection_matrix_ = camera_inverse_ * projection_matrix_;
+		}
+
+		Matrix<4, 4, float> const & get_camera_inverse() const {
+			return camera_inverse_;
 		}
 
 		Vec2 project_to_normalized(Vec4 v) const {
@@ -60,10 +66,21 @@ class RenderingEngine {
 		Vec2 project_to_device_independent(Vec4 v) const {
 			float height = std::tan(field_of_view_ / 2);
 
-			v = v * camera_matrix_;
+			v = v * camera_inverse_;
 			Vec2 out = Vec2(v.x(), v.y()) / (-v.z() * v.w() * height);
             
 			return out;
+		}
+
+		Ray<3, float> unproject_device_independent(Vec2 const & v) const {
+			float height = std::tan(field_of_view_ / 2);
+			Vec4 start4 = Vec4(0, 0, 0, 1) * camera_matrix_,
+				end4 = Vec4(v.x() * height, v.y() * height, -1, 1) * camera_matrix_;
+
+			Vec3 start = Vec3(start4.x(), start4.y(), start4.z()) / start4.w(),
+				end = Vec3(end4.x(), end4.y(), end4.z()) / end4.w();
+
+			return Ray<3, float>(start, end - start);
 		}
 
 		float get_near_clip() const {
@@ -91,5 +108,5 @@ class RenderingEngine {
 		float near_clip_, far_clip_;
 		float field_of_view_;
 
-		Matrix<4, 4, float> projection_matrix_, camera_matrix_, camera_projection_matrix_;
+		Matrix<4, 4, float> projection_matrix_, camera_matrix_, camera_inverse_, camera_projection_matrix_;
 };

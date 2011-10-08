@@ -1,4 +1,5 @@
 #include <Circles/LocalCommandQueue.hpp>
+#include <iostream>
 
 bool LocalCommandQueue::init() {
 	MachineThreadHost * machine_thread_host = [[ MachineThreadHost alloc ] init ];
@@ -22,6 +23,8 @@ bool LocalCommandQueue::init() {
 
 	async_queue_ = machine_thread->get_command_queue();
 
+	this->set_client_id(1);
+
 	return true;
 }
 
@@ -29,7 +32,10 @@ void LocalCommandQueue::ResponseQueue::process() {
 	typedef ContainerType::iterator iterator;
 
 	for (iterator it = ping_.begin(); it != ping_.end(); ++it) {
-		if ((*it)->dispatch_callback()) { delete *it; continue; }
+		if ((*it)->dispatch_callback()) {
+			delete *it;
+			continue;
+		}
 		pong_.push_back(*it);
 	}
 

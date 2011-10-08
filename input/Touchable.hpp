@@ -1,24 +1,36 @@
 #pragma once
 
+#include <boost/utility.hpp>
 #include <math/Rectangle.hpp>
 #include <math/Vec.hpp>
 
-class Touchable {
-	public:
-		virtual ~Touchable() { }
+class TouchHandler;
 
-		Touchable(Rectangle<float> const & bounding_rect) :
-			bounding_rect_(bounding_rect) { }
+class Touchable : boost::noncopyable {
+	public:
+		enum TouchableTypeID {
+			TypeIDNone = 0,
+			TypeIDLinkMovingTouchable,
+		};
+
+		virtual ~Touchable() { }
 
 		Rectangle<float> const & get_bounding_rect() { return bounding_rect_; }
 
-		virtual void handle_move_start(Vec2 const & start) { }
-		virtual void handle_move_move(Vec2 const & loc) { }
-		virtual void handle_move_end(Vec2 const & end) { }
-		virtual void handle_single_tap(Vec2 const & loc) { }
+		// NOTE: TouchHandlers should return true to indicate that the
+		// Touchable should remain in the container after being handled.
+
+		virtual bool handle_move_start(TouchHandler * handler, Vec2 const & start) { return true; }
+		virtual bool handle_move_move(TouchHandler * handler, Vec2 const & loc) { return true; }
+		virtual bool handle_move_end(TouchHandler * handler, Vec2 const & end) { return true; }
+		virtual bool handle_single_tap(TouchHandler * handler, Vec2 const & loc) { return true; }
 	
-		void set_bounding_rect(Rectangle<float> const & rect)
-				{ bounding_rect_ = rect; }
+		void set_bounding_rectangle(Rectangle<float> const & rect)
+			{ bounding_rect_ = rect; }
+
+		virtual void handle_rendezvous(Touchable * touchable) { }
+
+		virtual TouchableTypeID get_touchable_type_id() const { return TypeIDNone; }
 
 	protected:
 		Touchable() { }

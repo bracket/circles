@@ -130,6 +130,16 @@ struct Matrix {
 		return out;
 	}
 
+	void set_row(int i, Vec<cols, T> const & row) {
+		range_type r = row_range(i);
+		for (int j = 0; j < cols; ++j) { r.first[j] = row[j]; }
+	}
+
+	void set_column(int j, Vec<rows, T> const & col) {
+		range_type r = column_range(j);
+		for (int i = 0; i < rows; ++i) { r.first[i] = col[i]; }
+	}
+
 	private:
 		template <class L, class R>
 		static inline T dot(L left, int stride_left, R right, int stride_right) {
@@ -149,10 +159,10 @@ struct Matrix {
 
 namespace detail {
 	namespace MatrixInverter {
-		int abs(int x) { return ::abs(x); }
-		float abs(float x) { return fabsf(x); }
-		double abs(double x) { return fabs(x); }
-		long double abs(long double x) { return fabsl(x); }
+		inline int abs(int x) { return ::abs(x); }
+		inline float abs(float x) { return fabsf(x); }
+		inline double abs(double x) { return fabs(x); }
+		inline long double abs(long double x) { return fabsl(x); }
 
 		template <class T, int N>
 		inline void swap(T (&left)[N], T (&right)[N]) {
@@ -161,12 +171,12 @@ namespace detail {
 		}
 
 		template <class T>
-		void div(T * begin, T * end, T d) {
+		inline void div(T * begin, T * end, T d) {
 			for (; begin != end; ++begin) { *begin /= d; }
 		}
 
 		template <class T>
-		T max_abs(T * begin, T * end) {
+		inline T max_abs(T * begin, T * end) {
 			T m = 0;
 			for (T * it = begin; it < end; ++it) {
 				T v = abs(*it);
@@ -178,7 +188,7 @@ namespace detail {
 		}
 
 		template <class T>
-		int find_pivot_row(T * begin, T * end, int stride) {
+		inline int find_pivot_row(T * begin, T * end, int stride) {
 			T m = 0; int p = 0, i = 0;
 			for (T * it = begin; it < end; ++i, it += stride) {
 				T v = abs(*it); 
@@ -190,13 +200,13 @@ namespace detail {
 		}
 
 		template <class T>
-		void normalize_front(T * begin, T * end) {
+		inline void normalize_front(T * begin, T * end) {
 			float d = *begin; *begin = 1; ++begin;
 			while (begin < end) { *begin++ /= d; }
 		}
 
 		template <class T>
-		void scale_and_subtract(T * begin, T * end, T * out) {
+		inline void scale_and_subtract(T * begin, T * end, T * out) {
 			T s = -*out / *begin++; *out++ = 0;
 			while (begin < end) { *out++ += s * *begin++; }
 		}
