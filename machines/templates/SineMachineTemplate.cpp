@@ -165,6 +165,7 @@ namespace {
 Template * create_test_template() {
 	ApplicationEngine * app_engine = ApplicationEngine::get();
 	Program * program = initialize_program();
+    if (!program) { return 0; }
 
 	SineTemplateRenderable * renderable = new SineTemplateRenderable(program);
 	SineTemplateTouchable * touchable = new SineTemplateTouchable();

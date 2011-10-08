@@ -5,6 +5,7 @@
 #include <math/Rectangle.hpp>
 #include <renderer/Shader.hpp>
 #include <shared/Ticker.hpp>
+#include <shared/EventLogger.hpp>
 
 #include <iostream>
 
@@ -45,6 +46,8 @@ void ApplicationEngine::render_frame() {
 
 void ApplicationEngine::post_systems_init() {
 	Machine * output_machine = MachineFactory::get().construct("OutputMachine");
+    if (!output_machine) { return; }
+
 
 	float T[] = {
 		1.0, 0.0, 0.0,
@@ -63,4 +66,5 @@ void ApplicationEngine::post_systems_init() {
 void ApplicationEngine::processing_loop_step() {
 	static Template * t = create_test_template();
 	if (command_queue_) { command_queue_->process_responses(); }
+	EventLogger::get().flush_messages();
 }

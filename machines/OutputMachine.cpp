@@ -104,6 +104,7 @@ namespace {
 
 	Machine * constructor() {
 		static Program * program = initialize_program();
+        if (!program) { return 0; }
 
 		OutputMachineRenderable * renderable = new OutputMachineRenderable(program);
 		OutputMachineTouchable * touchable = new OutputMachineTouchable();

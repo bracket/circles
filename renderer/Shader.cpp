@@ -1,5 +1,6 @@
 #include <renderer/Shader.hpp>
 #include <OpenGLES/ES2/gl.h>
+#include <shared/EventLogger.hpp>
 
 namespace {
 	inline GLenum shader_type_to_gl_enum(Shader::Type const & type) {
@@ -29,7 +30,19 @@ bool Shader::init() {
 
 	GLint status;
 	glGetShaderiv(name_, GL_COMPILE_STATUS, &status);
-	if (!status) { return false; }
+	if (!status) {
+		GLint length = 0;
+		glGetShaderiv(name_, GL_INFO_LOG_LENGTH, &length);
+
+		std::vector<char> log(length);
+
+		GLsizei written = 0;
+		glGetShaderInfoLog(name_, length, &written, &*log.begin());
+
+		log_message(EventLogWarn, EventLogGL, log);
+
+		return false;
+	}
 
 	return true;
 }
