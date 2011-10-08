@@ -2,14 +2,17 @@
 
 #include <arch/concurrency.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+#include <boost/range.hpp>
+#include <cstring>
+#include <vector>
 
 // NOTE: First two bits are the log level, rest of the bits are channels
 
 enum EventLogFlags {
 	EventLogFlagNone     = 0x0000,
 	EventLogDebug        = 0x0001,
-	EventLogWeasel       = 0x0002,
-	EventLogAlways       = 0x0003,
+	EventLogWarn         = 0x0002,
+	EventLogCritical     = 0x0003,
 	EventLogLevelMask    = 0x0003,
 	EventLogGeneral      = 0x0004,
 	EventLogGL           = 0x0008,
@@ -35,7 +38,8 @@ class EventLogger {
 	public:
 		EventLogger() :
 			head_(new EventLogMessage()), tail_(head_), 
-			freed_head_(new EventLogMessage()), freed_tail_(freed_head_)
+			freed_head_(new EventLogMessage()), freed_tail_(freed_head_),
+			flags_(static_cast<EventLogFlags>(EventLogDebug | EventLogChannelMask))
 		{ }
 
 		static EventLogger & get() {
@@ -46,7 +50,7 @@ class EventLogger {
 		void push_message(EventLogMessage * message) { push_queue(message, &head_, &tail_); }
 
 		EventLogMessage * alloc_message() {
-			EventLog * m = shift_freed();
+			EventLogMessage * m = shift_freed();
 			if (m) { m->reset(); return m; }
 			return new EventLogMessage();
 		}
@@ -71,7 +75,7 @@ class EventLogger {
 
 	private:
 		EventLogMessage * shift_freed() {
-			EventLogMessage * m = shift_queue(&freed_head_, &freed_tail_);
+			EventLogMessage * m = shift_queue<3>(&freed_head_, &freed_tail_);
 			if (!m) { return 0; }
 
 			m->reset();
@@ -85,7 +89,7 @@ class EventLogger {
 			while (!done) {
 				last = *tail;
 				if (last->next) { cmp_exchange(last, get_tail(last), tail); }
-				else { done = cmp_exchange(static_cast<EventLogMessage*>(0), message, &last->next);
+				else { done = cmp_exchange(static_cast<EventLogMessage*>(0), message, &last->next); }
 			}
 
 			cmp_exchange(last, get_tail(last), tail);
@@ -98,7 +102,7 @@ class EventLogger {
 			for (int i = 0; i < max_retries; ++i) {
 				EventLogMessage * message = *head, * next = message->next;
 				if (!next) { return 0; }
-				if (cmp_exchange(m, next, head)) { return message; }
+				if (cmp_exchange(message, next, head)) { return message; }
 			}
 
 			return 0;
@@ -116,16 +120,20 @@ class EventLogger {
 };
 
 template <class RanIt>
-inline EventLogMessage  * make_message(EventLogFlags flags, RanIt begin, RanIt end) {
+inline EventLogMessage * make_message(EventLogFlags flags, RanIt begin, RanIt end) {
+    using namespace boost::posix_time;
+    
 	EventLogger & logger = EventLogger::get();
-	EventLogMessage * message = logger.alloc_message()
+	EventLogMessage * message = logger.alloc_message(),
 		* current = message;
 
 	ptime timestamp; // = now()
 
-	messages->flags = flags;
+	message->flags = flags;
+	message->timestamp = timestamp;
+
 	for (RanIt next = begin; begin < end; begin = next) {
-		current->timestamp = 0;
+		current->timestamp = timestamp;
 		current->flags = flags;
 
 		next += std::min(end - next, 127);
@@ -136,4 +144,18 @@ inline EventLogMessage  * make_message(EventLogFlags flags, RanIt begin, RanIt e
 			current = current->next;
 		}
 	}
+
+	return message;
+}
+
+template <class Range>
+inline void log_message(EventLogFlags level, EventLogFlags channel, Range const & range) {
+	EventLogger & logger = EventLogger::get();
+	if (level < logger.get_level()) { return; }
+	if (!(channel & logger.get_channels())) { return; }
+	logger.push_message(make_message(static_cast<EventLogFlags>(level | channel), boost::begin(range), boost::end(range)));
+}
+
+inline void log_message(EventLogFlags level, EventLogFlags channel, char const * const & str) {
+	log_message(level, channel, std::make_pair(str, str + std::strlen(str)));
 }

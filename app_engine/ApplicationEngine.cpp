@@ -5,7 +5,7 @@
 #include <math/Rectangle.hpp>
 #include <renderer/Shader.hpp>
 #include <shared/Ticker.hpp>
-#include <shared/EventLogger/EventLogger.hpp>
+#include <shared/EventLogger.hpp>
 
 #include <iostream>
 
@@ -46,6 +46,8 @@ void ApplicationEngine::render_frame() {
 
 void ApplicationEngine::post_systems_init() {
 	Machine * output_machine = MachineFactory::get().construct("OutputMachine");
+    if (!output_machine) { return; }
+
 
 	float T[] = {
 		1.0, 0.0, 0.0,
