@@ -4,6 +4,13 @@
 
 #include <iostream>
 
+namespace {
+	struct Deleter {
+		template <class T>
+		void operator () (T * t) const { delete t; }
+	};
+}
+
 struct TouchHandlerAccess {
 	template <bool (Touchable::*f)(TouchHandler * handler, Vec2 const &)>
 	struct TouchHandlerWrapper {
@@ -42,18 +49,11 @@ struct TouchHandlerAccess {
 			bool force_;
 	};
 
-	void delete_pending(TouchHandler * handler) {
+	static void delete_pending(TouchHandler * handler) {
 		boost::for_each(handler->to_delete_, Deleter());
 		handler->to_delete_.clear();
 	}
 };
-
-namespace {
-	struct Deleter {
-		template <class T>
-		void operator () (T * t) const { delete t; }
-	};
-}
 
 void TouchHandler::handle_rendezvous() {
 	typedef RendezvousContainer::iterator iterator;
