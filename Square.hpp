@@ -43,7 +43,7 @@ struct Square {
 		};
 		Matrix<4, 4, float> M(F);
 		
-		program_->bind_uniform("model_view", engine->get_camera_inverse() * M);
+		program_->bind_uniform("model_view", engine->get_camera().get_camera_inverse() * M);
 
 		glVertexAttribPointer(pos_idx_, 3, GL_FLOAT, GL_FALSE,
 			sizeof(Vertex), vertices_.front().pos);
@@ -72,10 +72,10 @@ struct Square {
 		Matrix<4, 4, float> M(F);
 
 		Vec2 corners[] = {
-			engine->project_to_device_independent(vertices_[0].get_pos() * M),
-			engine->project_to_device_independent(vertices_[1].get_pos() * M),
-			engine->project_to_device_independent(vertices_[2].get_pos() * M),
-			engine->project_to_device_independent(vertices_[3].get_pos() * M)
+			engine->get_camera().project_to_device_independent(vertices_[0].get_pos() * M),
+			engine->get_camera().project_to_device_independent(vertices_[1].get_pos() * M),
+			engine->get_camera().project_to_device_independent(vertices_[2].get_pos() * M),
+			engine->get_camera().project_to_device_independent(vertices_[3].get_pos() * M)
 		};
 
 		return ::get_bounding_rectangle(corners);

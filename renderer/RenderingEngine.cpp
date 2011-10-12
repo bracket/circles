@@ -4,7 +4,6 @@
 #include <renderer/RenderingEngine.hpp>
 
 bool RenderingEngine::init() {
-
 	GLuint frame_buffer, render_buffer;
 	glGenFramebuffers(1, &frame_buffer);
 	glGenRenderbuffers(1, &render_buffer);
@@ -20,15 +19,11 @@ bool RenderingEngine::init() {
 
 	glViewport(0, 0, view_width_, view_height_);
 
-	near_clip_ = 1.0f;
-	far_clip_ = 10.0f;
-	field_of_view_ = static_cast<float>(2 * std::atan(1));
-
-	set_projection_matrix(perspective(
-		near_clip_, far_clip_,
+	camera_.set_projection_matrix(
+		1.0f, 10.0f,
 		view_width_ / view_height_,
-		field_of_view_
-	));
+		static_cast<float>(2 * std::atan(1))
+	);
 
 	float C[] = {
 		1, 0, 0, 0,
@@ -37,7 +32,7 @@ bool RenderingEngine::init() {
 		0, 0, 5, 1,
 	};
 
-	set_camera_matrix(Matrix<4, 4, float>(C));
+	camera_.set_camera_matrix(Matrix<4, 4, float>(C));
 
 	return true;
 }
@@ -51,7 +46,7 @@ void RenderingEngine::render() {
 
 	for (program_iterator pit = render_map_.begin(); pit != render_map_.end(); ++pit) {
 		pit->first->bind();
-		pit->first->bind_uniform("projection", projection_matrix_);
+		pit->first->bind_uniform("projection", camera_.get_projection_matrix());
 
 		iterator it = pit->second.begin(), end = pit->second.end();
 		for (; it != end; ++it) { (*it)->render(this); }
