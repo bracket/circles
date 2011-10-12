@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <math/MatrixOps.hpp>
+#include <math/Ray.hpp>
 
 class Camera {
 	public:

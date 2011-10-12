@@ -9,7 +9,6 @@ LinkMovingTouchable::~LinkMovingTouchable() {
 	delete renderable_;
 }
 
-
 bool LinkMovingTouchable::handle_move_move(TouchHandler *, Vec2 const & loc) {
 	RenderingEngine * rendering_engine = ApplicationEngine::get()->get_rendering_engine();
 	Ray<3, float> ray = rendering_engine->get_camera().unproject_device_independent(loc);
@@ -31,7 +30,7 @@ void LinkMovingRenderable::render(RenderingEngine const * rendering_engine) {
 
 	if (touchable_) {
 		touchable_->set_bounding_rectangle(
-			square_.get_bounding_rectangle(rendering_engine, get_frame())
+			get_bounding_rectangle(rendering_engine->get_camera(), get_frame(), square_.get_vertices())
 		);
 	}
 }

@@ -22,6 +22,7 @@
 		4ED275E313C104FA00DB7510 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED275E213C104FA00DB7510 /* OpenGLES.framework */; };
 		4ED275E513C1052F00DB7510 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED275E413C1052F00DB7510 /* QuartzCore.framework */; };
 		4ED275E813C1066000DB7510 /* GLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4ED275E713C1066000DB7510 /* GLView.mm */; };
+		4ED8455814454CA8008BBCD3 /* Square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4ED8455514454CA8008BBCD3 /* Square.cpp */; };
 		4EEEB86913DFADE50041AD59 /* common.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EEEB86813DFADE50041AD59 /* common.mm */; };
 		4EFBA8CA13D91C22007A0C38 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C213D91C22007A0C38 /* Program.cpp */; };
 		4EFBA8CB13D91C22007A0C38 /* RenderingEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EFBA8C513D91C22007A0C38 /* RenderingEngine.cpp */; };
@@ -82,6 +83,10 @@
 		4ED275E413C1052F00DB7510 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4ED275E613C1066000DB7510 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
 		4ED275E713C1066000DB7510 /* GLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLView.mm; sourceTree = "<group>"; };
+		4ED8455414454CA8008BBCD3 /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		4ED8455514454CA8008BBCD3 /* Square.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Square.cpp; sourceTree = "<group>"; };
+		4ED8455614454CA8008BBCD3 /* Square.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Square.hpp; sourceTree = "<group>"; };
+		4ED8455714454CA8008BBCD3 /* Vertex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
 		4EEEB86613DFADE50041AD59 /* common.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
 		4EEEB86813DFADE50041AD59 /* common.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = common.mm; sourceTree = "<group>"; };
 		4EFBA8C213D91C22007A0C38 /* Program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
@@ -119,7 +124,6 @@
 		B197FB17141735BB00120726 /* SineMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineMachine.cpp; sourceTree = "<group>"; };
 		B197FB1B141735BB00120726 /* SineMachineTemplate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SineMachineTemplate.cpp; sourceTree = "<group>"; };
 		B197FB1C141735BB00120726 /* Template.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Template.hpp; sourceTree = "<group>"; };
-		B197FB22141735D100120726 /* Square.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Square.hpp; sourceTree = "<group>"; };
 		B1C797511404BBE60094A1D2 /* LocalCommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LocalCommandQueue.hpp; sourceTree = "<group>"; };
 		B1C797521404BBE60094A1D2 /* LocalCommandQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocalCommandQueue.mm; sourceTree = "<group>"; };
 		B1C797551404BC010094A1D2 /* CommandQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandQueue.hpp; path = app_engine/CommandQueue.hpp; sourceTree = "<group>"; };
@@ -187,7 +191,6 @@
 		4ED275B913C1014E00DB7510 = {
 			isa = PBXGroup;
 			children = (
-				B197FB22141735D100120726 /* Square.hpp */,
 				4EFBA8C013D91C22007A0C38 /* renderer */,
 				B17C7B341415541A00233A0B /* machines */,
 				B1382791141452BD006E6F59 /* machine_graph */,
@@ -275,6 +278,10 @@
 		4EFBA8C013D91C22007A0C38 /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				4ED8455414454CA8008BBCD3 /* Camera.hpp */,
+				4ED8455514454CA8008BBCD3 /* Square.cpp */,
+				4ED8455614454CA8008BBCD3 /* Square.hpp */,
+				4ED8455714454CA8008BBCD3 /* Vertex.hpp */,
 				4EFBA90F13DB6850007A0C38 /* shaders */,
 				4EFBA8C213D91C22007A0C38 /* Program.cpp */,
 				4EFBA8C313D91C22007A0C38 /* Program.hpp */,
@@ -446,6 +453,7 @@
 				B1D8D9541432D1E1003DCAA1 /* OutputMachine.cpp in Sources */,
 				4E1BCE571437C60500942EB4 /* EventLogger.cpp in Sources */,
 				4E1439AC144533A800418712 /* LinkMovingTouchable.cpp in Sources */,
+				4ED8455814454CA8008BBCD3 /* Square.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

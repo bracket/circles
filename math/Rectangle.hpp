@@ -51,7 +51,7 @@ struct Rectangle {
 };
 
 template <class Iterator>
-Rectangle<float> get_bounding_rectangle(Iterator begin, Iterator end) {
+inline Rectangle<float> get_bounding_rectangle(Iterator begin, Iterator end) {
 	Vec2 lower_left = *begin, upper_right = *begin;
 	++begin;
 
@@ -65,6 +65,20 @@ Rectangle<float> get_bounding_rectangle(Iterator begin, Iterator end) {
 }
 
 template <class Container>
-Rectangle<float> get_bounding_rectangle(Container const & c) {
+inline Rectangle<float> get_bounding_rectangle(Container const & c) {
 	return get_bounding_rectangle(boost::begin(c), boost::end(c));
+}
+
+template <class Iterator, class F>
+inline Rectangle<float> get_bounding_rectangle(Iterator begin, Iterator end, F const & f) {
+	Vec2 lower_left = f(*begin), upper_right = f(*begin);
+	++begin;
+
+	for (; begin != end; ++begin) {
+		lower_left = min(lower_left, f(*begin));
+		upper_right = max(upper_right, f(*begin));
+	}
+
+	return Rectangle<float>(upper_right.y(), lower_left.x(),
+		lower_left.y(), upper_right.x());
 }

@@ -44,7 +44,7 @@ namespace {
 
 				if (touchable_) {
 					touchable_->set_bounding_rectangle(
-						square_.get_bounding_rectangle(rendering_engine, get_frame())
+						get_bounding_rectangle(rendering_engine->get_camera(), get_frame(), square_.get_vertices())
 					);
 				}
 			}
