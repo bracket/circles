@@ -6,7 +6,7 @@
 #include <shared/types.hpp>
 
 inline CommandID make_command_id(unsigned short space, unsigned short name) {
-	CommandID id = { name, space };
+	CommandID id = {{ name, space }};
 	return id;
 }
 

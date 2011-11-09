@@ -69,7 +69,7 @@ class EventLogger {
 
 		bool check_flags(EventLogFlags flags) const {
 			if (!(flags & EventLogChannelMask & flags_)) { return false; }
-			if (flags & EventLogLevelMask < get_level()) { return false; }
+			if ((flags & EventLogLevelMask) < get_level()) { return false; }
 			return true;
 		}
 
