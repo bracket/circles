@@ -1,0 +1,35 @@
+env = Environment();
+
+env['CXX'] = '/opt/local/bin/g++-mp-4.5';
+
+env.AppendUnique(CPPPATH = [
+	'/Users/bracket/src/circles',
+	'/Users/bracket/src/circles/circles_host',
+	'/opt/local/include'
+]);
+
+env.AppendUnique(CPPFLAGS = '-Wall');
+env.AppendUnique(LIBS = [ 'portaudio', 'boost_thread' ]);
+
+env.AppendUnique(LIBPATH = ['/opt/local/lib']);
+
+machine_graph_sources = [
+	'../machine_graph/commands/MachineCommand.cpp',
+	'../machine_graph/commands/MachineGraphCommands.cpp',
+	'../machine_graph/MachineGraph.cpp',
+	'../machine_graph/MachineThread.cpp',
+	'../machine_graph/OutputMachine.cpp',
+	'../machine_graph/SilentMachine.cpp',
+	'../machine_graph/SineMachine.cpp',
+	'../machine_graph/SoundMachine.cpp',
+];
+
+shared_sources = [
+	'../shared/EventLogger.cpp'
+];
+
+sources = [ 'main.cpp', 'MachineThreadHost.cpp' ];
+sources.extend(machine_graph_sources);
+sources.extend(shared_sources);
+
+env.Program('main', source = sources);
