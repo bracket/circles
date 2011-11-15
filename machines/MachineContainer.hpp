@@ -80,6 +80,8 @@ class MachineContainer {
 				p.first->second = ptr.release();
 				reverse_map_.erase(machine);
 			}
+            else { ptr.release(); }
+            
 			reverse_map_.insert(std::make_pair(machine, id));
 
 			machine->set_machine_id(id);

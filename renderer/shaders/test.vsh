@@ -1,12 +1,12 @@
-attribute vec4 position;
-attribute vec2 tex;
-
 uniform mat4 projection;
 uniform mat4 model_view;
 
-varying vec2 texVarying;
+attribute vec4 position;
+attribute vec2 tex;
+
+varying vec2 texture_varying;
 
 void main() {
 	gl_Position = projection * model_view * position;
-	texVarying = tex;
+	texture_varying =  tex;
 }

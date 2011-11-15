@@ -2,6 +2,8 @@
 #include <OpenGLES/ES2/gl.h>
 #include <shared/EventLogger.hpp>
 
+#include <iostream>
+
 namespace {
 	inline GLenum shader_type_to_gl_enum(Shader::Type const & type) {
 		switch (type) {
@@ -39,7 +41,8 @@ bool Shader::init() {
 		GLsizei written = 0;
 		glGetShaderInfoLog(name_, length, &written, &*log.begin());
 
-		log_message(EventLogWarn, EventLogGL, log);
+        std::cout << static_cast<char*>(&*log.begin()) << std::endl;
+		// log_message(EventLogWarn, EventLogGL, log);
 
 		return false;
 	}
