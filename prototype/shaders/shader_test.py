@@ -114,12 +114,15 @@ def main():
 
 	glEnable(GL_AUTO_NORMAL);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA);
 
 	glClearColor(0, 0, 0, 1);
 	gluPerspective(90, width / float(height), 1, 1e3);
 
 	glutDisplayFunc(display);
 	glutKeyboardFunc(key_event);
+	glutFullScreen();
 	glutMainLoop();
 
 def key_event(key, x, y):

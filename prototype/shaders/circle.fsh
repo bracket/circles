@@ -20,7 +20,7 @@ float pi = 4.0 * atan(1.0),
 	slice_length = 2.0 * pi / 40.
 	;
 
-void main() {
+vec4 circle() {
 	float r = length(texture_varying);
 	if (r > 1.0) { discard; }
 
@@ -51,5 +51,25 @@ void main() {
 		);
 	}
 
-	gl_FragColor = mix(vec4(block_color, 1), vec4(0, 0, 0, 0), on_line);
+	return mix(vec4(block_color, 1), vec4(0, 0, 0, 0), on_line);
+}
+
+float max_sine_length = .65, max_sine_height = .68 * .65;
+
+vec4 sine_wave() {
+	if (texture_varying.x < -max_sine_length) { return vec4(0); }
+	if (texture_varying.x > max_sine_length) { return vec4(0); } 
+
+	float x = 2.0 * pi * linstep(-max_sine_length, max_sine_length, texture_varying.x),
+		y = max_sine_height * sin(x);
+
+	return mix(
+		vec4(1, 0, 0, 1),
+		vec4(0),
+		smoothstep(.01, .02, abs(texture_varying.y - y))
+	);
+}
+
+void main() {
+	gl_FragColor = circle() + sine_wave();
 }
