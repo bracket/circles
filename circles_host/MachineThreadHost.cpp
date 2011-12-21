@@ -22,19 +22,6 @@ void MachineThreadHost::thread_main() {
 	PortAudioRenderer * renderer = construct_machine_thread_renderer(machine_thread);
 	port_audio_->start_stream(0, 2, renderer);
 
-	MachineGraph * graph = machine_thread->get_machine_graph();
-
-	TargetID input_id;
-	input_id.client_id = 1;
-	input_id.machine_id = 2;
-
-	TargetID output_id;
-	output_id.client_id = 0;
-	output_id.machine_id = 1;
-
-	graph->add_machine(input_id, "SineMachine");
-	graph->link_machines(input_id, output_id);
-
 	for (;;) {
 		machine_thread_->loop();
 		usleep(5000);

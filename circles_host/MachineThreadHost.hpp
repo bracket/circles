@@ -10,6 +10,8 @@ class MachineThreadHost {
 
 		void thread_main();
 
+		MachineThread * get_machine_thread() const { return machine_thread_; }  
+
 	private:
 		MachineThread * machine_thread_;
 		PortAudio * port_audio_;

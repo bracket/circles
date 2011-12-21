@@ -1,27 +1,26 @@
-#include <boost/scoped_ptr.hpp>
-#include <boost/thread.hpp>
-#include <circles_host/MachineThreadHost.hpp>
-#include <circles_host/PortAudio.hpp>
-
-namespace {
-	struct ThreadStarter {
-		ThreadStarter(MachineThreadHost * thread_host)
-			: thread_host_(thread_host) { }
-
-		void operator () () const {
-			thread_host_->thread_main();
-		}
-
-		private:
-			MachineThreadHost * thread_host_;
-	};
-}
+#include <circles_host/HostCommandQueue.hpp>
+#include <machine_graph/commands/MachineGraphCommands.hpp>
 
 int main() {
-	boost::scoped_ptr<MachineThreadHost> machine_thread_host(new MachineThreadHost());
-	boost::thread host_thread(ThreadStarter(machine_thread_host.get()));
+	HostCommandQueue * command_queue = HostCommandQueue::construct();
 
-	host_thread.join();
+	CreateMachineCommand * create_command = new CreateMachineCommand("SineMachine", 2);
+	command_queue->push(create_command);
+
+	usleep(500000);
+
+	TargetID input_id;
+	input_id.client_id = 0;
+	input_id.machine_id = 2;
+
+	TargetID output_id;
+	output_id.client_id = 0;
+	output_id.machine_id = 1;
+
+	LinkMachineCommand * link_command = new LinkMachineCommand(input_id, output_id);
+	command_queue->push(link_command);
+
+	for (;;) { sleep(10); }
 
 	return 0;
 }
