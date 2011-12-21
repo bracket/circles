@@ -1,157 +1,155 @@
 #include <boost/range/algorithm.hpp>
+#include <boost/smart_ptr/scoped_ptr.hpp>
 #include <boost/utility.hpp>
+#include <circles_host/PortAudio.hpp>
 #include <cmath>
+#include <iostream>
+#include <machine_graph/MachineThread.hpp>
 #include <memory>
 #include <portaudio.h>
-#include <iostream>
-#include <boost/smart_ptr/scoped_ptr.hpp>
 
-const double two_pi = 8.0 * std::atan(1.0), hz = two_pi / 44.1e3;
+namespace {
+	const double two_pi = 8.0 * std::atan(1.0), hz = two_pi / 44.1e3;
 
-void log_pa_error(PaError err) {
-	std::cerr << Pa_GetErrorText(err) << std::endl;
+	void log_pa_error(PaError err) {
+		std::cerr << Pa_GetErrorText(err) << std::endl;
+	}
+
+	bool log_if_error(PaError err) {
+		if (err == paNoError) { return false; }
+
+		log_pa_error(err);
+		return true;
+	}
+
+	bool start_or_free(PaStream * stream) {
+		if (log_if_error(Pa_StartStream(stream))) { return false; }
+
+		Pa_Terminate();
+		return true;
+	}
 }
 
-bool log_if_error(PaError err) {
-	if (err == paNoError) { return false; }
+PortAudio::~PortAudio() {
+	if (stream_) { 
+		log_if_error(Pa_StopStream(stream_));
+		log_if_error(Pa_CloseStream(stream_));
+	}
 
-	log_pa_error(err);
+	Pa_Terminate();
+}
+
+namespace {
+	PaStreamParameters construct_stream_parameters(int device_index, int channel_count, bool input)
+	{
+		PaStreamParameters out;
+		memset(&out, 0, sizeof(out));
+
+		out.device = device_index;
+		out.channelCount = channel_count;
+		out.sampleFormat = paFloat32;
+
+		PaDeviceInfo const * info = Pa_GetDeviceInfo(device_index);
+		out.suggestedLatency = input ? info->defaultLowInputLatency : info->defaultLowOutputLatency;
+
+		return out;
+	}
+
+	int callback(
+		void const * input, void * output, unsigned long frame_count,
+		PaStreamCallbackTimeInfo const * time_info,
+		PaStreamCallbackFlags flags,
+		void * renderer
+	)
+	{
+		return (*static_cast<PortAudioRenderer*>(renderer))(
+			input, output, frame_count, time_info, flags
+		);
+	}
+}
+
+bool PortAudio::start_stream(int input_device_index, int output_device_index,
+	PortAudioRenderer * renderer)
+{
+	PaStreamParameters in_params = construct_stream_parameters(input_device_index, 2, true),
+		out_params = construct_stream_parameters(output_device_index, 2, false);
+
+	PaStream * ptr;
+
+	PaError err = Pa_OpenStream(
+		&ptr,
+		&in_params,
+		&out_params,
+		44100,
+		paFramesPerBufferUnspecified,
+		paNoFlag,
+		&callback,
+		renderer
+	);
+
+	if (log_if_error(err)) { return false; }
+	if (!start_or_free(ptr)) { return false; }
+
 	return true;
 }
 
-struct PortAudioRenderer {
-	virtual int operator () (
-		void const * input,
-		void * output,
-		unsigned long frame_count,
-		PaStreamCallbackTimeInfo const * time_info,
-		PaStreamCallbackFlags flags) = 0;
-	
-	virtual ~PortAudioRenderer() { }
-};
+bool PortAudio::stream_is_active() const { return Pa_IsStreamActive(stream_); }
 
-struct PortAudio : boost::noncopyable {
-	public:
-		static inline PortAudio * construct() {
-			std::auto_ptr<PortAudio> ptr(new PortAudio());
-			if (!ptr->init()) { return 0; }
-			return ptr.release();
-		}
+bool PortAudio::init() {
+	if (log_if_error(Pa_Initialize())) { return false; }
+	return true;
+}
 
-		~PortAudio() {
-			if (stream_) { 
-				log_if_error(Pa_StopStream(stream_));
-				log_if_error(Pa_CloseStream(stream_));
+namespace {
+	struct MachineThreadRenderer : PortAudioRenderer {
+		typedef MachineThread::BlockQueue BlockQueue;
+
+		MachineThreadRenderer(MachineThread * machine_thread)
+			: machine_thread_(machine_thread) { }
+		
+		int operator () (void const * input,
+			void * output,
+			unsigned long frame_count,
+			PaStreamCallbackTimeInfo const * time_info,
+			PaStreamCallbackFlags flags)
+		{
+			float * left_channel = reinterpret_cast<float*>(output);
+			MachineThread::BlockQueue * queue = machine_thread_->get_block_queue();
+
+			static boost::optional<BlockType *> block;
+			static BlockType::iterator it, end = it;
+
+			unsigned int copied = 0;
+			while (copied < frame_count) {
+				if (it == end) {
+					if (block) { delete *block; block = boost::none; }
+					if (!queue->shift(block)) { break; }
+
+					it = (*block)->channel_begin(0);
+					end = (*block)->channel_end(0);
+				}
+
+				for (; it != end && copied < frame_count; ++copied) {
+					*left_channel++ = *it;
+					*left_channel++ = *it++;
+				}
 			}
 
-			Pa_Terminate();
+			for (; copied < frame_count; ++copied) { *left_channel++ = 0; }
+
+			return paContinue;
 		}
 
-		bool start_stream(int input_device_index, int output_device_index,
-			PortAudioRenderer * renderer)
-		{
+		private:
+			MachineThread * machine_thread_;
+	};
+}
 
-			PaStreamParameters in_params = construct_stream_parameters(input_device_index, 2, true),
-				out_params = construct_stream_parameters(output_device_index, 2, false);
+PortAudioRenderer * construct_machine_thread_renderer(MachineThread * machine_thread) {
+	return new MachineThreadRenderer(machine_thread);
+}
 
-			PaStream * ptr;
-
-			auto err = Pa_OpenStream(
-				&ptr,
-				&in_params,
-				&out_params,
-				44100,
-				paFramesPerBufferUnspecified,
-				paNoFlag,
-				&callback,
-				renderer
-			);
-
-			if (log_if_error(err)) { return false; }
-
-			stream_pointer s(ptr);
-
-			if (log_if_error(Pa_StartStream(s.get()))) { return false; }
-
-			stream_.swap(s);
-			return true;
-		}
-
-		bool stream_is_active() { return Pa_IsStreamActive(stream_.get()); }
-
-	private:
-		PortAudio() { }
-
-		bool init() {
-			if (log_if_error(Pa_Initialize())) { return false; }
-			return true;
-		}
-
-		PaStreamParameters construct_stream_parameters(int device_index, int channel_count, bool input) const
-		{
-			PaStreamParameters out;
-			memset(&out, 0, sizeof(out));
-
-			out.device = device_index;
-			out.channelCount = channel_count;
-			out.sampleFormat = paFloat32;
-
-			PaDeviceInfo const * info = Pa_GetDeviceInfo(device_index);
-			out.suggestedLatency = input ? info->defaultLowInputLatency : info->defaultLowOutputLatency;
-
-			return out;
-		}
-
-		static int callback(
-			void const * input, void * output, unsigned long frame_count,
-			PaStreamCallbackTimeInfo const * time_info,
-			PaStreamCallbackFlags flags,
-			void * renderer
-		)
-		{
-			return (*static_cast<PortAudioRenderer*>(renderer))(
-				input, output, frame_count, time_info, flags
-			);
-		}
-
-		PaStream * stream_;
-};
-
-struct PlayRenderer : PortAudioRenderer {
-	PlayRenderer() : current_time_(0), max_time_(5 * 44100) { load(); }
-
-	~PlayRenderer() { delete [] samples_; }
-
-	int operator () (void const * input,
-		void * output,
-		unsigned long frame_count,
-		PaStreamCallbackTimeInfo const * time_info,
-		PaStreamCallbackFlags flags)
-	{
-		float * out = reinterpret_cast<float*>(output);
-		int next_time = current_time_ + frame_count,
-			end_time = (std::min)(next_time, max_time_),
-			delta = end_time - current_time_;
-
-		memcpy(out, samples_ + 2 * current_time_, delta * sizeof(float[2]));
-
-		current_time_ = end_time;
-		return current_time_ == max_time_ ? paComplete : paContinue;
-	}
-
-	private:
-		void load() {
-			samples_ = new float[2 * max_time_];
-
-			FILE * fd = fopen("out.dat", "rb");
-			fread(samples_, 1, sizeof(float[2]) * max_time_, fd);
-			fclose(fd);
-		}
-
-		float * samples_;
-		int current_time_, max_time_;
-};
-
+/*
 int weasel() {
 	auto pa = PortAudio::construct();
 	if (!pa) { return 1; }
@@ -163,3 +161,4 @@ int weasel() {
 
 	return 0;
 }
+*/

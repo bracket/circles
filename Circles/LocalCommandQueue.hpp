@@ -1,7 +1,7 @@
-#include <app_engine/CommandQueue.hpp>
-#include <machine_graph/MachineThread.hpp>
 #include <Circles/MachineThreadHost.h>
+#include <machine_graph/MachineThread.hpp>
 #include <memory>
+#include <shared/CommandQueue.hpp>
 #include <vector>
 
 class LocalCommandQueue : public CommandQueue {

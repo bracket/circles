@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <app_engine/ApplicationEngine.hpp>
-#import "GLView.h"
-#import "app_engine/CommandQueue.hpp"
+#import <GLView.h>
+#import <shared/CommandQueue.hpp>
 
 class RenderingEngine;
 class MachineThread;

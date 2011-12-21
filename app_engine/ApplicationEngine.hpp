@@ -1,7 +1,6 @@
 #pragma once
 
 #include <algorithm>
-#include <app_engine/CommandQueue.hpp>
 #include <boost/shared_ptr.hpp>
 #include <input/TouchHandler.hpp>
 #include <machines/MachineContainer.hpp>
@@ -9,6 +8,7 @@
 #include <memory>
 #include <renderer/RenderingEngine.hpp>
 #include <set>
+#include <shared/CommandQueue.hpp>
 
 class ApplicationEngine {
 	typedef std::set<Renderable *> RenderableContainer;

@@ -28,7 +28,7 @@ shared_sources = [
 	'../shared/EventLogger.cpp'
 ];
 
-sources = [ 'main.cpp', 'MachineThreadHost.cpp' ];
+sources = [ 'main.cpp', 'MachineThreadHost.cpp', 'PortAudio.cpp' ];
 sources.extend(machine_graph_sources);
 sources.extend(shared_sources);
 

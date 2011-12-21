@@ -23,6 +23,8 @@ class MachineThread : boost::noncopyable {
 		BlockQueue * get_block_queue() { return &block_queue_; }
 		AsyncCommandQueue * get_command_queue() { return &command_queue_; }
 
+		MachineGraph * get_machine_graph() const { return graph_.get(); }
+
 	private:
 		MachineThread() : sample_time_(0), last_rendered_(0) { }
 

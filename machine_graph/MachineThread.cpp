@@ -17,7 +17,6 @@ bool MachineThread::loop() {
 	boost::optional<MachineCommand *> out;
 
 	while (command_queue_.shift(out)) {
-		std::cout << "server side " << (*out) << " " << (*out)->get_target_id() << std::endl;
 		graph_->dispatch_command(*out);
 	} 
 	sample_time_ += ticker_.tick();

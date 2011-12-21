@@ -1,6 +1,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread.hpp>
 #include <circles_host/MachineThreadHost.hpp>
+#include <circles_host/PortAudio.hpp>
 
 namespace {
 	struct ThreadStarter {
